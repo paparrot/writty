@@ -25,6 +25,7 @@ class UpdateUserRequest extends FormRequest
 
         return [
             'name' => ['required', 'string'],
+            'nickname' => ["unique:users,nickname,$userId", 'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/', 'required', 'string'],
             'email' => ['required', 'string', 'email', "unique:users,email,$userId"],
             'photo' => ['file', 'image']
         ];

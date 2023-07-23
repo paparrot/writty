@@ -6,8 +6,8 @@ const form = useForm({
     name: '',
     email: '',
     password: '',
+    nickname: '',
     password_confirmation: '',
-    terms: false,
 });
 
 const submit = () => {
@@ -38,7 +38,25 @@ const submit = () => {
                     />
                     <span class="text-error mt-2" v-for="message of form.errors.name">
                     {{ message }}
-                </span>
+                    </span>
+                </div>
+
+                <div class="mt-4">
+                    <label for="nickname">Nickname</label>
+                    <input
+                        id="name"
+                        v-model="form.nickname"
+                        type="text"
+                        class="input input-bordered mt-1 block w-full"
+                        required
+                        autofocus
+                        autocomplete="name"
+                        :class="{'input-error': form.errors.nickname}"
+                        @input="form.errors.nickname = null"
+                    />
+                    <span class="text-error mt-2" v-for="message of form.errors.nickname">
+                        {{ message }}
+                    </span>
                 </div>
 
                 <div class="mt-4">

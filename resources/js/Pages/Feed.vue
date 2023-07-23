@@ -43,13 +43,13 @@ defineProps({
                         </div>
                         <div class="author-text">
                             <h6 class="font-bold">
-                                <a :href="route('home', {author: post.author.id})">
+                                <a :href="route('home', {author: post.author.nickname})">
                                     {{ post.author.name }}
                                 </a>
                             </h6>
                             <p class="font-mono text-gray-500 mb-2 text-sm">
-                                <a :href="route('home', {author: post.author.id})">
-                                    {{ post.author.email }}
+                                <a :href="route('home', {author: post.author.nickname})">
+                                    @{{ post.author.nickname }}
                                 </a>
                             </p>
                         </div>

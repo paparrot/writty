@@ -20,7 +20,7 @@ class PostController extends Controller
         $postsQuery = Post::with(['author'])->latest();
 
         if ($request->has('author')) {
-            $postsQuery = $postsQuery->where('author_id', $request->get('author'));
+            $postsQuery = $postsQuery->whereRelation('author', 'nickname', $request->get('author'));
         }
 
         return Inertia::render('Feed', [

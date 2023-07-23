@@ -70,8 +70,8 @@ const logout = () => {
         <aside class="card card-bordered w-1/5 hidden md:block p-4">
             <h2 class="text-xl font-bold text-center mb-3">Latest authors</h2>
             <ul class="space-y-3">
-                <li v-for="(name, id) of page.props.latestAuthors">
-                    <a class="block w-full rounded px-2 py-1 text-center bg-base-200" :href="route('home', {author: id})">{{ name }}</a>
+                <li v-for="nickname of page.props.latestAuthors">
+                    <a class="block font-bold w-full rounded px-2 py-1 text-center bg-base-200" :href="route('home', {author: nickname})">@{{ nickname }}</a>
                 </li>
             </ul>
         </aside>
