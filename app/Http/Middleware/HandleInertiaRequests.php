@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
@@ -36,6 +37,10 @@ class HandleInertiaRequests extends Middleware
                     'location' => $request->url(),
                 ]);
             },
+            'latestAuthors' => function () {
+                return Post::whereHas('author', fn($query) => $query->distinct())->latest()->limit(10)
+                    ->get()->pluck('author.name', 'author.id');
+            }
         ]);
     }
 }

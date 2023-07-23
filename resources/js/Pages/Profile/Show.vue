@@ -1,57 +1,41 @@
 <script setup>
-import AppLayout from '@/Layouts/AppLayout.vue';
-import DeleteUserForm from '@/Pages/Profile/Partials/DeleteUserForm.vue';
-import LogoutOtherBrowserSessionsForm from '@/Pages/Profile/Partials/LogoutOtherBrowserSessionsForm.vue';
-import SectionBorder from '@/Components/SectionBorder.vue';
-import TwoFactorAuthenticationForm from '@/Pages/Profile/Partials/TwoFactorAuthenticationForm.vue';
-import UpdatePasswordForm from '@/Pages/Profile/Partials/UpdatePasswordForm.vue';
-import UpdateProfileInformationForm from '@/Pages/Profile/Partials/UpdateProfileInformationForm.vue';
+import {useForm, usePage} from "@inertiajs/vue3";
+import DefaultLayout from "@/Layouts/DefaultLayout.vue";
 
-defineProps({
-    confirmsTwoFactorAuthentication: Boolean,
-    sessions: Array,
+const page = usePage();
+const form = useForm({
+    email: page.props.auth?.user?.email,
+    name: page.props.auth?.user?.name,
 });
+
+const updateUser = () => {
+    form.put(route('profile.update', {user: page.props.auth.user.id}))
+}
 </script>
 
 <template>
-    <AppLayout title="Profile">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                Profile
-            </h2>
-        </template>
-
-        <div>
-            <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-                <div v-if="$page.props.jetstream.canUpdateProfileInformation">
-                    <UpdateProfileInformationForm :user="$page.props.auth.user" />
-
-                    <SectionBorder />
+    <DefaultLayout>
+        <h1 class="text-2xl text-center mb-2 font-bold">Profile information</h1>
+        <div class="card card-bordered p-4 mx-auto max-w-xl">
+            <form @submit.prevent="updateUser" class="space-y-4">
+                <div>
+                    <label for="email" class="label">
+                        Email
+                    </label>
+                    <input type="text" name="email" class="w-full input input-bordered" v-model="form.email">
+                    <p class="text-error" v-if="form.errors.email">{{ form.errors.email }}</p>
                 </div>
-
-                <div v-if="$page.props.jetstream.canUpdatePassword">
-                    <UpdatePasswordForm class="mt-10 sm:mt-0" />
-
-                    <SectionBorder />
+                <div>
+                    <label for="name" class="label">
+                        Name
+                    </label>
+                    <input type="text" class="input input-bordered w-full" v-model="form.name">
+                    <p class="text-error" v-if="form.errors.name">{{ form.errors.name }}</p>
                 </div>
-
-                <div v-if="$page.props.jetstream.canManageTwoFactorAuthentication">
-                    <TwoFactorAuthenticationForm
-                        :requires-confirmation="confirmsTwoFactorAuthentication"
-                        class="mt-10 sm:mt-0"
-                    />
-
-                    <SectionBorder />
-                </div>
-
-                <LogoutOtherBrowserSessionsForm :sessions="sessions" class="mt-10 sm:mt-0" />
-
-                <template v-if="$page.props.jetstream.hasAccountDeletionFeatures">
-                    <SectionBorder />
-
-                    <DeleteUserForm class="mt-10 sm:mt-0" />
-                </template>
-            </div>
+                <button type="submit" class="w-full btn btn-primary">
+                    Update
+                </button>
+            </form>
         </div>
-    </AppLayout>
+    </DefaultLayout>
 </template>

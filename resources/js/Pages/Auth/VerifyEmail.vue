@@ -1,9 +1,7 @@
 <script setup>
 import { computed } from 'vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import AuthenticationCard from '@/Components/AuthenticationCard.vue';
-import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
+import DefaultLayout from "@/Layouts/DefaultLayout.vue";
 
 const props = defineProps({
     status: String,
@@ -21,10 +19,7 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
 <template>
     <Head title="Email Verification" />
 
-    <AuthenticationCard>
-        <template #logo>
-            <AuthenticationCardLogo />
-        </template>
+    <DefaultLayout>
 
         <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
             Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.
@@ -36,9 +31,9 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
 
         <form @submit.prevent="submit">
             <div class="mt-4 flex items-center justify-between">
-                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <button class="btn btn-primary" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Resend Verification Email
-                </PrimaryButton>
+                </button>
 
                 <div>
                     <Link
@@ -58,5 +53,5 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
                 </div>
             </div>
         </form>
-    </AuthenticationCard>
+    </DefaultLayout>
 </template>
