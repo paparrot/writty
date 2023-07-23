@@ -21,7 +21,9 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Secure Area" />
+    <Head>
+        <title>Secure Area</title>
+    </Head>
 
     <DefaultLayout>
         <div class="card">

@@ -1,5 +1,5 @@
 <script setup>
-import {Head, Link, useForm} from '@inertiajs/vue3';
+import {Head,  useForm} from '@inertiajs/vue3';
 import DefaultLayout from "@/Layouts/DefaultLayout.vue";
 
 defineProps({
@@ -24,7 +24,9 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Log in"/>
+    <Head>
+        <title>Log in</title>
+    </Head>
 
     <DefaultLayout>
         <div class="card card-bordered bg-base-100 max-w-xl mx-auto p-4">

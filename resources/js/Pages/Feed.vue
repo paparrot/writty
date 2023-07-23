@@ -16,7 +16,8 @@ defineProps({
 </script>
 
 <template>
-    <Head title="Home">
+    <Head>
+        <title>Home</title>
     </Head>
     <DefaultLayout>
         <div class="space-y-2 px-3">

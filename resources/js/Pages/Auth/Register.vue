@@ -18,7 +18,11 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Register"/>
+    <Head>
+        <title>
+            Register
+        </title>
+    </Head>
 
     <DefaultLayout>
         <div class="card card-bordered max-w-xl mx-auto p-4">

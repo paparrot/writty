@@ -43,7 +43,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <label for="password" value="Password" />
+                <label for="password" class="label">Password</label>
                 <input
                     id="password"
                     v-model="form.password"

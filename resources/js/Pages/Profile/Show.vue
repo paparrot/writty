@@ -1,5 +1,5 @@
 <script setup>
-import {useForm, usePage, Head, router} from "@inertiajs/vue3";
+import {useForm, usePage, Head} from "@inertiajs/vue3";
 import DefaultLayout from "@/Layouts/DefaultLayout.vue";
 
 const page = usePage();
@@ -18,12 +18,14 @@ const updateUser = () => {
 </script>
 
 <template>
-    <Head title="Profile"></Head>
+    <Head>
+        <title>Profile</title>
+    </Head>
     <DefaultLayout>
         <h1 class="text-2xl text-center mb-2 font-bold">Profile information</h1>
         <div v-if="page.props.auth.user.profile_photo_path" class="avatar w-full my-4">
             <div class="w-16 mx-auto rounded-full">
-                <img :src="page.props.auth.user.profile_photo_path"/>
+                <img :src="page.props.auth.user.profile_photo_path" alt="page.props.auth.user.nickname"/>
             </div>
         </div>
         <div v-else class="avatar placeholder w-full my-4">

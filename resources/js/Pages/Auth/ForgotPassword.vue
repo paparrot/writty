@@ -16,7 +16,9 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Forgot Password" />
+    <Head>
+        Forgot Password
+    </Head>
 
     <DefaultLayout>
 
