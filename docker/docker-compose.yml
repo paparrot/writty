@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+    app:
+        container_name: writty_app
+        build:
+            context: ./../
+            dockerfile: ./docker/Dockerfile
+        depends_on:
+            - postgres
+        volumes:
+            - ./../:/var/www
+            - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+        restart: unless-stopped
+        networks:
+            - app-network
+
+    webserver:
+        image: nginx:alpine
+        container_name: writty_nginx
+        restart: unless-stopped
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./../:/var/www
+            - ./nginx/conf.d/:/etc/nginx/conf.d/
+        depends_on:
+            - app
+        networks:
+            - app-network
+
+    postgres:
+        container_name: writty_postgres
+        ports:
+            - "6000:5432"
+        image: postgres:14-alpine
+        restart: always
+        environment:
+            POSTGRES_USER: klim
+            POSTGRES_PASSWORD: example
+        volumes:
+            - data_postgres:/var/lib/postgresql/data
+        networks:
+            - app-network
+
+volumes:
+    data_postgres:
+        driver: local
+
+networks:
+    app-network:
+        driver: bridge

@@ -21,7 +21,7 @@ class CreateNewUser implements CreatesNewUsers
     {
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
-            'nickname' => ['unique:users,nickname', 'regex:^[a-z0-9]+(?:-[a-z0-9]+)*$', 'required', 'string'],
+            'nickname' => ['unique:users,nickname', 'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/', 'required', 'string'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
