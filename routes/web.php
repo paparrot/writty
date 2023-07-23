@@ -24,5 +24,5 @@ Route::post('posts', [PostController::class, 'store'])
 Route::delete('posts/{post}', [PostController::class, 'destroy'])
     ->name('posts.delete');
 
-Route::put('users/profile/{user}', [UserProfileController::class, 'update'])
+Route::post('users/profile/{user}', [UserProfileController::class, 'update'])
     ->name('profile.update');

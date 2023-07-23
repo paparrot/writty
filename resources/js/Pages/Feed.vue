@@ -1,6 +1,6 @@
 <script setup>
 import DefaultLayout from "@/Layouts/DefaultLayout.vue";
-
+import {Head} from "@inertiajs/vue3";
 import {router} from "@inertiajs/vue3";
 
 const deletePost = (id) => {
@@ -16,6 +16,8 @@ defineProps({
 </script>
 
 <template>
+    <Head title="Home">
+    </Head>
     <DefaultLayout>
         <div class="space-y-2 px-3">
             <div
@@ -23,18 +25,34 @@ defineProps({
                 :key="post"
                 class="card border rounded p-3"
             >
-                <div class="card-header flex justify-between">
-                    <div class="author">
-                        <h6 class="font-bold">
-                            <a :href="route('home', {author: post.author.id})">
-                                {{ post.author.name }}
-                            </a>
-                        </h6>
-                        <p class="font-mono text-gray-500 mb-2 text-sm">
-                            <a :href="route('home', {author: post.author.id})">
-                                {{ post.author.email }}
-                            </a>
-                        </p>
+                <div class="card-header mb-3 flex justify-between">
+                    <div class="author items-center flex gap-5">
+                        <div class="avatar" v-if="post.author.profile_photo_path">
+                            <div class="w-12 rounded-full">
+                                <img
+
+                                    :src="post.author.profile_photo_path"
+                                    alt="post.author.name"
+                                />
+                            </div>
+                        </div>
+                        <div class="avatar placeholder" v-else>
+                            <div class="bg-neutral-focus text-neutral-content w-12 rounded-full">
+                                <span class="text-2xl font-bold">{{ post.author.email[0].toUpperCase() }}</span>
+                            </div>
+                        </div>
+                        <div class="author-text">
+                            <h6 class="font-bold">
+                                <a :href="route('home', {author: post.author.id})">
+                                    {{ post.author.name }}
+                                </a>
+                            </h6>
+                            <p class="font-mono text-gray-500 mb-2 text-sm">
+                                <a :href="route('home', {author: post.author.id})">
+                                    {{ post.author.email }}
+                                </a>
+                            </p>
+                        </div>
                     </div>
                     <button @click="deletePost(post.id)"
                             v-if="auth.user && auth.user.id && auth.user.id === post.author.id">
@@ -49,7 +67,7 @@ defineProps({
                         </svg>
                     </button>
                 </div>
-                <p class="break-words">{{ post.content }}</p>
+                <p class="break-words text-lg">{{ post.content }}</p>
             </div>
         </div>
     </DefaultLayout>
