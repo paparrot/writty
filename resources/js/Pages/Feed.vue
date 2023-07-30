@@ -34,6 +34,15 @@ export default {
         }
     },
     mounted() {
+        Echo.channel('feed')
+            .listen('PostCreated', (e) =>  {
+                this.postList = [e.post, ...this.postList]
+            })
+        Echo.channel('feed')
+            .listen('PostDeleted', (e) =>  {
+                this.postList = this.postList.filter(post => post.id !== e.id);
+            })
+
         const observer = new IntersectionObserver(entries => {
                 return entries
                     .forEach(entry => entry.isIntersecting && this.loadMorePosts(), {rootMargin: "-150px 0px 0px 0px"})

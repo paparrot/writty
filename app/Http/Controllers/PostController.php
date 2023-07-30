@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PostCreated;
+use App\Events\PostDeleted;
 use App\Http\Requests\PostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
@@ -35,18 +37,23 @@ class PostController extends Controller
 
     public function store(PostRequest $request): RedirectResponse
     {
-        Post::create([
+        $post = Post::create([
             'content' => $request->post('content'),
             'author_id' => $request->user()->id,
         ]);
+
+        $post->load('author');
+        PostCreated::broadcast($request->user(), $post);
 
         return Redirect::to('/');
     }
 
     public function destroy(Post $post): RedirectResponse
     {
+        $id = $post->id;
         $post->delete();
 
+        PostDeleted::broadcast($id);
         return Redirect::to('/');
     }
 }
