@@ -1,18 +1,54 @@
-<script setup>
+<script>
 import DefaultLayout from "@/Layouts/DefaultLayout.vue";
-import {Head} from "@inertiajs/vue3";
-import {router} from "@inertiajs/vue3";
+import {Head, router} from "@inertiajs/vue3";
 
-const deletePost = (id) => {
-    router.delete(route('posts.delete', {post: id}))
-}
+export default {
+    components: {
+        DefaultLayout,
+        Head
+    },
+    data() {
+        return {
+            postList: this.posts.data,
+            initialPage: this.$page.url,
+        }
+    },
+    methods: {
+        deletePost(id) {
+            router.delete(route('posts.delete', {post: id}))
+        },
+        loadMorePosts() {
+            if (this.posts.next_page_url === null) {
+                return;
+            }
 
-defineProps({
-    posts: [],
-    auth: {
-        type: Object,
+            router.get(this.posts.next_page_url, {}, {
+                preserveState: true,
+                preserveScroll: true,
+                only: ['posts'],
+                onSuccess: () => {
+                    this.postList = [...this.postList, ...this.posts.data];
+                    window.history.replaceState({}, this.$page.title, this.initialUrl)
+                }
+            })
+        }
+    },
+    mounted() {
+        const observer = new IntersectionObserver(entries => {
+                return entries
+                    .forEach(entry => entry.isIntersecting && this.loadMorePosts(), {rootMargin: "-150px 0px 0px 0px"})
+            }
+        );
+
+        observer.observe(this.$refs.loadMoreIntersect)
+    },
+    props: {
+        posts: {
+            type: Object,
+            default: () => ({}),
+        }
     }
-})
+}
 </script>
 
 <template>
@@ -22,7 +58,7 @@ defineProps({
     <DefaultLayout>
         <div class="space-y-2 px-3">
             <div
-                v-for="post of posts"
+                v-for="post of postList"
                 :key="post"
                 class="card border rounded p-3"
             >
@@ -56,7 +92,7 @@ defineProps({
                         </div>
                     </div>
                     <button @click="deletePost(post.id)"
-                            v-if="auth.user && auth.user.id && auth.user.id === post.author.id">
+                            v-if="$page.props.auth.user && $page.props.auth.user.id && $page.props.auth.user.id === post.author.id">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash-x"
                              width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                              fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -70,6 +106,7 @@ defineProps({
                 </div>
                 <p class="break-words text-lg">{{ post.content }}</p>
             </div>
+            <span ref="loadMoreIntersect"></span>
         </div>
     </DefaultLayout>
 </template>

@@ -24,7 +24,7 @@ class PostController extends Controller
         }
 
         return Inertia::render('Feed', [
-            'posts' => $postsQuery->get()
+            'posts' => $postsQuery->paginate(20)
         ]);
     }
 
