@@ -38,6 +38,7 @@ const logout = () => {
                     </li>
                     <li>
                         <button
+                            v-if="userId"
                             @click="postModal = true"
                             class="w-full btn btn-primary btn-outline"
                         >New post
@@ -117,10 +118,10 @@ const logout = () => {
         </footer>
         <div
             v-if="postModal"
-            class="absolute inset-0 bg-slate-950 bg-opacity-95 z-20 grid place-items-center"
+            class="absolute inset-0 bg-neutral-focus bg-opacity-95 z-20 grid place-items-center"
             @click="postModal = false"
         >
-            <div @click.stop class="relative h-60 bg-white p-4 rounded w-1/2 max-w-5xl">
+            <div @click.stop class="relative h-60 bg-neutral card card-bordered p-4 rounded w-1/2 max-w-5xl">
                 <div class="flex items-center justify-between w-full">
                     <h2 class="font-bold text-2xl">Make new post</h2>
                     <button
