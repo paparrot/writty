@@ -24,7 +24,7 @@ const onSubmitForm = async () => {
                             @input="form.errors.content = null"
                             v-model="form.content" placeholder="What's happen?"
                             :class="{'textarea-error' : (form.content.length > 255) || form.errors.content}"
-                            class="textarea textarea-bordered textarea-sm w-full"
+                            class="textarea textarea-bordered resize-none textarea-sm w-full"
                         ></textarea>
             <p class="text-error">
                 {{ form.errors.content }}
