@@ -36,6 +36,15 @@ const logout = () => {
                             class="btn w-full"
                         >{{ userId ? "Profile" : "Login" }}</a>
                     </li>
+                    <li v-if="!userId">
+                        <a
+                            :class="{'text-primary': page.component.startsWith('Profile')}"
+                            :href="route('register')"
+                            class="btn w-full"
+                        >
+                            Register
+                        </a>
+                    </li>
                     <li>
                         <button
                             v-if="userId"
@@ -72,7 +81,8 @@ const logout = () => {
             <h2 class="text-xl font-bold text-center mb-3">Latest authors</h2>
             <ul class="space-y-3">
                 <li v-for="nickname of page.props.latestAuthors">
-                    <a class="block font-bold w-full rounded px-2 py-1 text-center bg-base-200" :href="route('home', {author: nickname})">@{{ nickname }}</a>
+                    <a class="block font-bold w-full rounded px-2 py-1 text-center bg-base-200"
+                       :href="route('home', {author: nickname})">@{{ nickname }}</a>
                 </li>
             </ul>
         </aside>
@@ -121,7 +131,7 @@ const logout = () => {
             class="absolute inset-0 bg-neutral-focus bg-opacity-95 z-20 grid place-items-center"
             @click="postModal = false"
         >
-            <div @click.stop class="relative h-60 bg-neutral card card-bordered p-4 rounded w-1/2 max-w-5xl">
+            <div @click.stop class="relative h-60 bg-white dark:bg-neutral card card-bordered p-4 rounded w-1/2 max-w-5xl">
                 <div class="flex items-center justify-between w-full">
                     <h2 class="font-bold text-2xl">Make new post</h2>
                     <button
