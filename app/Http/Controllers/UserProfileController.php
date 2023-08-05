@@ -24,6 +24,6 @@ class UserProfileController extends Controller
             'profile_photo_path' => Storage::url("images/$photoName.$photoExtension"),
         ]);
 
-        return Redirect::to(route('home'));
+        return Redirect::route('home');
     }
 }
