@@ -5,13 +5,11 @@ namespace App\Http\Controllers;
 use App\Events\PostCreated;
 use App\Events\PostDeleted;
 use App\Http\Requests\PostRequest;
-use App\Http\Resources\PostResource;
+use App\Http\Resources\Post\PostResource;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Validation\Rules\In;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -26,7 +24,7 @@ class PostController extends Controller
         }
 
         return Inertia::render('Feed', [
-            'posts' => $postsQuery->paginate(20)
+            'posts' => PostResource::collection($postsQuery->paginate(20)),
         ]);
     }
 
@@ -45,7 +43,7 @@ class PostController extends Controller
         $post->load('author');
         PostCreated::broadcast($request->user(), $post);
 
-        return Redirect::to('/');
+        return Redirect::route('home');
     }
 
     public function destroy(Post $post): RedirectResponse
@@ -54,6 +52,6 @@ class PostController extends Controller
         $post->delete();
 
         PostDeleted::broadcast($id);
-        return Redirect::to('/');
+        return Redirect::route('home');
     }
 }

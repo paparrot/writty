@@ -35,11 +35,11 @@ export default {
     },
     mounted() {
         Echo.channel('feed')
-            .listen('PostCreated', (e) =>  {
+            .listen('PostCreated', (e) => {
                 this.postList = [e.post, ...this.postList]
             })
         Echo.channel('feed')
-            .listen('PostDeleted', (e) =>  {
+            .listen('PostDeleted', (e) => {
                 this.postList = this.postList.filter(post => post.id !== e.id);
             })
 
@@ -73,18 +73,18 @@ export default {
             >
                 <div class="card-header mb-3 flex justify-between">
                     <div class="author items-center flex gap-5">
-                        <div class="avatar" v-if="post.author.profile_photo_path">
+                        <div class="avatar" v-if="post.author.avatar">
                             <div class="w-12 rounded-full">
                                 <img
 
-                                    :src="post.author.profile_photo_path"
+                                    :src="post.author.avatar"
                                     alt="post.author.name"
                                 />
                             </div>
                         </div>
                         <div class="avatar placeholder" v-else>
                             <div class="bg-neutral-focus text-neutral-content w-12 rounded-full">
-                                <span class="text-2xl font-bold">{{ post.author.email[0].toUpperCase() }}</span>
+                                <span class="text-2xl font-bold">{{ post.author.name }}</span>
                             </div>
                         </div>
                         <div class="author-text">
@@ -100,8 +100,10 @@ export default {
                             </p>
                         </div>
                     </div>
-                    <button @click="deletePost(post.id)"
-                            v-if="$page.props.auth.user && $page.props.auth.user.id && $page.props.auth.user.id === post.author.id">
+                    <button
+                        @click="deletePost(post.id)"
+                        v-if="$page.props.auth.user && $page.props.auth.user.nickname && $page.props.auth.user.nickname === post.author.nickname"
+                    >
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash-x"
                              width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                              fill="none" stroke-linecap="round" stroke-linejoin="round">

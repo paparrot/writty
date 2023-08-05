@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Post;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PostResource extends JsonResource
+class UserResource extends JsonResource
 {
-    public static $wrap = null;
-
     /**
      * Transform the resource into an array.
      *
@@ -17,9 +15,9 @@ class PostResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'content' => $this->content,
-            'authorName' => $this->author?->name,
-            'attachmentPath' => $this->attachment?->path,
+            'name' => $this->name,
+            'avatar' => $this->profile_photo_path,
+            'nickname' => $this->nickname
         ];
     }
 }
