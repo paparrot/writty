@@ -19,13 +19,13 @@ const onSubmitForm = async () => {
 <template>
     <form class="p-3" @submit.prevent="onSubmitForm">
         <div class="mb-2">
-                        <textarea
-                            name="content"
-                            @input="form.errors.content = null"
-                            v-model="form.content" placeholder="What's happen?"
-                            :class="{'textarea-error' : (form.content.length > 255) || form.errors.content}"
-                            class="textarea textarea-bordered resize-none textarea-sm w-full"
-                        ></textarea>
+            <textarea
+                name="content"
+                @input="form.errors.content = null"
+                v-model="form.content" placeholder="What's happen?"
+                :class="{'textarea-error' : (form.content.length > 255) || form.errors.content}"
+                class="textarea textarea-bordered resize-none textarea-sm w-full"
+            ></textarea>
             <p class="text-error">
                 {{ form.errors.content }}
             </p>
