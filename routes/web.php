@@ -24,5 +24,9 @@ Route::post('posts', [PostController::class, 'store'])
 Route::delete('posts/{post}', [PostController::class, 'destroy'])
     ->name('posts.delete');
 
+Route::get('users/{user:nickname}', [UserProfileController::class, 'show'])
+    ->name('profile.show');
 Route::post('users/profile/{user}', [UserProfileController::class, 'update'])
     ->name('profile.update');
+Route::get('users/profile/edit', [UserProfileController::class, 'edit'])
+    ->name('profile.edit');

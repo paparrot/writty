@@ -38,12 +38,13 @@ class HandleInertiaRequests extends Middleware
                 ]);
             },
             'latestAuthors' => function () {
-                return Post::join('users', 'users.id', '=', 'posts.author_id')
-                    ->select('users.nickname')
-                    ->groupBy('users.nickname')
-                    ->limit(10)
+                return Post::latest()
+                    ->with('author')
                     ->get()
-                    ->pluck('nickname');
+                    ->unique('author_id')
+                    ->sortByDesc('created_at')
+                    ->take(10)
+                    ->pluck('author.nickname');
             }
         ]);
     }

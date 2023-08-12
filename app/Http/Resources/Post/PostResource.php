@@ -15,6 +15,7 @@ class PostResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'author' => UserResource::make($this->author),
             'content' => $this->content,
             'created' => $this->created_at->diffForHumans()

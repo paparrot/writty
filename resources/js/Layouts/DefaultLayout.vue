@@ -29,16 +29,24 @@ const logout = () => {
                             :class="{'text-primary': page.component.startsWith('Feed')}"
                             :href="route('home')" class="btn w-full">Home</a>
                     </li>
-                    <li>
+                    <li v-if="!userId">
                         <a
-                            :class="{'text-primary': page.component.startsWith('Profile')}"
-                            :href="userId ? route('profile.show') : route('login')"
+                            :class="{'text-primary': page.component === 'Auth/Login'}"
                             class="btn w-full"
-                        >{{ userId ? "Profile" : "Login" }}</a>
+                            :href="route('login')">
+                            Login
+                        </a>
+                    </li>
+                    <li v-if="userId">
+                        <a
+                            :class="{'text-primary': page.component === 'Profile/Edit'}"
+                            :href="route('profile.edit')"
+                            class="btn w-full"
+                        >Profile</a>
                     </li>
                     <li v-if="!userId">
                         <a
-                            :class="{'text-primary': page.component.startsWith('Profile')}"
+                            :class="{'text-primary': page.component === 'Auth/Register'}"
                             :href="route('register')"
                             class="btn w-full"
                         >
@@ -113,7 +121,7 @@ const logout = () => {
                     </a>
                 </li>
                 <li>
-                    <a :href="userId ? route('profile.show') : route('login') ">
+                    <a :href="userId ? route('profile.edit') : route('login') ">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle"
                              width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                              fill="none" stroke-linecap="round" stroke-linejoin="round">
