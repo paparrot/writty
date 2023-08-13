@@ -77,7 +77,7 @@ export default {
             </div>
             <p class="break-words text-lg">{{ post.content }}</p>
             <div class="actions flex gap-2 justify-end">
-                <button @click="post.isLiked ? postService.unlike(post.id) : postService.like(post.id)">
+                <button v-if="$page.props.auth.user" @click="post.isLiked ? postService.unlike(post.id) : postService.like(post.id)">
                     <svg
                         :class="{'fill-pink-300 stroke-pink-500': post.isLiked }"
                         xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">

@@ -14,11 +14,13 @@ class PostResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $isLiked = $request->user()?->id ? $this->isLikedBy($request->user()->id) : false;
+
         return [
             'id' => $this->id,
             'author' => UserResource::make($this->author),
             'content' => $this->content,
-            'isLiked' => $this->isLikedBy($request->user()->id),
+            'isLiked' => $isLiked,
             'created' => $this->created_at->diffForHumans()
         ];
     }
