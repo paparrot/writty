@@ -23,6 +23,10 @@ Route::post('posts', [PostController::class, 'store'])
     ->name('posts.store');
 Route::delete('posts/{post}', [PostController::class, 'destroy'])
     ->name('posts.delete');
+Route::post('posts/{post}/like', [PostController::class, 'like'])->name('posts.like');
+Route::delete('posts/{post}/like', [PostController::class, 'unlike'])->name('posts.unlike');
+Route::get('posts/favourites', [PostController::class, 'favourites'])->name('posts.favourites');
+
 
 Route::get('users/{user:nickname}', [UserProfileController::class, 'show'])
     ->name('profile.show');

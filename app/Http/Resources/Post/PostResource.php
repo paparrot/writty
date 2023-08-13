@@ -18,6 +18,7 @@ class PostResource extends JsonResource
             'id' => $this->id,
             'author' => UserResource::make($this->author),
             'content' => $this->content,
+            'isLiked' => $this->isLikedBy($request->user()->id),
             'created' => $this->created_at->diffForHumans()
         ];
     }

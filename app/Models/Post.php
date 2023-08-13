@@ -2,19 +2,27 @@
 
 namespace App\Models;
 
+use App\Contracts\Likeable;
+use App\Models\Concerns\Likes;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Post extends Model
+class Post extends Model implements Likeable
 {
-    use HasFactory, HasUuids;
+    use HasFactory, HasUuids, Likes;
 
     protected $fillable = [
         'content',
         'attachment_id',
         'author_id'
+    ];
+
+    protected $with = [
+        'author',
+        'likes',
     ];
 
     public function author(): BelongsTo
@@ -25,5 +33,20 @@ class Post extends Model
     public function attachment(): BelongsTo
     {
         return $this->belongsTo(Attachment::class);
+    }
+
+    public function isLikedBy(string $id): bool
+    {
+        return $this->likes->contains('user_id', $id);
+    }
+
+    public function scopeFavourites(Builder $query, string $id): Builder
+    {
+        return $query
+            ->join('likes', 'posts.id', '=', 'likes.likeable_id')
+            ->where('likes.likeable_type', Post::class)
+            ->where('likes.user_id', $id)
+            ->select('posts.*')
+            ->orderBy('likes.created_at', 'desc');
     }
 }

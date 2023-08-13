@@ -43,7 +43,7 @@ class UserProfileController extends Controller
 
     public function show(User $user): Response
     {
-        $posts = Post::where('author_id', $user->id)->paginate(10);
+        $posts = Post::where('author_id', $user->id)->latest()->paginate(10);
 
         return Inertia::render('Profile/Show', [
             'posts' => PostResource::collection($posts),

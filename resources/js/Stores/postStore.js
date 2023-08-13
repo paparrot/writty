@@ -14,6 +14,20 @@ export const usePostStore = defineStore('posts', () => {
         posts.value = newValue;
     }
 
+    const setLiked = (id) => {
+        posts.value = posts.value.map(post => {
+            if (post.id === id) post.isLiked = true;
+            return post;
+        });
+    }
+
+    const setUnliked = (id) => {
+        posts.value = posts.value.map(post => {
+            if (post.id === id) post.isLiked = false;
+            return post;
+        });
+    }
+
     const setCurrentPage = (newValue) => {
         currentPage.value = newValue;
     }
@@ -22,5 +36,5 @@ export const usePostStore = defineStore('posts', () => {
         lastPage.value = newValue;
     }
 
-    return {posts, currentPage, lastPage, setPosts, setCurrentPage, setLastPage }
+    return {posts, currentPage, lastPage, setPosts, setLiked, setUnliked, setCurrentPage, setLastPage }
 })

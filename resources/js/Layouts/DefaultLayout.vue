@@ -29,38 +29,49 @@ const logout = () => {
                             :class="{'text-primary': page.component.startsWith('Feed')}"
                             :href="route('home')" class="btn w-full">Home</a>
                     </li>
-                    <li v-if="!userId">
-                        <a
-                            :class="{'text-primary': page.component === 'Auth/Login'}"
-                            class="btn w-full"
-                            :href="route('login')">
-                            Login
-                        </a>
-                    </li>
-                    <li v-if="userId">
-                        <a
-                            :class="{'text-primary': page.component === 'Profile/Edit'}"
-                            :href="route('profile.edit')"
-                            class="btn w-full"
-                        >Profile</a>
-                    </li>
-                    <li v-if="!userId">
-                        <a
-                            :class="{'text-primary': page.component === 'Auth/Register'}"
-                            :href="route('register')"
-                            class="btn w-full"
-                        >
-                            Register
-                        </a>
-                    </li>
-                    <li>
-                        <button
-                            v-if="userId"
-                            @click="postModal = true"
-                            class="w-full btn btn-primary btn-outline"
-                        >New post
-                        </button>
-                    </li>
+                    <template v-if="!userId">
+                        <li v-if="!userId">
+                            <a
+                                :class="{'text-primary': page.component === 'Auth/Login'}"
+                                class="btn w-full"
+                                :href="route('login')">
+                                Login
+                            </a>
+                        </li>
+                        <li v-if="!userId">
+                            <a
+                                :class="{'text-primary': page.component === 'Auth/Register'}"
+                                :href="route('register')"
+                                class="btn w-full"
+                            >
+                                Register
+                            </a>
+                        </li>
+                    </template>
+                    <template v-else>
+                        <li v-if="userId">
+                            <a
+                                :class="{'text-primary': page.component === 'Profile/Edit'}"
+                                :href="route('profile.edit')"
+                                class="btn w-full"
+                            >Profile</a>
+                        </li>
+                        <li class="">
+                            <a
+                                :class="{'text-primary': page.component === 'Post/Favourites'}"
+                                :href="route('posts.favourites')"
+                                class="btn w-full"
+                            >Favourites</a>
+                        </li>
+                        <li>
+                            <button
+                                v-if="userId"
+                                @click="postModal = true"
+                                class="w-full btn btn-primary btn-outline"
+                            >New post
+                            </button>
+                        </li>
+                    </template>
                 </ul>
             </nav>
         </aside>
@@ -90,7 +101,7 @@ const logout = () => {
             <ul class="space-y-3">
                 <li v-for="nickname of page.props.latestAuthors">
                     <a class="block font-bold w-full rounded px-2 py-1 text-center bg-base-200"
-                       :href="route('home', {author: nickname})">@{{ nickname }}</a>
+                       :href="route('profile.show', {user: nickname})">@{{ nickname }}</a>
                 </li>
             </ul>
         </aside>

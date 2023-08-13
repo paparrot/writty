@@ -4,7 +4,6 @@ import {usePostStore} from "@/Stores/postStore.js";
 export default {
     loadMorePosts() {
         const postStore = usePostStore();
-
         if (postStore.currentPage >= postStore.lastPage) {
             return;
         }
@@ -34,9 +33,29 @@ export default {
     deletePost(id) {
         router.delete(route('posts.delete', {post: id}))
     },
+    like(id) {
+        const postStore = usePostStore();
+        router.post(route('posts.like', {post: id}), {}, {
+            preserveState: true,
+            preserveScroll: true,
+            onSuccess: () => {
+                postStore.setLiked(id)
+            }
+        })
+    },
+    unlike(id) {
+        const postStore = usePostStore();
+        router.delete(route('posts.unlike', {post: id}), {
+            preserveState: true,
+            preserveScroll: true,
+            onSuccess: () => {
+                console.log(2342);
+                postStore.setUnliked(id)
+            }
+        });
+    },
     listenDeletingPost() {
         const postStore = usePostStore();
-
         Echo.channel('feed')
             .listen('PostDeleted', (post) => {
                 const posts = postStore.posts;

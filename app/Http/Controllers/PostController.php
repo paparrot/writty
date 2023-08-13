@@ -17,11 +17,7 @@ class PostController extends Controller
 {
     public function feed(Request $request): Response
     {
-        $postsQuery = Post::with(['author'])->latest();
-
-        if ($request->has('author')) {
-            $postsQuery = $postsQuery->whereRelation('author', 'nickname', $request->get('author'));
-        }
+        $postsQuery = Post::latest();
 
         return Inertia::render('Feed', [
             'posts' => PostResource::collection($postsQuery->paginate(20)),
@@ -53,5 +49,28 @@ class PostController extends Controller
 
         PostDeleted::broadcast($id);
         return Redirect::route('home');
+    }
+
+    public function favourites(): Response
+    {
+        $favouritesPost = Post::favourites(auth()->id())->paginate();
+
+        return Inertia::render('Post/Favourites', [
+            'posts' => PostResource::collection($favouritesPost)
+        ]);
+    }
+
+    public function like(Post $post): RedirectResponse
+    {
+        auth()->user()->like($post);
+
+        return back();
+    }
+
+    public function unlike(Post $post): RedirectResponse
+    {
+        auth()->user()->unlike($post);
+
+        return back();
     }
 }

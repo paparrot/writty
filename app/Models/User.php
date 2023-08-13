@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Contracts\Likeable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -62,4 +62,40 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    public function like(Likeable $likeable)
+    {
+        if ($this->hasLiked($likeable)) {
+            return $this;
+        }
+
+        $like = new Like();
+        $like->user_id = $this->id;
+        $like->likeable()->associate($likeable);
+        $like->save();
+    }
+
+    public function unlike(Likeable $likeable)
+    {
+        if (! $this->hasLiked($likeable)) {
+            return $this;
+        }
+
+        $this->likes()->where('likeable_id', $likeable->id)->delete();
+    }
+
+    public function hasLiked(Likeable $likeable)
+    {
+        if (! $likeable->exists) {
+            return false;
+        }
+
+
+        return $likeable->likes()->whereHas('user', fn ($q) => $q->whereId($this->id))->exists();
+    }
 }
