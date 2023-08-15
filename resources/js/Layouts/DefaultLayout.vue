@@ -26,23 +26,23 @@ const logout = () => {
                 <ul class="space-y-3">
                     <li>
                         <a
-                            :class="{'text-primary': page.component.startsWith('Feed')}"
-                            :href="route('home')" class="btn w-full">Home</a>
+                            :class="{'text-primary': route().current('home')}"
+                            :href="route('home')" class="btn btn-outline w-full">Home</a>
                     </li>
                     <template v-if="!userId">
                         <li v-if="!userId">
                             <a
-                                :class="{'text-primary': page.component === 'Auth/Login'}"
-                                class="btn w-full"
+                                :class="{'text-primary': route().current('login')}"
+                                class="btn btn-outline w-full"
                                 :href="route('login')">
                                 Login
                             </a>
                         </li>
                         <li v-if="!userId">
                             <a
-                                :class="{'text-primary': page.component === 'Auth/Register'}"
+                                :class="{'text-primary': route().current('register')}"
                                 :href="route('register')"
-                                class="btn w-full"
+                                class="btn btn-outline w-full"
                             >
                                 Register
                             </a>
@@ -51,23 +51,23 @@ const logout = () => {
                     <template v-else>
                         <li v-if="userId">
                             <a
-                                :class="{'text-primary': page.component === 'Profile/Edit'}"
+                                :class="{'text-primary': route().current('profile.edit')}"
                                 :href="route('profile.edit')"
-                                class="btn w-full"
+                                class="btn btn-outline w-full"
                             >Profile</a>
                         </li>
                         <li class="">
                             <a
-                                :class="{'text-primary': page.component === 'Post/Favourites'}"
+                                :class="{'text-primary': route().current('posts.favourites')}"
                                 :href="route('posts.favourites')"
-                                class="btn w-full"
+                                class="btn btn-outline w-full"
                             >Favourites</a>
                         </li>
                         <li>
                             <button
                                 v-if="userId"
                                 @click="postModal = true"
-                                class="w-full btn btn-primary btn-outline"
+                                class="w-full btn btn-primary"
                             >New post
                             </button>
                         </li>
@@ -78,9 +78,18 @@ const logout = () => {
         <main class="w-full md:w-3/5 overflow-y-scroll rounded">
             <header class="sticky top-0 z-10 backdrop-blur-xl w-full mb-4">
                 <nav class="navbar flex justify-between shadow-md rounded-b">
-                    <a :href="route('home')" class="btn btn-ghost normal-case text-xl">
-                        Writty
-                    </a>
+                    <div class="flex gap-3">
+                        <a
+                            :class="{'text-primary': route().current('home')}"
+                            :href="route('home')" class="btn btn-ghost normal-case text-xl">
+                            Writty
+                        </a>
+                        <a
+                            :class="{'text-primary': route().current('posts.following')}"
+                            :href="route('posts.following')" class="btn btn-ghost normal-case text-xl">
+                            Following
+                        </a>
+                    </div>
                     <button v-if="userId" @click="logout">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="24"
                              height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -128,6 +137,14 @@ const logout = () => {
                             <path d="M9 12h6"></path>
                             <path d="M12 9v6"></path>
                             <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z"></path>
+                        </svg>
+                    </a>
+                </li>
+                <li v-if="userId">
+                    <a :href="route('posts.favourites')">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M6.979 3.074a6 6 0 0 1 4.988 1.425l.037 .033l.034 -.03a6 6 0 0 1 4.733 -1.44l.246 .036a6 6 0 0 1 3.364 10.008l-.18 .185l-.048 .041l-7.45 7.379a1 1 0 0 1 -1.313 .082l-.094 -.082l-7.493 -7.422a6 6 0 0 1 3.176 -10.215z" stroke-width="0" fill="currentColor"></path>
                         </svg>
                     </a>
                 </li>

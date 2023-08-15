@@ -58,15 +58,16 @@ export default {
         const postStore = usePostStore();
         Echo.channel('feed')
             .listen('PostDeleted', (post) => {
-                const posts = postStore.posts;
+                const posts = postStore.posts.data;
                 postStore.setPosts(posts.filter(_post => _post.id !== post.id))
             })
     },
     listenCreatingPost() {
         const postStore = usePostStore();
         Echo.channel('feed')
-            .listen('PostCreated', (post) => {
-                postStore.setPosts([post, ...postStore.posts])
+            .listen('PostCreated', ({post}) => {
+                postStore.setPosts([post, ...postStore.posts.data]);
+                // postStore.setPosts()
             })
     }
 }

@@ -5,16 +5,21 @@ import DefaultLayout from "@/Layouts/DefaultLayout.vue";
 import PostList from "@/Components/PostList.vue";
 import {usePostStore} from "@/Stores/postStore.js";
 import postService from "@/Services/postService.js";
+import userService from "@/Services/userService.js";
 
-const {user, posts} = defineProps({
+const {user, posts, isFollowing } = defineProps({
     posts: {
         type: Object,
     },
     user: {
         type: Object,
+    },
+    isFollowing: {
+        type: Boolean,
     }
 })
 
+const {props: {auth}} = usePage();
 const postStore = usePostStore();
 
 onBeforeMount(() => {
@@ -36,6 +41,14 @@ onBeforeMount(() => {
             <div class="w-16 mx-auto rounded-full">
                 <img :src="user.avatar" :alt="user.nickname"/>
             </div>
+        </div>
+        <div v-if="auth.user.id !== user.id" class="flex items-center my-2">
+            <button v-if="!isFollowing" @click="userService.follow(user.nickname)" class="mx-auto btn btn-primary btn-outline">
+                Follow
+            </button>
+            <button @click="userService.unfollow(user.nickname)" v-else class="mx-auto btn btn-outline">
+                Unfollow
+            </button>
         </div>
         <PostList
             :posts="postStore.posts"

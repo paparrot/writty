@@ -1,4 +1,4 @@
-import {ref} from "vue";
+import {reactive, ref} from "vue";
 import {defineStore} from "pinia";
 
 export const usePostStore = defineStore('posts', () => {
@@ -6,23 +6,23 @@ export const usePostStore = defineStore('posts', () => {
     const searchParams = url.searchParams;
     const defaultPage = Number(searchParams.get('page')) ? Number(searchParams.get('page')) : 1;
 
-    const posts = ref([]);
+    const posts = reactive({data: []})
     const currentPage = ref(defaultPage);
     const lastPage = ref(1);
 
     const setPosts = (newValue) => {
-        posts.value = newValue;
+        posts.data = newValue;
     }
 
     const setLiked = (id) => {
-        posts.value = posts.value.map(post => {
+        posts.data = posts.data.map(post => {
             if (post.id === id) post.isLiked = true;
             return post;
         });
     }
 
     const setUnliked = (id) => {
-        posts.value = posts.value.map(post => {
+        posts.data = posts.data.map(post => {
             if (post.id === id) post.isLiked = false;
             return post;
         });

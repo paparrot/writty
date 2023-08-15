@@ -28,7 +28,7 @@ export default {
         <article
             v-for="post of posts"
             :key="post"
-            class="card border rounded p-3"
+            class="border border-neutral-focus rounded p-3"
         >
             <div class="card-header mb-3 flex justify-between">
                 <div class="author items-center flex gap-5">
