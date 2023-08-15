@@ -26,6 +26,7 @@ Route::delete('posts/{post}', [PostController::class, 'destroy'])
 Route::post('posts/{post}/like', [PostController::class, 'like'])->name('posts.like');
 Route::delete('posts/{post}/like', [PostController::class, 'unlike'])->name('posts.unlike');
 Route::get('posts/favourites', [PostController::class, 'favourites'])->name('posts.favourites');
+Route::get('posts/following', [PostController::class, 'following'])->name('posts.following');
 
 
 Route::get('users/{user:nickname}', [UserProfileController::class, 'show'])
