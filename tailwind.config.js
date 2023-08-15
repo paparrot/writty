@@ -11,13 +11,17 @@ export default {
         './resources/views/**/*.blade.php',
         './resources/js/**/*.vue',
     ],
-
     theme: {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
         },
+    },
+    daisyui: {
+        themes: ['lofi', 'night'],
+        darkTheme: "night", // name of one of the included themes for dark mode
+        base: true, // applies background color and foreground color for root element by default
     },
 
     plugins: [forms, typography, require('daisyui')],
