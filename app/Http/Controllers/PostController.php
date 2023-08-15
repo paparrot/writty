@@ -37,7 +37,7 @@ class PostController extends Controller
         ]);
 
         $post->load('author');
-        PostCreated::broadcast($request->user(), $post);
+        PostCreated::broadcast($post);
 
         return Redirect::route('home');
     }
