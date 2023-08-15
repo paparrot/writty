@@ -2,8 +2,8 @@
 
 namespace App\Events;
 
+use App\Http\Resources\Post\PostResource;
 use App\Models\Post;
-use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -14,16 +14,14 @@ class PostCreated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public Post $post;
-    public User $user;
+    public PostResource $post;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(User $user, Post $post)
+    public function __construct(Post $post)
     {
-        $this->user = $user;
-        $this->post = $post;
+        $this->post = PostResource::make($post);
     }
 
     /**
