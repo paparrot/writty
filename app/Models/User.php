@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Contracts\Likeable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -62,6 +63,39 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function isFollowing(User $user)
+    {
+        return $user->whereHas('followers', fn ($query) => $query->where('id', $this->id))->count() > 0;
+    }
+
+    public function followers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'users_users', 'follower_id', 'user_id');
+    }
+
+    public function following(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'users_users', 'user_id', 'follower_id');
+    }
+
+    public function follow(User $user)
+    {
+        if ($user->followers->where('id', $this->id)->isNotEmpty()){
+            return $this;
+        }
+
+        $user->followers()->attach($this->id);
+    }
+
+    public function unfollow(User $user)
+    {
+        if ($user->followers->where('id', $this->id)->isEmpty()){
+            return $this;
+        }
+
+        $user->followers()->detach($this->id);
+    }
 
     public function likes()
     {
