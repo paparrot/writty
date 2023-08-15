@@ -67,7 +67,6 @@ export default {
         Echo.channel('feed')
             .listen('PostCreated', ({post}) => {
                 postStore.setPosts([post, ...postStore.posts.data]);
-                // postStore.setPosts()
             })
     }
 }

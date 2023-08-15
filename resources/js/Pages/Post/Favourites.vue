@@ -29,7 +29,7 @@ const page = usePage();
     </Head>
     <DefaultLayout>
         <PostList
-            :posts="postStore.posts"
+            :posts="postStore.posts.data"
             @load-more-posts="postService.loadMorePosts"
         ></PostList>
     </DefaultLayout>
