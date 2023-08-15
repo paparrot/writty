@@ -7,6 +7,7 @@ use App\Http\Resources\Post\PostResource;
 use App\Http\Resources\Post\UserResource;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Laravel\Jetstream\Jetstream;
 
-class UserProfileController extends Controller
+class UserController extends Controller
 {
     public function update(UpdateUserRequest $request)
     {
@@ -41,13 +42,28 @@ class UserProfileController extends Controller
         return Jetstream::inertia()->render($request, 'Profile/Edit');
     }
 
-    public function show(User $user): Response
+    public function show(Request $request, User $user): Response
     {
         $posts = Post::where('author_id', $user->id)->latest()->paginate(10);
 
         return Inertia::render('Profile/Show', [
             'posts' => PostResource::collection($posts),
-            'user' => UserResource::make($user)
+            'user' => UserResource::make($user),
+            'isFollowing' => $request->user()->isFollowing($user),
         ]);
+    }
+
+    public function follow(Request $request, User $user): RedirectResponse
+    {
+        $request->user()->follow($user);
+
+        return Redirect::back();
+    }
+
+    public function unfollow(Request $request, User $user): RedirectResponse
+    {
+        $request->user()->unfollow($user);
+
+        return Redirect::back();
     }
 }

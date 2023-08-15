@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,10 +28,13 @@ Route::delete('posts/{post}/like', [PostController::class, 'unlike'])->name('pos
 Route::get('posts/favourites', [PostController::class, 'favourites'])->name('posts.favourites');
 Route::get('posts/following', [PostController::class, 'following'])->name('posts.following');
 
-
-Route::get('users/{user:nickname}', [UserProfileController::class, 'show'])
+Route::post('users/{user:nickname}', [UserController::class, 'follow'])
+    ->name('users.follow');
+Route::delete('users/{user:nickname}', [UserController::class, 'unfollow'])
+    ->name('users.unfollow');
+Route::get('users/{user:nickname}', [UserController::class, 'show'])
     ->name('profile.show');
-Route::post('users/profile/{user}', [UserProfileController::class, 'update'])
+Route::post('users/profile/{user}', [UserController::class, 'update'])
     ->name('profile.update');
-Route::get('users/profile/edit', [UserProfileController::class, 'edit'])
+Route::get('users/profile/edit', [UserController::class, 'edit'])
     ->name('profile.edit');
