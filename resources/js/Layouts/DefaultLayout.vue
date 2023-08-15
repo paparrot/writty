@@ -117,7 +117,7 @@ const logout = () => {
         <footer class="w-full fixed bottom-0 md:hidden">
             <ul class="menu flex justify-between menu-horizontal bg-base-200 rounded-t-box">
                 <li>
-                    <a :href="route('home')">
+                    <a :href="route('home')" :class="{'text-primary': route().current('home')}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home-2" width="24"
                              height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                              stroke-linecap="round" stroke-linejoin="round">
@@ -129,7 +129,7 @@ const logout = () => {
                     </a>
                 </li>
                 <li v-if="userId">
-                    <a :href="route('posts.create')">
+                    <a :class="{'text-primary': route().current('posts.create')}" :href="route('posts.create')">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-rounded-plus"
                              width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                              fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -141,7 +141,7 @@ const logout = () => {
                     </a>
                 </li>
                 <li v-if="userId">
-                    <a :href="route('posts.favourites')">
+                    <a :class="{'text-primary': route().current('posts.favourites')}" :href="route('posts.favourites')">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                             <path d="M6.979 3.074a6 6 0 0 1 4.988 1.425l.037 .033l.034 -.03a6 6 0 0 1 4.733 -1.44l.246 .036a6 6 0 0 1 3.364 10.008l-.18 .185l-.048 .041l-7.45 7.379a1 1 0 0 1 -1.313 .082l-.094 -.082l-7.493 -7.422a6 6 0 0 1 3.176 -10.215z" stroke-width="0" fill="currentColor"></path>
@@ -149,7 +149,7 @@ const logout = () => {
                     </a>
                 </li>
                 <li>
-                    <a :href="userId ? route('profile.edit') : route('login') ">
+                    <a :class="{'text-primary': route().current('profile.edit')}" :href="userId ? route('profile.edit') : route('login') ">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle"
                              width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                              fill="none" stroke-linecap="round" stroke-linejoin="round">
