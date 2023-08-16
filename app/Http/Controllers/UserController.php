@@ -49,7 +49,7 @@ class UserController extends Controller
         return Inertia::render('Profile/Show', [
             'posts' => PostResource::collection($posts),
             'user' => UserResource::make($user),
-            'isFollowing' => $request->user()->isFollowing($user),
+            'isFollowing' => $request->user()?->isFollowing($user) ?? false,
         ]);
     }
 
