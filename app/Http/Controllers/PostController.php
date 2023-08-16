@@ -63,10 +63,21 @@ class PostController extends Controller
     public function following(Request $request): Response
     {
         $followingIds = $request->user()->following()->pluck('id');
-        $posts = Post::whereHas('author', fn ($query) => $query->whereIn('id', $followingIds))->paginate();
+        $posts = Post::whereHas('author', fn($query) => $query->whereIn('id', $followingIds))->paginate();
 
         return Inertia::render('Feed', [
             'posts' => PostResource::collection($posts),
+        ]);
+    }
+
+    public function search(Request $request): Response
+    {
+        $q = $request->get('q') ?? "";
+
+        $posts = Post::search($q)->get()->take(10);
+
+        return Inertia::render('Post/Search', [
+            'posts' => $posts
         ]);
     }
 

@@ -9,10 +9,12 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Env;
+use Laravel\Scout\Searchable;
 
 class Post extends Model implements Likeable
 {
-    use HasFactory, HasUuids, Likes;
+    use HasFactory, HasUuids, Likes, Searchable;
 
     protected $fillable = [
         'content',
@@ -24,6 +26,18 @@ class Post extends Model implements Likeable
         'author',
         'likes',
     ];
+
+    public function searchableAs(): string
+    {
+        return Env::get('APP_ENV') . "_posts_index";
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'content' => $this->content
+        ];
+    }
 
     public function author(): BelongsTo
     {

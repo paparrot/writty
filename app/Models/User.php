@@ -6,11 +6,13 @@ use App\Contracts\Likeable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Scout\Searchable;
 
 class User extends Authenticatable
 {
@@ -20,6 +22,7 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -64,9 +67,24 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function isFollowing(User $user)
+    public function searchableAs(): string
     {
-        return $user->whereHas('followers', fn ($query) => $query->where('id', $this->id))->count() > 0;
+        return "users_index";
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'name' => $this->name,
+            'nickname' => $this->nickname,
+            'id' => $this->id,
+            'email' => $this->email,
+        ];
+    }
+
+    public function isFollowing(User $user): bool
+    {
+        return $user->whereHas('followers', fn($query) => $query->where('id', $this->id))->count() > 0;
     }
 
     public function followers(): BelongsToMany
@@ -81,7 +99,7 @@ class User extends Authenticatable
 
     public function follow(User $user)
     {
-        if ($user->followers->where('id', $this->id)->isNotEmpty()){
+        if ($user->followers->where('id', $this->id)->isNotEmpty()) {
             return $this;
         }
 
@@ -90,14 +108,14 @@ class User extends Authenticatable
 
     public function unfollow(User $user)
     {
-        if ($user->followers->where('id', $this->id)->isEmpty()){
+        if ($user->followers->where('id', $this->id)->isEmpty()) {
             return $this;
         }
 
         $user->followers()->detach($this->id);
     }
 
-    public function likes()
+    public function likes(): HasMany
     {
         return $this->hasMany(Like::class);
     }
@@ -116,20 +134,20 @@ class User extends Authenticatable
 
     public function unlike(Likeable $likeable)
     {
-        if (! $this->hasLiked($likeable)) {
+        if (!$this->hasLiked($likeable)) {
             return $this;
         }
 
         $this->likes()->where('likeable_id', $likeable->id)->delete();
     }
 
-    public function hasLiked(Likeable $likeable)
+    public function hasLiked(Likeable $likeable): bool
     {
-        if (! $likeable->exists) {
+        if (!$likeable->exists) {
             return false;
         }
 
 
-        return $likeable->likes()->whereHas('user', fn ($q) => $q->whereId($this->id))->exists();
+        return $likeable->likes()->whereHas('user', fn($q) => $q->whereId($this->id))->exists();
     }
 }
