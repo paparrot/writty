@@ -85,6 +85,7 @@ const logout = () => {
                             Writty
                         </a>
                         <a
+                            v-if="userId"
                             :class="{'text-primary': route().current('posts.following')}"
                             :href="route('posts.following')" class="btn btn-ghost normal-case text-xl">
                             Following

@@ -1,1 +1,0 @@
-import{_ as a,a as e}from"./DefaultLayout-e0d066db.js";import{o as t,p as _,w as r,a as s}from"./app-479178b6.js";const f={__name:"Create",setup(o){return(c,n)=>(t(),_(a,null,{default:r(()=>[s(e)]),_:1}))}};export{f as default};
