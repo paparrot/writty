@@ -3,6 +3,7 @@ import {onBeforeMount, ref} from 'vue';
 import DefaultLayout from "@/Layouts/DefaultLayout.vue";
 import PostList from "@/Components/PostList.vue";
 import {router} from "@inertiajs/vue3";
+import {Head} from "@inertiajs/vue3";
 
 const search = ref('');
 
