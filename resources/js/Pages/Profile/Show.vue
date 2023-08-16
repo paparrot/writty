@@ -42,7 +42,7 @@ onBeforeMount(() => {
                 <img :src="user.avatar" :alt="user.nickname"/>
             </div>
         </div>
-        <div v-if="auth.user.id !== user.id" class="flex items-center my-2">
+        <div v-if="auth.user && auth.user.id !== user.id" class="flex items-center my-2">
             <button v-if="!isFollowing" @click="userService.follow(user.nickname)" class="mx-auto btn btn-primary btn-outline">
                 Follow
             </button>

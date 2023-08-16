@@ -30,7 +30,7 @@ const logout = () => {
                             :href="route('home')" class="btn btn-outline w-full">Home</a>
                     </li>
                     <template v-if="!userId">
-                        <li v-if="!userId">
+                        <li>
                             <a
                                 :class="{'text-primary': route().current('login')}"
                                 class="btn btn-outline w-full"
@@ -38,7 +38,7 @@ const logout = () => {
                                 Login
                             </a>
                         </li>
-                        <li v-if="!userId">
+                        <li>
                             <a
                                 :class="{'text-primary': route().current('register')}"
                                 :href="route('register')"
@@ -48,15 +48,24 @@ const logout = () => {
                             </a>
                         </li>
                     </template>
-                    <template v-else>
-                        <li v-if="userId">
+                    <li>
+                        <a
+                            :class="{'text-primary': route().current('posts.search')}"
+                            :href="route('posts.search')"
+                            class="btn btn-outline w-full"
+                        >
+                            Search
+                        </a>
+                    </li>
+                    <template v-if="userId">
+                        <li>
                             <a
                                 :class="{'text-primary': route().current('profile.edit')}"
                                 :href="route('profile.edit')"
                                 class="btn btn-outline w-full"
                             >Profile</a>
                         </li>
-                        <li class="">
+                        <li >
                             <a
                                 :class="{'text-primary': route().current('posts.favourites')}"
                                 :href="route('posts.favourites')"
@@ -126,6 +135,17 @@ const logout = () => {
                             <path d="M5 12l-2 0l9 -9l9 9l-2 0"></path>
                             <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"></path>
                             <path d="M10 12h4v4h-4z"></path>
+                        </svg>
+                    </a>
+                </li>
+                <li>
+                    <a
+                        :class="{'text-primary': route().current('posts.search')}"
+                        :href="route('posts.search')">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+                            <path d="M21 21l-6 -6"></path>
                         </svg>
                     </a>
                 </li>
