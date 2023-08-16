@@ -77,7 +77,7 @@ class PostController extends Controller
         $posts = Post::search($q)->get()->take(10);
 
         return Inertia::render('Post/Search', [
-            'posts' => $posts
+            'posts' => PostResource::collection($posts)
         ]);
     }
 

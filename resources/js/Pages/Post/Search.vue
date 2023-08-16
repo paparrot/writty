@@ -46,7 +46,7 @@ defineProps({
             <button class="btn border-neutral btn-outline">Search</button>
         </form>
         <PostList
-            :posts="posts"
+            :posts="posts.data"
         />
     </DefaultLayout>
 </template>
