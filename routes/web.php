@@ -19,15 +19,21 @@ Route::get('/', [PostController::class, 'feed'])
     ->name('home');
 Route::get('posts/create', [PostController::class, 'create'])
     ->name('posts.create');
+Route::get('posts/favourites', [PostController::class, 'favourites'])->name('posts.favourites');
+Route::get('posts/following', [PostController::class, 'following'])->name('posts.following');
+Route::get('posts/search', [PostController::class, 'search'])->name('posts.search');
+Route::get('posts/{post}', [PostController::class, 'show'])
+    ->name('posts.show');
 Route::post('posts', [PostController::class, 'store'])
     ->name('posts.store');
+Route::post('posts/{post}/reply', [PostController::class, 'reply'])
+    ->name('posts.reply');
+Route::get('posts/{post}/reply', [PostController::class, 'createReply'])
+    ->name('posts.reply.create');
 Route::delete('posts/{post}', [PostController::class, 'destroy'])
     ->name('posts.delete');
 Route::post('posts/{post}/like', [PostController::class, 'like'])->name('posts.like');
 Route::delete('posts/{post}/like', [PostController::class, 'unlike'])->name('posts.unlike');
-Route::get('posts/favourites', [PostController::class, 'favourites'])->name('posts.favourites');
-Route::get('posts/following', [PostController::class, 'following'])->name('posts.following');
-Route::get('posts/search', [PostController::class, 'search'])->name('posts.search');
 
 Route::post('users/{user:nickname}', [UserController::class, 'follow'])
     ->name('users.follow');

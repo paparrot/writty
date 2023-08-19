@@ -17,7 +17,7 @@ class PostController extends Controller
 {
     public function feed(Request $request): Response
     {
-        $postsQuery = Post::latest();
+        $postsQuery = Post::latest()->doesntHave('replied');
 
         return Inertia::render('Feed', [
             'posts' => PostResource::collection($postsQuery->paginate(20)),
@@ -32,7 +32,7 @@ class PostController extends Controller
     public function store(PostRequest $request): RedirectResponse
     {
         $post = Post::create([
-            'content' => $request->post('content'),
+            'content' => $request->validated('content'),
             'author_id' => $request->user()->id,
         ]);
 
@@ -42,13 +42,21 @@ class PostController extends Controller
         return Redirect::route('home');
     }
 
+    public function show(Post $post): Response
+    {
+        return Inertia::render('Post/Show', [
+            'post' => PostResource::make($post),
+            'replies' => PostResource::collection($post->replies()->paginate())
+        ]);
+    }
+
     public function destroy(Post $post): RedirectResponse
     {
         $id = $post->id;
         $post->delete();
 
         PostDeleted::broadcast($id);
-        return Redirect::route('home');
+        return Redirect::back();
     }
 
     public function favourites(): Response
@@ -63,7 +71,9 @@ class PostController extends Controller
     public function following(Request $request): Response
     {
         $followingIds = $request->user()->following()->pluck('id');
-        $posts = Post::whereHas('author', fn($query) => $query->whereIn('id', $followingIds))->paginate();
+        $posts = Post::whereHas('author', fn($query) => $query->whereIn('id', $followingIds))
+            ->latest()
+            ->paginate();
 
         return Inertia::render('Feed', [
             'posts' => PostResource::collection($posts),
@@ -93,5 +103,22 @@ class PostController extends Controller
         auth()->user()->unlike($post);
 
         return back();
+    }
+
+    public function reply(Post $post, PostRequest $request): RedirectResponse
+    {
+        $post->replies()->create([
+            'content' => $request->validated('content'),
+            'author_id' => $request->user()->id,
+        ]);
+
+        return Redirect::route('posts.show', ['post' => $post->id]);
+    }
+
+    public function createReply(Post $post): Response
+    {
+        return Inertia::render('Reply/Create', [
+            'post' => PostResource::make($post),
+        ]);
     }
 }

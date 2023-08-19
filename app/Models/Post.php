@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Env;
 use Laravel\Scout\Searchable;
 
@@ -24,7 +25,6 @@ class Post extends Model implements Likeable
 
     protected $with = [
         'author',
-        'likes',
     ];
 
     public function searchableAs(): string
@@ -62,5 +62,15 @@ class Post extends Model implements Likeable
             ->where('likes.user_id', $id)
             ->select('posts.*')
             ->orderBy('likes.created_at', 'desc');
+    }
+
+    public function replied(): BelongsTo
+    {
+        return $this->belongsTo(Post::class, 'replied_id');
+    }
+
+    public function replies(): HasMany
+    {
+        return $this->hasMany(Post::class, 'replied_id')->latest();
     }
 }
