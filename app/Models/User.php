@@ -97,22 +97,26 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'users_users', 'user_id', 'follower_id');
     }
 
-    public function follow(User $user)
+    public function follow(User $user): self
     {
         if ($user->followers->where('id', $this->id)->isNotEmpty()) {
             return $this;
         }
 
         $user->followers()->attach($this->id);
+
+        return $this;
     }
 
-    public function unfollow(User $user)
+    public function unfollow(User $user): self
     {
         if ($user->followers->where('id', $this->id)->isEmpty()) {
             return $this;
         }
 
         $user->followers()->detach($this->id);
+
+        return $this;
     }
 
     public function likes(): HasMany
