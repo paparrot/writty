@@ -120,7 +120,7 @@ class User extends Authenticatable
         return $this->hasMany(Like::class);
     }
 
-    public function like(Likeable $likeable)
+    public function like(Likeable $likeable): self
     {
         if ($this->hasLiked($likeable)) {
             return $this;
@@ -130,24 +130,25 @@ class User extends Authenticatable
         $like->user_id = $this->id;
         $like->likeable()->associate($likeable);
         $like->save();
+
+        return $this;
     }
 
-    public function unlike(Likeable $likeable)
+    public function unlike(Likeable $likeable): self
     {
         if (!$this->hasLiked($likeable)) {
             return $this;
         }
 
-        $this->likes()->where('likeable_id', $likeable->id)->delete();
+        $likeable->likes()->whereHas('user', fn($q) => $q->whereId($this->id))->delete();
+
+        return $this;
     }
 
     public function hasLiked(Likeable $likeable): bool
     {
-        if (!$likeable->exists) {
-            return false;
-        }
-
-
-        return $likeable->likes()->whereHas('user', fn($q) => $q->whereId($this->id))->exists();
+        return $likeable->likes()
+            ->whereHas('user', fn($q) => $q->whereId($this->id))
+            ->exists();
     }
 }
