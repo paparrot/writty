@@ -1,5 +1,7 @@
 # Writty
 
+[![Build status](https://github.com/paparrot/writty/actions/workflows/laravel.yml/badge.svg)](https://github.com/paparrot/writty/actions/workflows/laravel.yml)
+
 This is demo website for showing my competence in web development.
 It is a light "microblogging" platform where users can post short messages and
 comment on them. It is written in PHP using the Laravel framework.
