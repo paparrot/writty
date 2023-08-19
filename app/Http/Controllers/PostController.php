@@ -6,10 +6,12 @@ use App\Events\PostCreated;
 use App\Events\PostDeleted;
 use App\Http\Requests\PostRequest;
 use App\Http\Resources\Post\PostResource;
+use App\Models\Attachment;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -31,10 +33,25 @@ class PostController extends Controller
 
     public function store(PostRequest $request): RedirectResponse
     {
+
         $post = Post::create([
             'content' => $request->validated('content'),
             'author_id' => $request->user()->id,
         ]);
+
+        if ($request->hasFile('attachment')) {
+            $file = $request->file('attachment');
+            $path = $file->getClientOriginalName();
+
+            Storage::put($path, $file->getContent());
+
+            $attachment = Attachment::create([
+                'path' => Storage::url($path),
+            ]);
+
+            $post->attachment()->associate($attachment);
+            $post->save();
+        }
 
         $post->load('author');
         PostCreated::broadcast($post);

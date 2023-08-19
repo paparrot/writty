@@ -22,8 +22,8 @@ const logout = () => {
 </script>
 
 <template>
-    <div class="h-screen overflow-hidden flex gap-4 md:p-4">
-        <aside class="card card-bordered w-1/5 hidden md:block p-4">
+    <div class="h-screen overflow-hidden max-w-6xl mx-auto flex gap-4 md:p-4">
+        <aside class="card card-bordered border-neutral w-3/12 hidden md:block p-4">
             <nav>
                 <ul class="space-y-3">
                     <li>
@@ -86,7 +86,7 @@ const logout = () => {
                 </ul>
             </nav>
         </aside>
-        <main class="w-full md:w-3/5 overflow-y-scroll rounded">
+        <main class="w-full md:w-6/12 overflow-y-scroll rounded">
             <header class="sticky top-0 z-10 backdrop-blur-xl w-full mb-4">
                 <nav class="navbar flex justify-between shadow-md rounded-b">
                     <div class="flex gap-3">
@@ -117,7 +117,7 @@ const logout = () => {
             </header>
             <slot></slot>
         </main>
-        <aside class="card card-bordered w-1/5 hidden md:block p-4">
+        <aside class="card card-bordered border-neutral w-3/12 hidden md:block p-4">
             <h2 class="text-xl font-bold text-center mb-3">Latest authors</h2>
             <ul class="space-y-3">
                 <li v-for="nickname of page.props.latestAuthors">

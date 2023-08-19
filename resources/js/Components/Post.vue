@@ -74,6 +74,7 @@ const canDeletePost = computed(() => {
             </button>
         </div>
         <p class="break-words text-lg">{{ post.content }}</p>
+        <img class="aspect-square my-2 rounded" v-if="post.attachment" :src="post.attachment" alt="Attachment">
         <div v-if="!withoutActions" class="actions mt-2 flex items-center gap-2 justify-start">
             <div class="likes flex gap-1">
                 <p class="font-bold text-lg" v-if="post.likesCount">{{ post.likesCount }}</p>

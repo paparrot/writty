@@ -29,7 +29,8 @@ class PostResource extends JsonResource
             'isLiked' => $isLiked,
             'likesCount' => $this->likes_count,
             'repliesCount' => $this->replies_count,
-            'created' => $this->created_at->diffForHumans()
+            'created' => $this->created_at->diffForHumans(),
+            'attachment' => $this->attachment?->path,
         ];
     }
 }

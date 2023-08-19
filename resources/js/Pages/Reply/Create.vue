@@ -30,7 +30,7 @@ const {post} = defineProps({
             <Post without-actions :post="post" />
             <div class="card card-bordered border-neutral p-3">
                 <h2 class="text-xl font-semibold">Add new reply</h2>
-                <PostForm />
+                <PostForm :replied="post.id" />
             </div>
         </div>
     </DefaultLayout>

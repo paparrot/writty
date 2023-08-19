@@ -38,6 +38,7 @@ export const usePostStore = defineStore('posts', () => {
     }
 
     const openPostModal = () => {
+        setPostToReply(null)
         showPostModal.value = true;
     }
 
