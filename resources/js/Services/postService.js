@@ -20,8 +20,8 @@ export default {
             preserveScroll: true,
             only: ['posts'],
             onSuccess: ({props}) => {
-                const prevPosts = postStore.posts;
-                const nextPosts = props.posts.data;
+                const prevPosts = postStore.posts.data;
+                const nextPosts = props.posts?.data ?? props.replies.data;
 
                 postStore.setPosts([...prevPosts, ...nextPosts]);
                 postStore.setCurrentPage(nextPage);
@@ -49,7 +49,6 @@ export default {
             preserveState: true,
             preserveScroll: true,
             onSuccess: () => {
-                console.log(2342);
                 postStore.setUnliked(id)
             }
         });

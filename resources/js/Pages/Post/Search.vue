@@ -4,24 +4,29 @@ import DefaultLayout from "@/Layouts/DefaultLayout.vue";
 import PostList from "@/Components/PostList.vue";
 import {router} from "@inertiajs/vue3";
 import {Head} from "@inertiajs/vue3";
+import {usePostStore} from "@/Stores/postStore.js";
 
 const search = ref('');
 
-onBeforeMount(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    search.value = urlParams.get('q');
-})
+const postStore = usePostStore();
 
 const onSearch = () => {
     router.get(route('posts.search', {q: search.value}))
 }
 
-defineProps({
+const {posts} = defineProps({
     posts: {
         type: Array,
         default: () => ([])
     }
 })
+
+onBeforeMount(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    search.value = urlParams.get('q');
+    postStore.setPosts(posts.data);
+})
+
 
 </script>
 
@@ -46,9 +51,7 @@ defineProps({
             </div>
             <button class="btn border-neutral btn-outline">Search</button>
         </form>
-        <PostList
-            :posts="posts.data"
-        />
+        <PostList/>
     </DefaultLayout>
 </template>
 

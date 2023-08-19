@@ -3,7 +3,7 @@ import DefaultLayout from "@/Layouts/DefaultLayout.vue";
 import {Head} from "@inertiajs/vue3";
 import PostList from "@/Components/PostList.vue";
 import {usePostStore} from "@/Stores/postStore.js";
-import {onBeforeMount} from "vue";
+import {onBeforeMount, onUpdated} from "vue";
 import postService from "@/Services/postService.js";
 
 const {posts} = defineProps({
@@ -15,11 +15,10 @@ const {posts} = defineProps({
 const postStore = usePostStore();
 
 onBeforeMount(() => {
+    postStore.setPosts(posts.data)
+    postStore.setLastPage(posts.meta.last_page);
     postService.listenCreatingPost();
     postService.listenDeletingPost();
-    postStore.setPosts(posts.data)
-    postStore.setCurrentPage(posts.meta.current_page);
-    postStore.setLastPage(posts.meta.last_page);
 })
 
 </script>
@@ -30,7 +29,6 @@ onBeforeMount(() => {
     </Head>
     <DefaultLayout>
         <PostList
-            :posts="postStore.posts.data"
             @load-more-posts="postService.loadMorePosts"
         ></PostList>
     </DefaultLayout>

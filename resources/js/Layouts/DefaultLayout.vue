@@ -2,6 +2,8 @@
 import {router, usePage} from "@inertiajs/vue3";
 import {onUpdated, ref} from 'vue';
 import PostForm from "@/Components/PostForm.vue";
+import {usePostStore} from "@/Stores/postStore.js";
+import Post from "@/Components/Post.vue";
 
 const page = usePage();
 const userId = ref(page.props?.auth?.user?.id)
@@ -10,7 +12,7 @@ onUpdated(() => {
     userId.value = page.props?.auth?.user?.id;
 })
 
-const postModal = ref(false);
+const postStore = usePostStore();
 
 const logout = () => {
     router.post(route('logout'))
@@ -75,7 +77,7 @@ const logout = () => {
                         <li>
                             <button
                                 v-if="userId"
-                                @click="postModal = true"
+                                @click="postStore.openPostModal"
                                 class="w-full btn btn-primary"
                             >New post
                             </button>
@@ -184,15 +186,17 @@ const logout = () => {
             </ul>
         </footer>
         <div
-            v-if="postModal"
+            v-if="postStore.showPostModal"
             class="absolute inset-0 bg-neutral-focus bg-opacity-95 z-20 grid place-items-center"
-            @click="postModal = false"
+            @click="postStore.closePostModal"
         >
-            <div @click.stop class="relative h-60 bg-white dark:bg-neutral card card-bordered p-4 rounded w-1/2 max-w-5xl">
-                <div class="flex items-center justify-between w-full">
-                    <h2 class="font-bold text-2xl">Make new post</h2>
+            <div @click.stop
+                 class="relative bg-white dark:bg-neutral card card-bordered p-4 w-full rounded md:w-1/2 md:max-w-5xl">
+                <div class="flex items-center justify-between w-full mb-3">
+                    <h2 v-if="postStore.postToReply" class="font-bold text-xl">Reply to </h2>
+                    <h2 v-else class="font-bold text-xl">Make new post</h2>
                     <button
-                        @click="postModal = false"
+                        @click="postStore.closePostModal"
                         class="btn btn-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24"
                              height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -203,7 +207,9 @@ const logout = () => {
                         </svg>
                     </button>
                 </div>
-                <PostForm @post-created="postModal = false"></PostForm>
+                <post :without-actions="true" :post="postStore.postToReply" v-if="postStore.postToReply">
+                </post>
+                <PostForm @post-created="postStore.closePostModal"></PostForm>
             </div>
         </div>
     </div>

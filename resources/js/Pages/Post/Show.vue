@@ -1,0 +1,56 @@
+<script setup>
+import PostList from "@/Components/PostList.vue";
+import Post from '@/Components/Post.vue'
+import {usePostStore} from "@/Stores/postStore.js";
+import {Head} from '@inertiajs/vue3';
+import {onBeforeMount, onUpdated} from "vue";
+import DefaultLayout from "@/Layouts/DefaultLayout.vue";
+import PostForm from "@/Components/PostForm.vue";
+import postService from "@/Services/postService.js";
+
+const postStore = usePostStore();
+
+const {post, replies } = defineProps({
+    post: {
+        type: Object,
+        default: null,
+    },
+    replies: {
+        type: Array,
+        default: () => [],
+    }
+})
+
+onBeforeMount(() => {
+    postService.listenDeletingPost();
+    postStore.closePostModal()
+    postStore.setPostToReply(post)
+    postStore.setPosts(replies.data)
+    postStore.setLastPage(replies.meta.last_page);
+})
+
+</script>
+
+<template>
+    <Head>
+        <title>Show post</title>
+    </Head>
+    <DefaultLayout>
+        <div class="px-3 space-y-2">
+            <h1 class="text-xl font-bold">Main post</h1>
+            <Post without-actions :post="post" />
+            <div class="card card-bordered border-neutral p-3">
+                <h2 class="text-xl font-semibold">Add new reply</h2>
+                <PostForm />
+            </div>
+            <div class="replies space-y-3" v-if="replies.data.length > 0">
+                <h2 class="text-xl font-semibold">Replies:</h2>
+                <PostList class="px-0" />
+            </div>
+        </div>
+    </DefaultLayout>
+</template>
+
+<style scoped>
+
+</style>

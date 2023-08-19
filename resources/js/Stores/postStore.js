@@ -7,8 +7,10 @@ export const usePostStore = defineStore('posts', () => {
     const defaultPage = Number(searchParams.get('page')) ? Number(searchParams.get('page')) : 1;
 
     const posts = reactive({data: []})
+    const showPostModal = ref(false);
     const currentPage = ref(defaultPage);
     const lastPage = ref(1);
+    const postToReply = ref(null);
 
     const setPosts = (newValue) => {
         posts.data = newValue;
@@ -16,16 +18,44 @@ export const usePostStore = defineStore('posts', () => {
 
     const setLiked = (id) => {
         posts.data = posts.data.map(post => {
-            if (post.id === id) post.isLiked = true;
+            if (post.id === id) {
+                post.isLiked = true;
+                post.likesCount += 1;
+            }
+
             return post;
         });
     }
 
     const setUnliked = (id) => {
         posts.data = posts.data.map(post => {
-            if (post.id === id) post.isLiked = false;
+            if (post.id === id) {
+                post.isLiked = false
+                post.likesCount -= 1;
+            }
             return post;
         });
+    }
+
+    const openPostModal = () => {
+        showPostModal.value = true;
+    }
+
+    const setPostToReply = (post) => {
+        postToReply.value = post;
+    }
+
+    const openReplyModal = (post) => {
+        setPostToReply(post);
+        showPostModal.value = true;
+    }
+
+    const closePostModal = () => {
+        if (postToReply.value) {
+            setPostToReply(null);
+        }
+
+        showPostModal.value = false;
     }
 
     const setCurrentPage = (newValue) => {
@@ -36,5 +66,20 @@ export const usePostStore = defineStore('posts', () => {
         lastPage.value = newValue;
     }
 
-    return {posts, currentPage, lastPage, setPosts, setLiked, setUnliked, setCurrentPage, setLastPage }
+    return {
+        posts,
+        currentPage,
+        lastPage,
+        showPostModal,
+        setPostToReply,
+        postToReply,
+        openPostModal,
+        closePostModal,
+        openReplyModal,
+        setPosts,
+        setLiked,
+        setUnliked,
+        setCurrentPage,
+        setLastPage
+    }
 })

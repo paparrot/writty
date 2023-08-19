@@ -1,5 +1,6 @@
 <script setup>
 import {useForm} from "@inertiajs/vue3";
+import {usePostStore} from "@/Stores/postStore.js";
 
 const emit = defineEmits(['post-created'])
 
@@ -7,9 +8,24 @@ const form = useForm({
     content: "",
 })
 
+const postStore = usePostStore();
+
 const onSubmitForm = async () => {
+    if (postStore.postToReply) {
+        form.post(route('posts.reply', {post: postStore.postToReply.id}), {
+            preserveState: false,
+            onSuccess: () => {
+                form.reset()
+                emit('post-created')
+            }
+        })
+
+        return;
+    }
+
     form.post(route('posts.store'), {
         onSuccess: () => {
+            form.reset();
             emit('post-created')
         }
     })
@@ -17,7 +33,7 @@ const onSubmitForm = async () => {
 </script>
 
 <template>
-    <form class="p-3" @submit.prevent="onSubmitForm">
+    <form class="py-3" @submit.prevent="onSubmitForm">
         <div class="mb-2">
             <textarea
                 name="content"
