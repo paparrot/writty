@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateUserRequest extends FormRequest
@@ -17,7 +18,7 @@ class UpdateUserRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return array<string, ValidationRule|array|string>
      */
     public function rules(): array
     {
@@ -25,7 +26,7 @@ class UpdateUserRequest extends FormRequest
 
         return [
             'name' => ['required', 'string'],
-            'nickname' => ["unique:users,nickname,$userId", 'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/', 'required', 'string'],
+            'nickname' => ["unique:users,nickname,$userId", 'regex:/^[a-zA-Z0-9]+(?:-[A-Za-z0-9]+)*$/', 'required', 'string'],
             'email' => ['required', 'string', 'email', "unique:users,email,$userId"],
             'photo' => ['file', 'image']
         ];
