@@ -24,24 +24,32 @@ Route::get('posts/following', [PostController::class, 'following'])->name('posts
 Route::get('posts/search', [PostController::class, 'search'])->name('posts.search');
 Route::get('posts/{post}', [PostController::class, 'show'])
     ->name('posts.show');
-Route::post('posts', [PostController::class, 'store'])
-    ->name('posts.store');
-Route::post('posts/{post}/reply', [PostController::class, 'reply'])
-    ->name('posts.reply');
+Route::middleware('verified')->group(function () {
+    Route::post('posts', [PostController::class, 'store'])
+        ->name('posts.store');
+    Route::post('posts/{post}/reply', [PostController::class, 'reply'])
+        ->name('posts.reply');
+    Route::post('posts/{post}/like', [PostController::class, 'like'])
+        ->name('posts.like');
+});
 Route::get('posts/{post}/reply', [PostController::class, 'createReply'])
     ->name('posts.reply.create');
 Route::delete('posts/{post}', [PostController::class, 'destroy'])
     ->name('posts.delete');
-Route::post('posts/{post}/like', [PostController::class, 'like'])->name('posts.like');
 Route::delete('posts/{post}/like', [PostController::class, 'unlike'])->name('posts.unlike');
 
-Route::post('users/{user:nickname}', [UserController::class, 'follow'])
-    ->name('users.follow');
+Route::get('email/verify', [UserController::class, 'verify'])
+    ->name('verification.notice');
+
+Route::middleware('verified')->group(function() {
+    Route::post('users/{user:nickname}', [UserController::class, 'follow'])
+        ->name('users.follow');
+    Route::post('users/profile/{user:nickname}', [UserController::class, 'update'])
+        ->name('profile.update');
+});
 Route::delete('users/{user:nickname}', [UserController::class, 'unfollow'])
     ->name('users.unfollow');
 Route::get('users/{user:nickname}', [UserController::class, 'show'])
     ->name('profile.show');
-Route::post('users/profile/{user}', [UserController::class, 'update'])
-    ->name('profile.update');
 Route::get('users/profile/edit', [UserController::class, 'edit'])
     ->name('profile.edit');
