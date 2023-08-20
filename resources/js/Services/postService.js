@@ -54,16 +54,18 @@ export default {
         });
     },
     listenDeletingPost() {
+        const channel = import.meta.env.VITE_APP_ENV;
         const postStore = usePostStore();
-        Echo.channel('feed')
+        Echo.channel(`${channel}_feed`)
             .listen('PostDeleted', (post) => {
                 const posts = postStore.posts.data;
                 postStore.setPosts(posts.filter(_post => _post.id !== post.id))
             })
     },
     listenCreatingPost() {
+        const channel = import.meta.env.VITE_APP_ENV;
         const postStore = usePostStore();
-        Echo.channel('feed')
+        Echo.channel(`${channel}_feed`)
             .listen('PostCreated', ({post}) => {
                 postStore.setPosts([post, ...postStore.posts.data]);
             })

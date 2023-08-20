@@ -8,6 +8,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Env;
 
 class PostDeleted implements ShouldBroadcast
 {
@@ -25,12 +26,13 @@ class PostDeleted implements ShouldBroadcast
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return array<int, \Illuminate\Broadcasting\Channel>
+     * @return array<int, Channel>
      */
     public function broadcastOn(): array
     {
+        $env = Env::get("APP_ENV");
         return [
-            new Channel('feed'),
+            new Channel("{$env}_feed"),
         ];
     }
 }
