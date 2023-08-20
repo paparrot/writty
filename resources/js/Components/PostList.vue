@@ -29,7 +29,7 @@ export default {
 </script>
 
 <template>
-    <div class="space-y-2 px-3 pb-16 md:pb-0">
+    <div class="space-y-2 px-3 md:px-0 pb-16 md:pb-0">
         <div
             v-for="post of postStore.posts.data"
             :key="post"

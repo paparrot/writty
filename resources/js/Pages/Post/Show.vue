@@ -42,9 +42,9 @@ onBeforeMount(() => {
                 <h2 class="text-xl font-semibold">Add new reply</h2>
                 <PostForm :replied="post.id" />
             </div>
-            <div class="replies space-y-3" v-if="replies.data.length > 0">
+            <div class="px-0 replies space-y-3" v-if="replies.data.length > 0">
                 <h2 class="text-xl font-semibold">Replies:</h2>
-                <PostList class="px-0" />
+                <PostList />
             </div>
         </div>
     </DefaultLayout>

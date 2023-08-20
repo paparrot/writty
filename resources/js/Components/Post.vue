@@ -12,6 +12,10 @@ const {withoutActions, post} =defineProps({
     withoutActions: {
         type: Boolean,
         default: false,
+    },
+    withoutPreview: {
+        type: Boolean,
+        default: false,
     }
 })
 
@@ -20,6 +24,10 @@ const page = usePage();
 
 const canDeletePost = computed(() => {
     return page.props.auth?.user?.nickname === post.author.nickname && !withoutActions
+})
+
+const showActions = computed(() => {
+    return !withoutActions && page.props.auth.user;
 })
 
 </script>
@@ -74,8 +82,8 @@ const canDeletePost = computed(() => {
             </button>
         </div>
         <p class="break-words text-lg">{{ post.content }}</p>
-        <img class="aspect-square my-2 rounded" v-if="post.attachment" :src="post.attachment" alt="Attachment">
-        <div v-if="!withoutActions" class="actions mt-2 flex items-center gap-2 justify-start">
+        <img v-if="!withoutPreview && post.attachment" class="object-cover aspect-square my-2 rounded" :src="post.attachment" alt="Attachment">
+        <div v-if="showActions" class="actions mt-2 flex items-center gap-2 justify-start">
             <div class="likes flex gap-1">
                 <p class="font-bold text-lg" v-if="post.likesCount">{{ post.likesCount }}</p>
                 <button v-if="$page.props.auth.user"

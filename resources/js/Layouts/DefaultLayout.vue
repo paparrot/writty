@@ -67,7 +67,7 @@ const logout = () => {
                                 class="btn btn-outline w-full"
                             >Profile</a>
                         </li>
-                        <li >
+                        <li>
                             <a
                                 :class="{'text-primary': route().current('posts.favourites')}"
                                 :href="route('posts.favourites')"
@@ -144,7 +144,9 @@ const logout = () => {
                     <a
                         :class="{'text-primary': route().current('posts.search')}"
                         :href="route('posts.search')">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24"
+                             height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                             stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                             <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
                             <path d="M21 21l-6 -6"></path>
@@ -165,14 +167,19 @@ const logout = () => {
                 </li>
                 <li v-if="userId">
                     <a :class="{'text-primary': route().current('posts.favourites')}" :href="route('posts.favourites')">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart-filled"
+                             width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                             fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <path d="M6.979 3.074a6 6 0 0 1 4.988 1.425l.037 .033l.034 -.03a6 6 0 0 1 4.733 -1.44l.246 .036a6 6 0 0 1 3.364 10.008l-.18 .185l-.048 .041l-7.45 7.379a1 1 0 0 1 -1.313 .082l-.094 -.082l-7.493 -7.422a6 6 0 0 1 3.176 -10.215z" stroke-width="0" fill="currentColor"></path>
+                            <path
+                                d="M6.979 3.074a6 6 0 0 1 4.988 1.425l.037 .033l.034 -.03a6 6 0 0 1 4.733 -1.44l.246 .036a6 6 0 0 1 3.364 10.008l-.18 .185l-.048 .041l-7.45 7.379a1 1 0 0 1 -1.313 .082l-.094 -.082l-7.493 -7.422a6 6 0 0 1 3.176 -10.215z"
+                                stroke-width="0" fill="currentColor"></path>
                         </svg>
                     </a>
                 </li>
                 <li>
-                    <a :class="{'text-primary': route().current('profile.edit')}" :href="userId ? route('profile.edit') : route('login') ">
+                    <a :class="{'text-primary': route().current('profile.edit')}"
+                       :href="userId ? route('profile.edit') : route('login') ">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle"
                              width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                              fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -190,8 +197,9 @@ const logout = () => {
             class="absolute inset-0 bg-neutral-focus bg-opacity-95 z-20 grid place-items-center"
             @click="postStore.closePostModal"
         >
-            <div @click.stop
-                 class="relative bg-white dark:bg-neutral card card-bordered p-4 w-full rounded md:w-1/2 md:max-w-5xl">
+            <div
+                @click.stop
+                class="relative bg-white dark:bg-neutral card card-bordered p-4 w-full rounded md:w-1/2 md:max-w-5xl">
                 <div class="flex items-center justify-between w-full mb-3">
                     <h2 v-if="postStore.postToReply" class="font-bold text-xl">Reply to </h2>
                     <h2 v-else class="font-bold text-xl">Make new post</h2>
@@ -207,9 +215,14 @@ const logout = () => {
                         </svg>
                     </button>
                 </div>
-                <post :without-actions="true" :post="postStore.postToReply" v-if="postStore.postToReply">
+                <post
+                    without-preview
+                    without-actions
+                    :post="postStore.postToReply"
+                    v-if="postStore.postToReply"
+                >
                 </post>
-                <PostForm @post-created="postStore.closePostModal"></PostForm>
+                <PostForm :replied="postStore.postToReply" @post-created="postStore.closePostModal"></PostForm>
             </div>
         </div>
     </div>

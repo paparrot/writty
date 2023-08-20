@@ -1,7 +1,7 @@
 <script setup>
 import {useForm} from "@inertiajs/vue3";
 import {usePostStore} from "@/Stores/postStore.js";
-import {computed} from "vue";
+import {computed, onBeforeMount} from "vue";
 
 const emit = defineEmits(['post-created'])
 
@@ -67,7 +67,7 @@ const onSubmitForm = async () => {
                :class="{'text-red-500' : form.content.length > 255}"
             > {{ form.content.length }} / 255</p>
             <div class="my-2 flex gap-3 items-center">
-                <label :for="`attachment-${replied}`" :class="form.errors.attachment" class="my-2">
+                <label :for="`attachment-${replied}`" :class="form.errors.attachment" class="hover:cursor-pointer my-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-paperclip" width="24"
                          height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                          stroke-linecap="round" stroke-linejoin="round">

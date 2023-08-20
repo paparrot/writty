@@ -124,10 +124,24 @@ class PostController extends Controller
 
     public function reply(Post $post, PostRequest $request): RedirectResponse
     {
-        $post->replies()->create([
+        $reply = $post->replies()->create([
             'content' => $request->validated('content'),
             'author_id' => $request->user()->id,
         ]);
+
+        if ($request->hasFile('attachment')) {
+            $file = $request->file('attachment');
+            $path = $file->getClientOriginalName();
+
+            Storage::put($path, $file->getContent());
+
+            $attachment = Attachment::create([
+                'path' => Storage::url($path),
+            ]);
+
+            $reply->attachment()->associate($attachment);
+            $reply->save();
+        }
 
         return Redirect::route('posts.show', ['post' => $post->id]);
     }

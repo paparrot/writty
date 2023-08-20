@@ -1,0 +1,1 @@
+import{_ as s,P as o}from"./DefaultLayout-bed9487a.js";import{o as r,c as _,a as e,w as t,u as l,F as n,Z as c,b as a}from"./app-76f08721.js";const u=a("title",null,"Create post",-1),m={class:"px-3"},x={__name:"Create",setup(i){return(p,d)=>(r(),_(n,null,[e(l(c),null,{default:t(()=>[u]),_:1}),e(s,null,{default:t(()=>[a("div",m,[e(o)])]),_:1})],64))}};export{x as default};
