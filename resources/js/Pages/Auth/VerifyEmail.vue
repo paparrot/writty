@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import DefaultLayout from "@/Layouts/DefaultLayout.vue";
+import {usePostStore} from "@/Stores/postStore.js";
 
 const props = defineProps({
     status: String,
@@ -13,38 +14,46 @@ const submit = () => {
     form.post(route('verification.send'));
 };
 
+const postStore = usePostStore();
+postStore.closePostModal();
+
 const verificationLinkSent = computed(() => props.status === 'verification-link-sent');
 </script>
 
 <template>
     <Head >
-        Email Verification
+        <title>
+            Email Verification
+        </title>
     </Head>
 
     <DefaultLayout>
-
-        <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-            Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.
-        </div>
-
-        <div v-if="verificationLinkSent" class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
-            A new verification link has been sent to the email address you provided in your profile settings.
-        </div>
-
-        <form @submit.prevent="submit">
-            <div class="mt-4 flex items-center justify-between">
-                <button class="btn btn-primary" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Resend Verification Email
-                </button>
-
-                <div>
-                    <Link
-                        :href="route('profile.show')"
-                        class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                    >
-                        Edit Profile</Link>
-                </div>
+        <div class="card card-bordered p-3">
+            <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+                Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.
             </div>
-        </form>
+
+            <div v-if="verificationLinkSent" class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
+                A new verification link has been sent to the email address you provided in your profile settings.
+            </div>
+
+            <form @submit.prevent="submit">
+                <div class="mt-4 flex items-center justify-between">
+                    <button class="btn btn-primary" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                        Resend Verification Email
+                    </button>
+
+                    <div>
+                        <Link
+                            v-if="$page.props.auth.user"
+                            :href="route('profile.edit', { user: $page.props.auth.user.nickname })"
+                            class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                        >
+                            Edit Profile</Link>
+                    </div>
+                </div>
+            </form>
+        </div>
+
     </DefaultLayout>
 </template>

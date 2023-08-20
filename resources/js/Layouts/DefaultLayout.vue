@@ -23,7 +23,7 @@ const logout = () => {
 
 <template>
     <div class="h-screen overflow-hidden max-w-6xl mx-auto flex gap-4 md:p-4">
-        <aside class="card card-bordered border-neutral w-3/12 hidden md:block p-4">
+        <aside class="card card-bordered w-3/12 hidden md:block p-4">
             <nav>
                 <ul class="space-y-3">
                     <li>
@@ -117,7 +117,7 @@ const logout = () => {
             </header>
             <slot></slot>
         </main>
-        <aside class="card card-bordered border-neutral w-3/12 hidden md:block p-4">
+        <aside class="card card-bordered w-3/12 hidden md:block p-4">
             <h2 class="text-xl font-bold text-center mb-3">Latest authors</h2>
             <ul class="space-y-3">
                 <li v-for="nickname of page.props.latestAuthors">

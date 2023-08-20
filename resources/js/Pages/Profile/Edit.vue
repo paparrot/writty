@@ -11,7 +11,7 @@ const form = useForm({
 });
 
 const updateUser = () => {
-    form.post(route('profile.update', {user: page.props.auth.user.id}), {
+    form.post(route('profile.update', {user: page.props.auth.user.nickname}), {
         forceFormData: true,
     })
 }

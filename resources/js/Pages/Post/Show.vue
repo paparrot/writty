@@ -38,7 +38,7 @@ onBeforeMount(() => {
         <div class="px-3 space-y-2">
             <h1 class="text-xl font-bold">Main post</h1>
             <Post without-actions :post="post" />
-            <div class="card card-bordered border-neutral p-3">
+            <div class="card card-bordered p-3">
                 <h2 class="text-xl font-semibold">Add new reply</h2>
                 <PostForm :replied="post.id" />
             </div>

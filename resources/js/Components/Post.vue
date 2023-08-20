@@ -33,7 +33,7 @@ const showActions = computed(() => {
 </script>
 
 <template>
-    <article class="border border-neutral-focus rounded p-3">
+    <article class="card card-bordered rounded p-3">
         <div class="card-header mb-3 flex justify-between">
             <div class="author items-center flex gap-5">
                 <div class="avatar" v-if="post.author.avatar">
