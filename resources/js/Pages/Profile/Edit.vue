@@ -59,6 +59,7 @@ const updateUser = () => {
                         Nickname
                     </label>
                     <input
+                        disabled
                         :class="{'input-error': form.errors.nickname}"
                         id="name"
                         type="text"
