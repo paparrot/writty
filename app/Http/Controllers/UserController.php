@@ -53,6 +53,11 @@ class UserController extends Controller
         ]);
     }
 
+    public function verify(): Response
+    {
+        return Inertia::render('Auth/VerifyEmail');
+    }
+
     public function follow(Request $request, User $user): RedirectResponse
     {
         $request->user()->follow($user);
