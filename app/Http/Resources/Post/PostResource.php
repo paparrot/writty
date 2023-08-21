@@ -18,7 +18,6 @@ class PostResource extends JsonResource
     public function toArray(Request $request): array
     {
         /** @var Post $this */
-
         $isLiked = $request->user()?->id ? $this->isLikedBy($request->user()->id) : false;
         $this->loadCount('likes', 'replies');
 
@@ -31,6 +30,7 @@ class PostResource extends JsonResource
             'repliesCount' => $this->replies_count,
             'created' => $this->created_at->diffForHumans(),
             'attachment' => $this->attachment?->path,
+            'reposted' => $this->reposted ? PostResource::make($this->reposted) : null,
         ];
     }
 }

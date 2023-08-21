@@ -4,7 +4,7 @@ import postService from "@/Services/postService.js";
 import {computed} from "vue";
 import {usePage} from "@inertiajs/vue3";
 
-const {withoutActions, post} =defineProps({
+const {withoutActions, post} = defineProps({
     post: {
         type: Object,
         default: null,
@@ -30,6 +30,14 @@ const showActions = computed(() => {
     return !withoutActions && page.props.auth.user;
 })
 
+const canDeleteRepost = computed(() => {
+    return post.author.id === page.props.auth.user.id && post.reposted;
+})
+
+const canRepost = computed(() => {
+    return page.props.auth.user.id !== post.author.id
+})
+
 </script>
 
 <template>
@@ -49,7 +57,7 @@ const showActions = computed(() => {
                 </div>
                 <div class="avatar placeholder" v-else>
                     <div class="bg-neutral-focus text-neutral-content w-12 rounded-full">
-                        <span class="text-2xl font-bold">{{ post.author.name }}</span>
+                        <span class="text-2xl font-bold">{{ post.author.nickname.toUpperCase()[0] }}</span>
                     </div>
                 </div>
                 <div class="author-text">
@@ -81,13 +89,21 @@ const showActions = computed(() => {
                 </svg>
             </button>
         </div>
-        <p class="break-words text-lg">{{ post.content }}</p>
-        <img v-if="!withoutPreview && post.attachment" class="object-cover aspect-square my-2 rounded" :src="post.attachment" alt="Attachment">
+        <div v-if="! post.reposted" class="main">
+            <p class="break-words text-lg">{{ post.content }}</p>
+            <img
+                v-if="!withoutPreview && post.attachment"
+                class="object-cover aspect-square my-2 rounded"
+                :src="post.attachment"
+                alt="Attachment" />
+        </div>
+        <div v-else>
+            <post without-actions :post="post.reposted" />
+        </div>
         <div v-if="showActions" class="actions mt-2 flex items-center gap-2 justify-start">
             <div class="likes flex gap-1">
                 <p class="font-bold text-lg" v-if="post.likesCount">{{ post.likesCount }}</p>
-                <button v-if="$page.props.auth.user"
-                        @click="post.isLiked ? postService.unlike(post.id) : postService.like(post.id)">
+                <button @click="post.isLiked ? postService.unlike(post.id) : postService.like(post.id)">
                     <svg
                         :class="{'fill-pink-300 stroke-pink-500': post.isLiked }"
                         xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart" width="24"
@@ -98,7 +114,29 @@ const showActions = computed(() => {
                     </svg>
                 </button>
             </div>
-            <button class="hidden md:block" v-if="$page.props.auth.user" @click.stop="postStore.openReplyModal(post)">
+            <button
+                v-if="!canDeleteRepost"
+                :disabled="!canRepost"
+                :class="{'text-neutral': !canRepost}"
+                @click="postService.repost(post.id)"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-repeat" width="24"
+                     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                     stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M4 12v-3a3 3 0 0 1 3 -3h13m-3 -3l3 3l-3 3"/>
+                    <path d="M20 12v3a3 3 0 0 1 -3 3h-13m3 3l-3 -3l3 -3"/>
+                </svg>
+            </button>
+            <button @click="postService.deletePost(post.id)" v-else>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-repeat-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M4 12v-3c0 -1.336 .873 -2.468 2.08 -2.856m3.92 -.144h10m-3 -3l3 3l-3 3" />
+                    <path d="M20 12v3a3 3 0 0 1 -.133 .886m-1.99 1.984a3 3 0 0 1 -.877 .13h-13m3 3l-3 -3l3 -3" />
+                    <path d="M3 3l18 18" />
+                </svg>
+            </button>
+            <button class="hidden md:block" @click.stop="postStore.openReplyModal(post)">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message-circle-2"
                      width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                      stroke-linecap="round" stroke-linejoin="round">
@@ -115,7 +153,8 @@ const showActions = computed(() => {
                 </svg>
             </a>
             <div v-if="post.repliesCount > 0">
-                <a class="text-lg text-accent font-bold" :href="route('posts.show', {post: post.id })">Show {{ post.repliesCount }} replies...</a>
+                <a class="text-lg text-accent font-bold" :href="route('posts.show', {post: post.id })">Show
+                    {{ post.repliesCount }} replies...</a>
             </div>
         </div>
     </article>

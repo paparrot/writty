@@ -152,4 +152,23 @@ class PostController extends Controller
             'post' => PostResource::make($post),
         ]);
     }
+
+    public function repost(Post $post, Request $request): RedirectResponse
+    {
+        if ($post->reposted) {
+            $repost = Post::create(['author_id' => $request->user()->id()]);
+            $repost->reposted()->associate($post->reposted);
+            $repost->save();
+            PostCreated::broadcast($repost);
+
+            return back();
+        }
+
+        $repost = Post::create(['author_id' => $request->user()->id]);
+        $repost->reposted()->associate($post);
+        $repost->save();
+        PostCreated::broadcast($repost);
+
+        return back();
+    }
 }

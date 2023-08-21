@@ -31,6 +31,8 @@ Route::middleware('verified')->group(function () {
         ->name('posts.reply');
     Route::post('posts/{post}/like', [PostController::class, 'like'])
         ->name('posts.like');
+    Route::post('posts/{post}/repost', [PostController::class, 'repost'])
+        ->name('posts.repost');
 });
 Route::get('posts/{post}/reply', [PostController::class, 'createReply'])
     ->name('posts.reply.create');

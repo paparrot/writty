@@ -69,5 +69,8 @@ export default {
             .listen('PostCreated', ({post}) => {
                 postStore.setPosts([post, ...postStore.posts.data]);
             })
+    },
+    repost(id) {
+        router.post(route('posts.repost', {post : id}))
     }
 }

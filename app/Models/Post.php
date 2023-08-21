@@ -73,4 +73,14 @@ class Post extends Model implements Likeable
     {
         return $this->hasMany(Post::class, 'replied_id')->latest();
     }
+
+    public function reposted(): BelongsTo
+    {
+        return $this->belongsTo(Post::class, 'reposted_id');
+    }
+
+    public function reposts(): HasMany
+    {
+        return $this->hasMany(Post::class, 'reposted_id')->latest();
+    }
 }
