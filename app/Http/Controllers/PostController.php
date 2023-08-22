@@ -8,6 +8,7 @@ use App\Http\Requests\PostRequest;
 use App\Http\Resources\Post\PostResource;
 use App\Models\Attachment;
 use App\Models\Post;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -19,10 +20,14 @@ class PostController extends Controller
 {
     public function feed(Request $request): Response
     {
-        $postsQuery = Post::latest()->doesntHave('replied');
+
+        $posts = Post::includeReposts()
+            ->latest()
+            ->doesntHave('replied')
+            ->paginate();
 
         return Inertia::render('Feed', [
-            'posts' => PostResource::collection($postsQuery->paginate(20)),
+            'posts' => PostResource::collection($posts),
         ]);
     }
 
@@ -33,7 +38,6 @@ class PostController extends Controller
 
     public function store(PostRequest $request): RedirectResponse
     {
-
         $post = Post::create([
             'content' => $request->validated('content'),
             'author_id' => $request->user()->id,
@@ -78,7 +82,7 @@ class PostController extends Controller
 
     public function favourites(): Response
     {
-        $favouritesPost = Post::favourites(auth()->id())->paginate();
+        $favouritesPost = Post::includeReposts()->favourites(auth()->id())->paginate();
 
         return Inertia::render('Post/Favourites', [
             'posts' => PostResource::collection($favouritesPost)
@@ -88,7 +92,8 @@ class PostController extends Controller
     public function following(Request $request): Response
     {
         $followingIds = $request->user()->following()->pluck('id');
-        $posts = Post::whereHas('author', fn($query) => $query->whereIn('id', $followingIds))
+        $posts = Post::includeReposts()
+            ->whereHas('author', fn($query) => $query->whereIn('id', $followingIds))
             ->latest()
             ->paginate();
 

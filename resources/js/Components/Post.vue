@@ -95,10 +95,10 @@ const canRepost = computed(() => {
                 v-if="!withoutPreview && post.attachment"
                 class="object-cover aspect-square my-2 rounded"
                 :src="post.attachment"
-                alt="Attachment" />
+                alt="Attachment"/>
         </div>
         <div v-else>
-            <post without-actions :post="post.reposted" />
+            <post without-actions :post="post.reposted"/>
         </div>
         <div v-if="showActions" class="actions mt-2 flex items-center gap-2 justify-start">
             <div class="likes flex gap-1">
@@ -128,12 +128,14 @@ const canRepost = computed(() => {
                     <path d="M20 12v3a3 3 0 0 1 -3 3h-13m3 3l-3 -3l3 -3"/>
                 </svg>
             </button>
-            <button @click="postService.deletePost(post.id)" v-else>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-repeat-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <button @click="postService.deleteRepost(post)" v-else>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-repeat-off" width="24"
+                     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                     stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                    <path d="M4 12v-3c0 -1.336 .873 -2.468 2.08 -2.856m3.92 -.144h10m-3 -3l3 3l-3 3" />
-                    <path d="M20 12v3a3 3 0 0 1 -.133 .886m-1.99 1.984a3 3 0 0 1 -.877 .13h-13m3 3l-3 -3l3 -3" />
-                    <path d="M3 3l18 18" />
+                    <path d="M4 12v-3c0 -1.336 .873 -2.468 2.08 -2.856m3.92 -.144h10m-3 -3l3 3l-3 3"/>
+                    <path d="M20 12v3a3 3 0 0 1 -.133 .886m-1.99 1.984a3 3 0 0 1 -.877 .13h-13m3 3l-3 -3l3 -3"/>
+                    <path d="M3 3l18 18"/>
                 </svg>
             </button>
             <button class="hidden md:block" @click.stop="postStore.openReplyModal(post)">

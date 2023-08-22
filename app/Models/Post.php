@@ -54,6 +54,31 @@ class Post extends Model implements Likeable
         return $this->likes->contains('user_id', $id);
     }
 
+    public function scopeIncludeReposts(Builder $query): Builder
+    {
+        $currentUser = auth()->user();
+
+        return $query->when(
+            $currentUser,
+            function (Builder $query) use ($currentUser): Builder {
+                $repostIds = $currentUser
+                    ?->posts()
+                    ->whereNotNull('reposted_id')
+                    ->pluck('reposted_id')
+                    ->all();
+
+                $reposts = Post::whereHas(
+                    'reposted',
+                    fn(Builder $query): Builder => $query->where('author_id', $currentUser->id)
+                )->get('id')->pluck('id');
+
+                return $query
+                    ->whereNotIn('id', $repostIds)
+                    ->whereNotIn('id', $reposts);
+            }
+        );
+    }
+
     public function scopeFavourites(Builder $query, string $id): Builder
     {
         return $query

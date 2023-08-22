@@ -71,6 +71,19 @@ export default {
             })
     },
     repost(id) {
-        router.post(route('posts.repost', {post : id}))
+        const postStore = usePostStore();
+        router.post(route('posts.repost', {post: id}), {}, {
+            onSuccess: () => {
+                const newPosts = postStore.posts.data.filter(post => post.id !== id);
+                postStore.setPosts(newPosts);
+            }
+        })
+    },
+    deleteRepost(post) {
+        const postStore = usePostStore();
+        const newPosts = [post.reposted, ...postStore.posts.data]
+        postStore.setPosts(newPosts);
+
+        this.deletePost(post.id);
     }
 }
