@@ -160,7 +160,7 @@ class PostController extends Controller
     public function repost(Post $post, Request $request): RedirectResponse
     {
         if ($post->reposted) {
-            $repost = Post::create(['author_id' => $request->user()->id()]);
+            $repost = Post::create(['author_id' => auth()->id()]);
             $repost->reposted()->associate($post->reposted);
             $repost->save();
             PostCreated::broadcast($repost);

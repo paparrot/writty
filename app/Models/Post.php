@@ -70,7 +70,7 @@ class Post extends Model implements Likeable
                 $reposts = Post::whereHas(
                     'reposted',
                     fn(Builder $query): Builder => $query->where('author_id', $currentUser->id)
-                )->get('id')->pluck('id');
+                )->pluck('id');
 
                 return $query
                     ->whereNotIn('posts.id', $repostIds)

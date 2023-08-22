@@ -45,7 +45,7 @@ class DeletePosts extends Command
                 return Command::FAILURE;
             }
 
-            $ids = Post::where('author_id', $authorId)->get()->pluck('id');
+            $ids = Post::where('author_id', $authorId)->pluck('id');
         }
 
 
