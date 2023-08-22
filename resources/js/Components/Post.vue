@@ -35,7 +35,10 @@ const canDeleteRepost = computed(() => {
 })
 
 const canRepost = computed(() => {
-    return page.props.auth.user.id !== post.author.id
+    const currentUserId = page.props.auth.user.id;
+    const postAuthorId = post.author.id;
+    const repostAuthorId = post.reposted?.author.id;
+    return currentUserId !== postAuthorId && repostAuthorId !== currentUserId;
 })
 
 </script>
@@ -98,7 +101,9 @@ const canRepost = computed(() => {
                 alt="Attachment"/>
         </div>
         <div v-else>
-            <post without-actions :post="post.reposted"/>
+            <a :href="route('posts.show', {post: post.reposted.id})">
+                <post without-actions :post="post.reposted"/>
+            </a>
         </div>
         <div v-if="showActions" class="actions mt-2 flex items-center gap-2 justify-start">
             <div class="likes flex gap-1">

@@ -73,8 +73,8 @@ class Post extends Model implements Likeable
                 )->get('id')->pluck('id');
 
                 return $query
-                    ->whereNotIn('id', $repostIds)
-                    ->whereNotIn('id', $reposts);
+                    ->whereNotIn('posts.id', $repostIds)
+                    ->whereNotIn('posts.id', $reposts);
             }
         );
     }

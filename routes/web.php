@@ -24,6 +24,7 @@ Route::get('posts/following', [PostController::class, 'following'])->name('posts
 Route::get('posts/search', [PostController::class, 'search'])->name('posts.search');
 Route::get('posts/{post}', [PostController::class, 'show'])
     ->name('posts.show');
+
 Route::middleware('verified')->group(function () {
     Route::post('posts', [PostController::class, 'store'])
         ->name('posts.store');
@@ -34,6 +35,7 @@ Route::middleware('verified')->group(function () {
     Route::post('posts/{post}/repost', [PostController::class, 'repost'])
         ->name('posts.repost');
 });
+
 Route::get('posts/{post}/reply', [PostController::class, 'createReply'])
     ->name('posts.reply.create');
 Route::delete('posts/{post}', [PostController::class, 'destroy'])

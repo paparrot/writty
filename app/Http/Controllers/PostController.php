@@ -92,8 +92,7 @@ class PostController extends Controller
     public function following(Request $request): Response
     {
         $followingIds = $request->user()->following()->pluck('id');
-        $posts = Post::includeReposts()
-            ->whereHas('author', fn($query) => $query->whereIn('id', $followingIds))
+        $posts = Post::whereHas('author', fn($query) => $query->whereIn('id', $followingIds))
             ->latest()
             ->paginate();
 
