@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\App;
 
 use App\Events\PostCreated;
 use App\Events\PostDeleted;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use App\Http\Resources\Post\PostResource;
 use App\Models\Attachment;
 use App\Models\Post;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -20,7 +20,6 @@ class PostController extends Controller
 {
     public function feed(Request $request): Response
     {
-
         $posts = Post::includeReposts()
             ->latest()
             ->doesntHave('replied')
