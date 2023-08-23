@@ -24,7 +24,8 @@ class PostController extends Controller
     public function show(Post $post): JsonResponse
     {
         return response()->json([
-            'post' => PostResource::make($post)
+            'post' => PostResource::make($post),
+            'replies' => PostResource::collection($post->replies()->paginate())
         ]);
     }
 }
