@@ -2,7 +2,7 @@
 import {usePostStore} from "@/Stores/postStore.js";
 import postService from "@/Services/postService.js";
 import {computed} from "vue";
-import {usePage} from "@inertiajs/vue3";
+import {usePage, Link} from "@inertiajs/vue3";
 
 const {withoutActions, post} = defineProps({
     post: {
@@ -49,13 +49,12 @@ const canRepost = computed(() => {
             <div class="author items-center flex gap-5">
                 <div class="avatar" v-if="post.author.avatar">
                     <div class="w-12 rounded-full">
-                        <a :href="route('profile.show', {user: post.author.nickname})">
+                        <Link class="block" :href="route('profile.show', {user: post.author.nickname})">
                             <img
-
                                 :src="post.author.avatar"
                                 alt="post.author.name"
                             />
-                        </a>
+                        </Link>
                     </div>
                 </div>
                 <div class="avatar placeholder" v-else>
@@ -65,14 +64,12 @@ const canRepost = computed(() => {
                 </div>
                 <div class="author-text">
                     <h6 class="font-bold">
-                        <a :href="route('profile.show', {user: post.author.nickname})">
+                        <Link class="inline" :href="route('profile.show', {user: post.author.nickname})">
                             {{ post.author.name }}
-                        </a>
+                        </Link>
                     </h6>
                     <p class="font-mono text-gray-500 text-sm">
-                        <a :href="route('profile.show', {user: post.author.nickname})">
-                            @{{ post.author.nickname }}
-                        </a>
+                        <Link class="inline" :href="route('profile.show', {user: post.author.nickname})">@{{ post.author.nickname }}</Link>
                     </p>
                     <p class="font-mono text-gray-500 text-sm">{{ post.created }}</p>
                 </div>
@@ -101,9 +98,9 @@ const canRepost = computed(() => {
                 alt="Attachment"/>
         </div>
         <div v-else>
-            <a :href="route('posts.show', {post: post.reposted.id})">
+            <Link class="block" :href="route('posts.show', {post: post.reposted.id})">
                 <post without-actions :post="post.reposted"/>
-            </a>
+            </Link>
         </div>
         <div v-if="showActions" class="actions mt-2 flex items-center gap-2 justify-start">
             <div class="likes flex gap-1">
@@ -151,17 +148,17 @@ const canRepost = computed(() => {
                     <path d="M3 20l1.3 -3.9a9 8 0 1 1 3.4 2.9l-4.7 1"/>
                 </svg>
             </button>
-            <a class="md:hidden" :href="route('posts.reply.create', {post: post.id })">
+            <Link class="md:hidden" :href="route('posts.reply.create', {post: post.id })">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message-circle-2"
                      width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                      stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                     <path d="M3 20l1.3 -3.9a9 8 0 1 1 3.4 2.9l-4.7 1"/>
                 </svg>
-            </a>
+            </Link>
             <div v-if="post.repliesCount > 0">
-                <a class="text-lg text-accent font-bold" :href="route('posts.show', {post: post.id })">Show
-                    {{ post.repliesCount }} replies...</a>
+                <Link class="text-lg text-accent font-bold" :href="route('posts.show', {post: post.id })">Show
+                    {{ post.repliesCount }} replies...</Link>
             </div>
         </div>
     </article>

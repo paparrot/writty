@@ -1,11 +1,11 @@
 <script setup>
 import PostForm from "@/Components/PostForm.vue";
-import Post from "@/Components/Post.vue";
 import {usePostStore} from "@/Stores/postStore.js";
-import {Head} from "@inertiajs/vue3";
+import {Head, usePage } from "@inertiajs/vue3";
 import DefaultLayout from "@/Layouts/DefaultLayout.vue";
 import {onBeforeMount} from "vue";
 
+const page = usePage();
 const postStore = usePostStore();
 
 onBeforeMount(() => {
@@ -28,7 +28,7 @@ const {post} = defineProps({
         <div class="px-3 space-y-2">
             <h1 class="text-xl font-bold">Main post</h1>
             <Post without-actions :post="post" />
-            <div class="card card-bordered p-3">
+            <div v-if="page.props.auth.user" class="card card-bordered p-3">
                 <h2 class="text-xl font-semibold">Add new reply</h2>
                 <PostForm :replied="post.id" />
             </div>

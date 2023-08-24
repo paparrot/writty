@@ -1,5 +1,5 @@
 <script setup>
-import {Head,  useForm} from '@inertiajs/vue3';
+import {Head, Link,  useForm} from '@inertiajs/vue3';
 import DefaultLayout from "@/Layouts/DefaultLayout.vue";
 
 defineProps({
@@ -76,7 +76,7 @@ const submit = () => {
                 </div>
 
                 <div class="text-sm py-4">
-                    <a class="text-primary" :href="route('register')">Register</a>, if you don't have account yet.
+                    <Link class="text-primary" :href="route('register')">Register</Link>, if you don't have account yet.
                 </div>
 
                 <div class="flex items-center justify-end mt-4">
