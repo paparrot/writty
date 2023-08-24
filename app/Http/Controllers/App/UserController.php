@@ -34,7 +34,7 @@ class UserController extends Controller
             'profile_photo_path' => Storage::url("images/$photoName.$photoExtension"),
         ]);
 
-        return Redirect::route('home');
+        return Redirect::route('verification.notice');
     }
 
     public function edit(Request $request): Response
