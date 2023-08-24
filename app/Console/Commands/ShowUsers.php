@@ -34,9 +34,10 @@ class ShowUsers extends Command
             ->map(fn (User $user) => [
                 'id' => $user->id,
                 'name' => $user->name,
-                'nickname' => $user->nickname
+                'nickname' => $user->nickname,
+                'email' => $user->email,
             ]);
 
-        $this->table(['ID', 'Name', 'Nickname'], $users->toArray());
+        $this->table(['ID', 'Name', 'Nickname', "Email"], $users->toArray());
     }
 }
