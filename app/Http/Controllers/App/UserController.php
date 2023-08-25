@@ -34,7 +34,7 @@ class UserController extends Controller
             'profile_photo_path' => Storage::url("images/$photoName.$photoExtension"),
         ]);
 
-        return Redirect::route('verification.notice');
+        return Redirect::route('home');
     }
 
     public function edit(Request $request): Response
@@ -70,5 +70,25 @@ class UserController extends Controller
         $request->user()->unfollow($user);
 
         return Redirect::back();
+    }
+
+    public function followers(User $user): Response
+    {
+        return Inertia::render('Profile/Followers', [
+            'user' => UserResource::make($user),
+            'followers' => UserResource::collection($user->followers),
+            'currentUserFollowers' => auth()->user()?->followers()->pluck('id') ?? [],
+            'currentUserFollowing' => auth()->user()?->following()->pluck('id') ?? [],
+        ]);
+    }
+
+    public function following(User $user): Response
+    {
+        return Inertia::render('Profile/Following', [
+            'user' => UserResource::make($user),
+            'following' => UserResource::collection($user->following),
+            'currentUserFollowers' => auth()->user()?->followers()->pluck('id') ?? [],
+            'currentUserFollowing' => auth()->user()?->following()->pluck('id') ?? [],
+        ]);
     }
 }

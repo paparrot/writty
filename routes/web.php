@@ -46,13 +46,19 @@ Route::get('email/verify', [UserController::class, 'verify'])
     ->name('verification.notice');
 
 Route::middleware('verified')->group(function() {
-    Route::post('users/{user:nickname}', [UserController::class, 'follow'])
+    Route::post('users/{user:nickname}/follow', [UserController::class, 'follow'])
         ->name('users.follow');
     Route::post('users/profile/{user:nickname}', [UserController::class, 'update'])
         ->name('profile.update');
+    Route::delete('users/{user:nickname}/follow', [UserController::class, 'unfollow'])
+        ->name('users.unfollow');
 });
-Route::delete('users/{user:nickname}', [UserController::class, 'unfollow'])
-    ->name('users.unfollow');
+
+Route::get('users/{user:nickname}/following', [UserController::class, 'following'])
+    ->name('profile.following');
+Route::get('users/{user:nickname}/followers', [UserController::class, 'followers'])
+    ->name('profile.followers');
+
 Route::get('users/{user:nickname}', [UserController::class, 'show'])
     ->name('profile.show');
 Route::get('users/profile/edit', [UserController::class, 'edit'])
