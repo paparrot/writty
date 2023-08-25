@@ -92,7 +92,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isFollowing(User $user): bool
     {
-        return $user->whereHas('followers', fn($query) => $query->where('id', $this->id))->count() > 0;
+        return $user->followers->pluck('id')->contains($this->id);
     }
 
     public function followers(): BelongsToMany
