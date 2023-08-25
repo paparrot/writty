@@ -35,6 +35,8 @@ class Post extends Model implements Likeable
     public function toSearchableArray(): array
     {
         return [
+            'authorName' => $this->author->name,
+            'authorNickname' => $this->author->nickname,
             'content' => $this->content
         ];
     }
