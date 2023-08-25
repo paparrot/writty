@@ -4,6 +4,7 @@ import {usePostStore} from "@/Stores/postStore.js";
 import {Head, usePage } from "@inertiajs/vue3";
 import DefaultLayout from "@/Layouts/DefaultLayout.vue";
 import {onBeforeMount} from "vue";
+import Post from '@/Components/Post.vue';
 
 const page = usePage();
 const postStore = usePostStore();

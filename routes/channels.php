@@ -1,5 +1,6 @@
 <?php
 
+use App\Broadcasting\ChatChannel;
 use App\Broadcasting\FeedChannel;
 use Illuminate\Support\Facades\Broadcast;
 
@@ -15,3 +16,4 @@ use Illuminate\Support\Facades\Broadcast;
 */
 
 Broadcast::channel('feed', FeedChannel::class);
+Broadcast::channel('chat.{firstUser}.{secondUser}', ChatChannel::class);

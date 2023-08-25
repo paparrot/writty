@@ -58,11 +58,12 @@ onBeforeMount(() => {
             </Link>
         </div>
         <div v-if="auth.user">
-            <div v-if="auth.user.id !== user.id" class="flex items-center my-2">
-                <button v-if="!isFollowing" @click="userService.follow(user.nickname)" class="mx-auto btn btn-primary btn-outline">
+            <div v-if="auth.user.id !== user.id" class="flex justify-center gap-3 items-center my-2">
+                <Link class="btn btn-primary btn-outline" :href="route('chat.show', {user: user.nickname})">Chat</Link>
+                <button v-if="!isFollowing" @click="userService.follow(user.nickname)" class="btn btn-primary btn-outline">
                 Follow
                 </button>
-                <button @click="userService.unfollow(user.nickname)" v-else class="mx-auto btn btn-outline">
+                <button @click="userService.unfollow(user.nickname)" v-else class="btn btn-outline hover:btn-error">
                 Unfollow
                  </button>
             </div>

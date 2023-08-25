@@ -4,7 +4,7 @@ namespace App\Broadcasting;
 
 use App\Models\User;
 
-class FeedChannel
+class ChatChannel
 {
     /**
      * Create a new channel instance.
@@ -16,7 +16,7 @@ class FeedChannel
     /**
      * Authenticate the user's access to the channel.
      */
-    public function join(User $user): array|bool
+    public function join(User $firstUser, User $secondUser): array|bool
     {
         return auth()->check();
     }

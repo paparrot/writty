@@ -22,7 +22,6 @@ const {user, currentUserFollowing, currentUserFollowers} = defineProps({
     }
 })
 const page = usePage();
-console.log(currentUserFollowing, currentUserFollowers)
 </script>
 
 <template>

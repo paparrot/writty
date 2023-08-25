@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\App\MessageController;
 use App\Http\Controllers\App\PostController;
 use App\Http\Controllers\App\UserController;
 use Illuminate\Support\Facades\Route;
@@ -14,13 +15,25 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::middleware('auth')->group(function () {
+    Route::get('email/verify', [UserController::class, 'verify'])
+        ->name('verification.notice');
+    Route::get('users/profile/edit', [UserController::class, 'edit'])
+        ->name('profile.edit');
+
+    Route::get('posts/favourites', [PostController::class, 'favourites'])->name('posts.favourites');
+    Route::get('posts/following', [PostController::class, 'following'])->name('posts.following');
+    Route::get('posts/create', [PostController::class, 'create'])
+        ->name('posts.create');
+
+    Route::get('chat/{user:nickname}', [MessageController::class, 'chat'])
+        ->name('chat.show');
+    Route::post('chat', [MessageController::class, 'store'])
+        ->name('chat.create');
+});
 
 Route::get('/', [PostController::class, 'feed'])
     ->name('home');
-Route::get('posts/create', [PostController::class, 'create'])
-    ->name('posts.create');
-Route::get('posts/favourites', [PostController::class, 'favourites'])->name('posts.favourites');
-Route::get('posts/following', [PostController::class, 'following'])->name('posts.following');
 Route::get('posts/search', [PostController::class, 'search'])->name('posts.search');
 Route::get('posts/{post}', [PostController::class, 'show'])
     ->name('posts.show');
@@ -34,6 +47,13 @@ Route::middleware('verified')->group(function () {
         ->name('posts.like');
     Route::post('posts/{post}/repost', [PostController::class, 'repost'])
         ->name('posts.repost');
+
+    Route::post('users/{user:nickname}/follow', [UserController::class, 'follow'])
+        ->name('users.follow');
+    Route::post('users/profile/{user:nickname}', [UserController::class, 'update'])
+        ->name('profile.update');
+    Route::delete('users/{user:nickname}/follow', [UserController::class, 'unfollow'])
+        ->name('users.unfollow');
 });
 
 Route::get('posts/{post}/reply', [PostController::class, 'createReply'])
@@ -42,16 +62,8 @@ Route::delete('posts/{post}', [PostController::class, 'destroy'])
     ->name('posts.delete');
 Route::delete('posts/{post}/like', [PostController::class, 'unlike'])->name('posts.unlike');
 
-Route::get('email/verify', [UserController::class, 'verify'])
-    ->name('verification.notice');
-
 Route::middleware('verified')->group(function() {
-    Route::post('users/{user:nickname}/follow', [UserController::class, 'follow'])
-        ->name('users.follow');
-    Route::post('users/profile/{user:nickname}', [UserController::class, 'update'])
-        ->name('profile.update');
-    Route::delete('users/{user:nickname}/follow', [UserController::class, 'unfollow'])
-        ->name('users.unfollow');
+
 });
 
 Route::get('users/{user:nickname}/following', [UserController::class, 'following'])
@@ -61,5 +73,3 @@ Route::get('users/{user:nickname}/followers', [UserController::class, 'followers
 
 Route::get('users/{user:nickname}', [UserController::class, 'show'])
     ->name('profile.show');
-Route::get('users/profile/edit', [UserController::class, 'edit'])
-    ->name('profile.edit');
