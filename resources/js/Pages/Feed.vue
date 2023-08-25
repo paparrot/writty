@@ -16,6 +16,7 @@ const postStore = usePostStore();
 
 onBeforeMount(() => {
     postStore.setPosts(posts.data)
+    postStore.setCurrentPage(1);
     postStore.setLastPage(posts.meta.last_page);
     postService.listenCreatingPost();
     postService.listenDeletingPost();

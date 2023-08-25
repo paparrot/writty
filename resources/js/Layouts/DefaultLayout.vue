@@ -1,11 +1,12 @@
 <script setup>
 import {router, Link, usePage} from "@inertiajs/vue3";
-import {onUpdated, ref} from 'vue';
+import {onBeforeMount, onUpdated, ref} from 'vue';
 import PostForm from "@/Components/PostForm.vue";
 import {usePostStore} from "@/Stores/postStore.js";
 import Post from "@/Components/Post.vue";
 
 const page = usePage();
+const user = ref(page.props.auth?.user);
 const userId = ref(page.props?.auth?.user?.id)
 
 onUpdated(() => {
@@ -17,6 +18,10 @@ const postStore = usePostStore();
 const logout = () => {
     router.post(route('logout'))
 }
+
+onBeforeMount(() => {
+    postStore.closePostModal();
+})
 
 
 </script>
@@ -62,8 +67,8 @@ const logout = () => {
                     <template v-if="userId">
                         <li>
                             <Link
-                                :class="{'text-primary': route().current('profile.edit')}"
-                                :href="route('profile.edit')"
+                                :class="{'text-primary': route().current('profile.show')}"
+                                :href="route('profile.show', {user: user.nickname})"
                                 class="btn btn-outline w-full"
                             >Profile</Link>
                         </li>

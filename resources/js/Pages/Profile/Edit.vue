@@ -30,7 +30,7 @@ const updateUser = () => {
         </div>
         <div v-else class="avatar placeholder w-full my-4">
             <div class="bg-neutral-focus text-neutral-content rounded-full w-16 mx-auto">
-                <span class="font-bold text-2xl">{{ page.props.auth.user.email[0].toUpperCase() }}</span>
+                <span class="font-bold uppercase text-2xl">{{ page.props.auth.user.nickname[0] }}</span>
             </div>
         </div>
         <div class="card card-bordered p-4 mx-auto max-w-xl">

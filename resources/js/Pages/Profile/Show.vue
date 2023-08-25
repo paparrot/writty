@@ -1,5 +1,5 @@
 <script setup>
-import {Head, usePage} from "@inertiajs/vue3";
+import {Head, usePage, Link} from "@inertiajs/vue3";
 import {onBeforeMount} from 'vue';
 import DefaultLayout from "@/Layouts/DefaultLayout.vue";
 import PostList from "@/Components/PostList.vue";
@@ -36,20 +36,41 @@ onBeforeMount(() => {
         <title>Profile</title>
     </Head>
     <DefaultLayout>
-        <h1 class="text-2xl text-center mb-2 font-bold">{{ user.name }}</h1>
-        <div v-if="user.avatar" class="avatar w-full my-4">
-            <div class="w-16 mx-auto rounded-full">
-                <img :src="user.avatar" :alt="user.nickname"/>
+       <div class="flex justify-center mb-3">
+           <div v-if="! user.avatar" class="avatar placeholder">
+               <div class="bg-neutral-focus text-neutral-content rounded-full w-16">
+                   <span class="text-xl font-bold">{{ user.nickname.toUpperCase()[0] }}</span>
+               </div>
+           </div>
+           <div v-else class="avatar">
+               <div class="w-16 rounded-full">
+                   <img :src="user.avatar"/>
+               </div>
+           </div>
+       </div>
+        <h1 class="text-2xl text-center mb-3 font-bold">{{ user.name }}</h1>
+        <div class="flex justify-center gap-3 mb-3">
+            <Link :href="route('profile.followers', {user: user.nickname})" class="text-primary">
+                Followers
+            </Link>
+            <Link :href="route('profile.following', {user: user.nickname})" class="text-primary">
+                Following
+            </Link>
+        </div>
+        <div v-if="auth.user">
+            <div v-if="auth.user.id !== user.id" class="flex items-center my-2">
+                <button v-if="!isFollowing" @click="userService.follow(user.nickname)" class="mx-auto btn btn-primary btn-outline">
+                Follow
+                </button>
+                <button @click="userService.unfollow(user.nickname)" v-else class="mx-auto btn btn-outline">
+                Unfollow
+                 </button>
+            </div>
+            <div v-else class="flex justify-center mb-3">
+                <Link class="btn btn-outline" :href="route('profile.edit')">Edit</Link>
             </div>
         </div>
-        <div v-if="auth.user && auth.user.id !== user.id" class="flex items-center my-2">
-            <button v-if="!isFollowing" @click="userService.follow(user.nickname)" class="mx-auto btn btn-primary btn-outline">
-                Follow
-            </button>
-            <button @click="userService.unfollow(user.nickname)" v-else class="mx-auto btn btn-outline">
-                Unfollow
-            </button>
-        </div>
+
         <PostList
             :posts="postStore.posts.data"
             @load-more-posts="postService.loadMorePosts"
