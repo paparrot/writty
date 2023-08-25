@@ -19,7 +19,7 @@ export default {
         },
     },
     daisyui: {
-        themes: ['lofi', 'night'],
+        themes: ['winter', 'night'],
         darkTheme: "night", // name of one of the included themes for dark mode
         base: true, // applies background color and foreground color for root element by default
     },
