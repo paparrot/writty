@@ -111,7 +111,7 @@ const resize = () => {
                     </li>
                 </ul>
             </div>
-            <form @submit.prevent="submit" class="p-2 bg-neutral-focus rounded-lg bg-opacity-70 pt-3 flex w-full gap-3 items-center">
+            <form @submit.prevent="submit" class="p-2 sticky bottom-0 bg-neutral-focus rounded-lg bg-opacity-10 dark:bg-opacity-70 pt-3 flex w-full gap-3 items-center">
                 <textarea @keydown.enter.meta="submit" @keydown.enter.ctrl="submit" v-model="form.message" @focusout="resize" @keyup="resize" ref="textarea" type="text" rows="1"
                           class="textarea resize-none textarea-bordered w-full"></textarea>
                 <button type="submit" class="p-2">
