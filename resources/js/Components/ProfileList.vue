@@ -47,7 +47,7 @@ defineProps({
                             <p class="px-2">@{{ profile.nickname }}</p>
                         </div>
                         <div
-                            v-if="(currentUser && currentUser.id !== profile.id) && !currentUserFollowers.includes(profile.id)">
+                            v-if="!currentUser || (currentUser.id !== profile.id && !currentUserFollowers.includes(profile.id))">
                             <p class="px-2">{{ profile.name }}</p>
                             <p class="px-2">@{{ profile.nickname }}</p>
                         </div>
