@@ -20,16 +20,14 @@ Route::middleware('auth')->group(function () {
         ->name('verification.notice');
     Route::get('users/profile/edit', [UserController::class, 'edit'])
         ->name('profile.edit');
-
     Route::get('posts/favourites', [PostController::class, 'favourites'])->name('posts.favourites');
     Route::get('posts/following', [PostController::class, 'following'])->name('posts.following');
     Route::get('posts/create', [PostController::class, 'create'])
         ->name('posts.create');
-
     Route::get('chat/{user:nickname}', [MessageController::class, 'chat'])
         ->name('chat.show');
-    Route::post('chat', [MessageController::class, 'store'])
-        ->name('chat.create');
+    Route::get('posts/{post}/reply', [PostController::class, 'createReply'])
+        ->name('posts.reply.create');
 });
 
 Route::get('/', [PostController::class, 'feed'])
@@ -38,7 +36,7 @@ Route::get('posts/search', [PostController::class, 'search'])->name('posts.searc
 Route::get('posts/{post}', [PostController::class, 'show'])
     ->name('posts.show');
 
-Route::middleware('verified')->group(function () {
+Route::middleware(['verified', 'auth'])->group(function () {
     Route::post('posts', [PostController::class, 'store'])
         ->name('posts.store');
     Route::post('posts/{post}/reply', [PostController::class, 'reply'])
@@ -47,23 +45,17 @@ Route::middleware('verified')->group(function () {
         ->name('posts.like');
     Route::post('posts/{post}/repost', [PostController::class, 'repost'])
         ->name('posts.repost');
-
+    Route::post('chat', [MessageController::class, 'store'])
+        ->name('chat.create');
     Route::post('users/{user:nickname}/follow', [UserController::class, 'follow'])
         ->name('users.follow');
     Route::post('users/profile/{user:nickname}', [UserController::class, 'update'])
         ->name('profile.update');
     Route::delete('users/{user:nickname}/follow', [UserController::class, 'unfollow'])
         ->name('users.unfollow');
-});
-
-Route::get('posts/{post}/reply', [PostController::class, 'createReply'])
-    ->name('posts.reply.create');
-Route::delete('posts/{post}', [PostController::class, 'destroy'])
-    ->name('posts.delete');
-Route::delete('posts/{post}/like', [PostController::class, 'unlike'])->name('posts.unlike');
-
-Route::middleware('verified')->group(function() {
-
+    Route::delete('posts/{post}', [PostController::class, 'destroy'])
+        ->name('posts.delete');
+    Route::delete('posts/{post}/like', [PostController::class, 'unlike'])->name('posts.unlike');
 });
 
 Route::get('users/{user:nickname}/following', [UserController::class, 'following'])

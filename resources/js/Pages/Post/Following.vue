@@ -25,7 +25,7 @@ const page = usePage();
 
 <template>
     <Head>
-        <title>Your favourites posts</title>
+        <title>Following</title>
     </Head>
     <DefaultLayout>
         <PostList

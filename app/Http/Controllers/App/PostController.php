@@ -21,8 +21,8 @@ class PostController extends Controller
     public function feed(Request $request): Response
     {
         $posts = Post::includeReposts()
-            ->latest()
             ->doesntHave('replied')
+            ->latest()
             ->paginate();
 
         return Inertia::render('Feed', [
@@ -72,6 +72,10 @@ class PostController extends Controller
 
     public function destroy(Post $post): RedirectResponse
     {
+        if ($post->author->id !== auth()->id()) {
+            return Redirect::back();
+        }
+
         $id = $post->id;
         $post->delete();
 
@@ -95,7 +99,7 @@ class PostController extends Controller
             ->latest()
             ->paginate();
 
-        return Inertia::render('Feed', [
+        return Inertia::render('Post/Following', [
             'posts' => PostResource::collection($posts),
         ]);
     }
