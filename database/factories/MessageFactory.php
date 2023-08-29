@@ -20,9 +20,9 @@ class MessageFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_from' => User::factory()->create(),
-            'user_to' => User::factory()->create(),
-            'text' => Crypt::encrypt($this->faker->text()),
+            'user_from' => User::factory()->create()->id,
+            'user_to' => User::factory()->create()->id,
+            'message' => Crypt::encrypt($this->faker->text()),
         ];
     }
 }
