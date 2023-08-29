@@ -73,7 +73,7 @@ defineProps({
                         </Link>
                         <Link
                             method="post"
-                            :href="route('users.follow', {user: profile.nickname})"
+                            :href="route('profile.follow', {user: profile.nickname})"
                             as="button"
                             v-if="!currentUserFollowing.includes(profile.id)"
                             class="px-2 btn btn-outline"
@@ -91,7 +91,7 @@ defineProps({
                             v-else
                             method="delete"
                             as="button"
-                            :href="route('users.unfollow', {user: profile.nickname})"
+                            :href="route('profile.unfollow', {user: profile.nickname})"
                             class="btn px-2 btn-outline"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-x"

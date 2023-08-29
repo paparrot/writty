@@ -3,134 +3,134 @@
     "file": "assets/DefaultLayout-2751b758.css",
     "src": "DefaultLayout.css"
   },
-  "_DefaultLayout-94a4f749.js": {
+  "_DefaultLayout-6d2d054e.js": {
     "css": [
       "assets/DefaultLayout-2751b758.css"
     ],
-    "file": "assets/DefaultLayout-94a4f749.js",
+    "file": "assets/DefaultLayout-6d2d054e.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
-  "_PostList-342d03f6.js": {
-    "file": "assets/PostList-342d03f6.js",
+  "_PostList-5e977180.js": {
+    "file": "assets/PostList-5e977180.js",
     "imports": [
-      "_DefaultLayout-94a4f749.js",
+      "_DefaultLayout-6d2d054e.js",
       "resources/js/app.js"
     ]
   },
-  "_ProfileList-86d0f4d8.js": {
-    "file": "assets/ProfileList-86d0f4d8.js",
+  "_ProfileList-22090a4e.js": {
+    "file": "assets/ProfileList-22090a4e.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
   "resources/js/Pages/Auth/ConfirmPassword.vue": {
-    "file": "assets/ConfirmPassword-a3635c7d.js",
+    "file": "assets/ConfirmPassword-fe3916ba.js",
     "imports": [
       "resources/js/app.js",
-      "_DefaultLayout-94a4f749.js"
+      "_DefaultLayout-6d2d054e.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/ConfirmPassword.vue"
   },
   "resources/js/Pages/Auth/ForgotPassword.vue": {
-    "file": "assets/ForgotPassword-8d55249d.js",
+    "file": "assets/ForgotPassword-f909664c.js",
     "imports": [
       "resources/js/app.js",
-      "_DefaultLayout-94a4f749.js"
+      "_DefaultLayout-6d2d054e.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/ForgotPassword.vue"
   },
   "resources/js/Pages/Auth/Login.vue": {
-    "file": "assets/Login-0bf1c342.js",
+    "file": "assets/Login-bfd4cb31.js",
     "imports": [
       "resources/js/app.js",
-      "_DefaultLayout-94a4f749.js"
+      "_DefaultLayout-6d2d054e.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/Login.vue"
   },
   "resources/js/Pages/Auth/Register.vue": {
-    "file": "assets/Register-4448c2db.js",
+    "file": "assets/Register-66cf152d.js",
     "imports": [
       "resources/js/app.js",
-      "_DefaultLayout-94a4f749.js"
+      "_DefaultLayout-6d2d054e.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/Register.vue"
   },
   "resources/js/Pages/Auth/ResetPassword.vue": {
-    "file": "assets/ResetPassword-0eeddd44.js",
+    "file": "assets/ResetPassword-e4af3d9b.js",
     "imports": [
       "resources/js/app.js",
-      "_DefaultLayout-94a4f749.js"
+      "_DefaultLayout-6d2d054e.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/ResetPassword.vue"
   },
   "resources/js/Pages/Auth/TwoFactorChallenge.vue": {
-    "file": "assets/TwoFactorChallenge-ce7ac1e2.js",
+    "file": "assets/TwoFactorChallenge-a2878bf3.js",
     "imports": [
       "resources/js/app.js",
-      "_DefaultLayout-94a4f749.js"
+      "_DefaultLayout-6d2d054e.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/TwoFactorChallenge.vue"
   },
   "resources/js/Pages/Auth/VerifyEmail.vue": {
-    "file": "assets/VerifyEmail-b9d60905.js",
+    "file": "assets/VerifyEmail-abaf6b35.js",
     "imports": [
       "resources/js/app.js",
-      "_DefaultLayout-94a4f749.js"
+      "_DefaultLayout-6d2d054e.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/VerifyEmail.vue"
   },
   "resources/js/Pages/Chat.vue": {
-    "file": "assets/Chat-1324f0ab.js",
+    "file": "assets/Chat-d3c98e51.js",
     "imports": [
       "resources/js/app.js",
-      "_DefaultLayout-94a4f749.js"
+      "_DefaultLayout-6d2d054e.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Chat.vue"
   },
   "resources/js/Pages/Feed.vue": {
-    "file": "assets/Feed-c3ec7405.js",
+    "file": "assets/Feed-49bd182a.js",
     "imports": [
-      "_DefaultLayout-94a4f749.js",
+      "_DefaultLayout-6d2d054e.js",
       "resources/js/app.js",
-      "_PostList-342d03f6.js"
+      "_PostList-5e977180.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Feed.vue"
   },
   "resources/js/Pages/Post/Create.vue": {
-    "file": "assets/Create-5ccadac1.js",
+    "file": "assets/Create-755c175e.js",
     "imports": [
-      "_DefaultLayout-94a4f749.js",
+      "_DefaultLayout-6d2d054e.js",
       "resources/js/app.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Post/Create.vue"
   },
   "resources/js/Pages/Post/Favourites.vue": {
-    "file": "assets/Favourites-7c960722.js",
+    "file": "assets/Favourites-43377d6b.js",
     "imports": [
-      "_PostList-342d03f6.js",
-      "_DefaultLayout-94a4f749.js",
+      "_PostList-5e977180.js",
+      "_DefaultLayout-6d2d054e.js",
       "resources/js/app.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Post/Favourites.vue"
   },
   "resources/js/Pages/Post/Following.vue": {
-    "file": "assets/Following-f69f2146.js",
+    "file": "assets/Following-55b398fb.js",
     "imports": [
-      "_PostList-342d03f6.js",
-      "_DefaultLayout-94a4f749.js",
+      "_PostList-5e977180.js",
+      "_DefaultLayout-6d2d054e.js",
       "resources/js/app.js"
     ],
     "isDynamicEntry": true,
@@ -144,68 +144,68 @@
     "css": [
       "assets/Search-229d04a8.css"
     ],
-    "file": "assets/Search-2a375175.js",
+    "file": "assets/Search-335a5f13.js",
     "imports": [
       "resources/js/app.js",
-      "_DefaultLayout-94a4f749.js",
-      "_PostList-342d03f6.js"
+      "_DefaultLayout-6d2d054e.js",
+      "_PostList-5e977180.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Post/Search.vue"
   },
   "resources/js/Pages/Post/Show.vue": {
-    "file": "assets/Show-663ffcb6.js",
+    "file": "assets/Show-b3462152.js",
     "imports": [
-      "_PostList-342d03f6.js",
-      "_DefaultLayout-94a4f749.js",
+      "_PostList-5e977180.js",
+      "_DefaultLayout-6d2d054e.js",
       "resources/js/app.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Post/Show.vue"
   },
   "resources/js/Pages/Profile/Edit.vue": {
-    "file": "assets/Edit-3f00c1af.js",
+    "file": "assets/Edit-58473b00.js",
     "imports": [
       "resources/js/app.js",
-      "_DefaultLayout-94a4f749.js"
+      "_DefaultLayout-6d2d054e.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Profile/Edit.vue"
   },
   "resources/js/Pages/Profile/Followers.vue": {
-    "file": "assets/Followers-62fdf90c.js",
+    "file": "assets/Followers-c464bb8b.js",
     "imports": [
-      "_DefaultLayout-94a4f749.js",
+      "_DefaultLayout-6d2d054e.js",
       "resources/js/app.js",
-      "_ProfileList-86d0f4d8.js"
+      "_ProfileList-22090a4e.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Profile/Followers.vue"
   },
   "resources/js/Pages/Profile/Following.vue": {
-    "file": "assets/Following-ee2c4289.js",
+    "file": "assets/Following-14c27fe7.js",
     "imports": [
       "resources/js/app.js",
-      "_DefaultLayout-94a4f749.js",
-      "_ProfileList-86d0f4d8.js"
+      "_DefaultLayout-6d2d054e.js",
+      "_ProfileList-22090a4e.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Profile/Following.vue"
   },
   "resources/js/Pages/Profile/Show.vue": {
-    "file": "assets/Show-7d79a698.js",
+    "file": "assets/Show-9ac6e513.js",
     "imports": [
       "resources/js/app.js",
-      "_DefaultLayout-94a4f749.js",
-      "_PostList-342d03f6.js"
+      "_DefaultLayout-6d2d054e.js",
+      "_PostList-5e977180.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Profile/Show.vue"
   },
   "resources/js/Pages/Reply/Create.vue": {
-    "file": "assets/Create-c49e790e.js",
+    "file": "assets/Create-f659ecad.js",
     "imports": [
-      "_DefaultLayout-94a4f749.js",
+      "_DefaultLayout-6d2d054e.js",
       "resources/js/app.js"
     ],
     "isDynamicEntry": true,
@@ -240,7 +240,7 @@
       "resources/js/Pages/Profile/Show.vue",
       "resources/js/Pages/Reply/Create.vue"
     ],
-    "file": "assets/app-8e84e4d2.js",
+    "file": "assets/app-ece90537.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }

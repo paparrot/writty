@@ -45,17 +45,18 @@ Route::middleware(['verified', 'auth'])->group(function () {
         ->name('posts.like');
     Route::post('posts/{post}/repost', [PostController::class, 'repost'])
         ->name('posts.repost');
+    Route::delete('posts/{post}', [PostController::class, 'destroy'])
+        ->name('posts.delete');
+    Route::delete('posts/{post}/like', [PostController::class, 'unlike'])
+        ->name('posts.unlike');
     Route::post('chat', [MessageController::class, 'store'])
         ->name('chat.create');
     Route::post('users/{user:nickname}/follow', [UserController::class, 'follow'])
-        ->name('users.follow');
+        ->name('profile.follow');
     Route::post('users/profile/{user:nickname}', [UserController::class, 'update'])
         ->name('profile.update');
     Route::delete('users/{user:nickname}/follow', [UserController::class, 'unfollow'])
-        ->name('users.unfollow');
-    Route::delete('posts/{post}', [PostController::class, 'destroy'])
-        ->name('posts.delete');
-    Route::delete('posts/{post}/like', [PostController::class, 'unlike'])->name('posts.unlike');
+        ->name('profile.unfollow');
 });
 
 Route::get('users/{user:nickname}/following', [UserController::class, 'following'])
