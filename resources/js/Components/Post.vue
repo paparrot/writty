@@ -51,6 +51,7 @@ const canRepost = computed(() => {
                     <div class="w-12 rounded-full">
                         <Link class="block" :href="route('profile.show', {user: post.author.nickname})">
                             <img
+                                class="aspect-square"
                                 :src="post.author.avatar"
                                 alt="post.author.name"
                             />
