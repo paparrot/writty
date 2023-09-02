@@ -2,9 +2,9 @@
 import DefaultLayout from "@/Layouts/DefaultLayout.vue";
 import {Head} from "@inertiajs/vue3";
 import PostList from "@/Components/PostList.vue";
-import {usePostStore} from "@/Stores/postStore.js";
+import {usePostStore} from "@/stores/postStore.js";
 import {onBeforeMount, onUpdated} from "vue";
-import postService from "@/Services/postService.js";
+import postService from "@/services/postService.js";
 
 const {posts} = defineProps({
     posts: {

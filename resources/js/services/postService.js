@@ -1,5 +1,5 @@
 import {router, usePage} from "@inertiajs/vue3";
-import {usePostStore} from "@/Stores/postStore.js";
+import {usePostStore} from "@/stores/postStore.js";
 
 export default {
     loadMorePosts() {

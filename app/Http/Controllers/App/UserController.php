@@ -22,19 +22,41 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request)
     {
         $user = Auth::user();
+        $emailChanged = $request->validated('email') !== $user->email;
 
-        $profilePhoto = $request->file('photo');
-        $photoName = $profilePhoto->getClientOriginalName();
-        $photoExtension = $profilePhoto->getClientOriginalExtension();
-        Storage::put("images/$photoName.$photoExtension", $profilePhoto->getContent());
+        if ($request->hasFile('photo')) {
+            $profilePhoto = $request->file('photo');
+            $photoName = $profilePhoto->getClientOriginalName();
+            $photoExtension = $profilePhoto->getClientOriginalExtension();
+            Storage::put("images/$photoName.$photoExtension", $profilePhoto->getContent());
 
-        $user->update([
-            'email' => $request->post('email'),
-            'name' => $request->post('name'),
-            'profile_photo_path' => Storage::url("images/$photoName.$photoExtension"),
-        ]);
+            $user->profile_photo_path = Storage::url("images/$photoName.$photoExtension");
+            $user->save();
+        }
+
+        $user->update($request->validated());
+
+        if ($emailChanged) {
+            $user->email_verified_at = null;
+            $user->save();
+            $user->sendEmailVerificationNotification();
+
+            return to_route('verification.notice');
+        }
 
         return Redirect::route('home');
+    }
+
+    public function destroy(): RedirectResponse
+    {
+        $user = Auth::user();
+
+        $user->posts()->delete();
+        $user->delete();
+
+        Auth::logout();
+
+        return to_route('home');
     }
 
     public function edit(Request $request): Response

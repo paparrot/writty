@@ -3,6 +3,7 @@
 use App\Http\Controllers\App\MessageController;
 use App\Http\Controllers\App\PostController;
 use App\Http\Controllers\App\UserController;
+use App\Socials\TelegramController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,8 @@ Route::middleware('auth')->group(function () {
         ->name('verification.notice');
     Route::get('users/profile/edit', [UserController::class, 'edit'])
         ->name('profile.edit');
+    Route::get('users/profile/add-email', [UserController::class, 'addEmail'])
+        ->name('profile.add-email');
     Route::get('posts/favourites', [PostController::class, 'favourites'])->name('posts.favourites');
     Route::get('posts/following', [PostController::class, 'following'])->name('posts.following');
     Route::get('posts/create', [PostController::class, 'create'])
@@ -36,7 +39,7 @@ Route::get('posts/search', [PostController::class, 'search'])->name('posts.searc
 Route::get('posts/{post}', [PostController::class, 'show'])
     ->name('posts.show');
 
-Route::middleware(['verified', 'auth'])->group(function () {
+Route::middleware(['auth', 'validate-email', 'verified'])->group(function () {
     Route::post('posts', [PostController::class, 'store'])
         ->name('posts.store');
     Route::post('posts/{post}/reply', [PostController::class, 'reply'])
@@ -53,8 +56,10 @@ Route::middleware(['verified', 'auth'])->group(function () {
         ->name('chat.create');
     Route::post('users/{user:nickname}/follow', [UserController::class, 'follow'])
         ->name('profile.follow');
-    Route::post('users/profile/{user:nickname}', [UserController::class, 'update'])
+    Route::post('users/profile', [UserController::class, 'update'])
         ->name('profile.update');
+    Route::delete('users/profile', [UserController::class, 'destroy'])
+        ->name('profile.delete');
     Route::delete('users/{user:nickname}/follow', [UserController::class, 'unfollow'])
         ->name('profile.unfollow');
 });
@@ -63,6 +68,10 @@ Route::get('users/{user:nickname}/following', [UserController::class, 'following
     ->name('profile.following');
 Route::get('users/{user:nickname}/followers', [UserController::class, 'followers'])
     ->name('profile.followers');
-
 Route::get('users/{user:nickname}', [UserController::class, 'show'])
     ->name('profile.show');
+
+Route::get('auth/telegram/redirect', [TelegramController::class, 'redirect'])
+    ->name('auth.telegram.redirect');
+Route::get('auth/telegram/callback', [TelegramController::class, 'callback'])
+    ->name('auth.telegram.callback');

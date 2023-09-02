@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -25,10 +26,20 @@ class UpdateUserRequest extends FormRequest
         $userId = auth()->id();
 
         return [
-            'name' => ['required', 'string'],
-            'nickname' => ["unique:users,nickname,$userId", 'regex:/^[a-zA-Z0-9]+(?:-[A-Za-z0-9]+)*$/', 'required', 'string'],
-            'email' => ['required', 'string', 'email', "unique:users,email,$userId"],
-            'photo' => ['file', 'image']
+            'name' => ['nullable', 'string'],
+            'nickname' => [
+                'nullable',
+                'regex:/^[a-zA-Z0-9]+(?:-[A-Za-z0-9]+)*$/',
+                'string',
+                Rule::unique('users')->ignore($userId)->whereNull('deleted_at')
+            ],
+            'email' => [
+                'nullable',
+                'string',
+                'email',
+                Rule::unique('users')->ignore($userId)->whereNull('deleted_at')
+            ],
+            'photo' => ['nullable', 'image']
         ];
     }
 }

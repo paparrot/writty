@@ -2,7 +2,7 @@
 import {router, Link, usePage} from "@inertiajs/vue3";
 import {onBeforeMount, onUpdated, ref} from 'vue';
 import PostForm from "@/Components/PostForm.vue";
-import {usePostStore} from "@/Stores/postStore.js";
+import {usePostStore} from "@/stores/postStore.js";
 import Post from "@/Components/Post.vue";
 
 const page = usePage();

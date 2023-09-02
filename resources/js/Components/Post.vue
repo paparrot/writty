@@ -1,6 +1,6 @@
 <script setup>
-import {usePostStore} from "@/Stores/postStore.js";
-import postService from "@/Services/postService.js";
+import {usePostStore} from "@/stores/postStore.js";
+import postService from "@/services/postService.js";
 import {computed} from "vue";
 import {usePage, Link} from "@inertiajs/vue3";
 

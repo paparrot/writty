@@ -7,11 +7,11 @@ const form = useForm({
     email: page.props.auth?.user?.email,
     name: page.props.auth?.user?.name,
     nickname: page.props.auth?.user?.nickname,
-    photo: page.props.auth?.user?.profile_photo_path
+    photo: null
 });
 
 const updateUser = () => {
-    form.post(route('profile.update', {user: page.props.auth.user.nickname}), {
+    form.post(route('profile.update'), {
         forceFormData: true,
     })
 }
@@ -39,7 +39,12 @@ const updateUser = () => {
                     <label for="email" class="label">
                         Email
                     </label>
-                    <input id="email" type="text" name="email" class="w-full input input-bordered" v-model="form.email">
+                    <input
+                        id="email"
+                        type="email"
+                        name="email"
+                        class="w-full input input-bordered"
+                        v-model="form.email">
                     <p class="text-error" v-if="form.errors.email">{{ form.errors.email }}</p>
                 </div>
                 <div>
@@ -59,7 +64,6 @@ const updateUser = () => {
                         Nickname
                     </label>
                     <input
-                        disabled
                         :class="{'input-error': form.errors.nickname}"
                         id="name"
                         type="text"
@@ -72,8 +76,12 @@ const updateUser = () => {
                     <label class="label" for="photo">
                         Profile photo
                     </label>
-                    <input type="file" @input="form.photo = $event.target.files[0]" id="photo"
-                           class="file-input file-input-bordered w-full max-w-xs"/>
+                    <input
+                        type="file"
+                        @input="form.photo = $event.target.files[0]"
+                        id="photo"
+                        class="file-input file-input-bordered w-full max-w-xs"
+                    />
                 </div>
                 <button type="submit" class="w-full btn btn-primary">
                     Update

@@ -1,6 +1,6 @@
 <script setup>
 import {useForm} from "@inertiajs/vue3";
-import {usePostStore} from "@/Stores/postStore.js";
+import {usePostStore} from "@/stores/postStore.js";
 import {computed, onBeforeMount} from "vue";
 
 const emit = defineEmits(['post-created'])

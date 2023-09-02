@@ -1,6 +1,6 @@
 <script>
-import postService from "@/Services/postService.js";
-import {usePostStore} from "@/Stores/postStore.js";
+import postService from "@/services/postService.js";
+import {usePostStore} from "@/stores/postStore.js";
 import Post from "@/Components/Post.vue";
 
 export default {

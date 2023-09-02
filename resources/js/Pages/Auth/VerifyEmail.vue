@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import DefaultLayout from "@/Layouts/DefaultLayout.vue";
-import {usePostStore} from "@/Stores/postStore.js";
+import {usePostStore} from "@/stores/postStore.js";
 
 const props = defineProps({
     status: String,
@@ -28,7 +28,7 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
     </Head>
 
     <DefaultLayout>
-        <div class="card card-bordered p-3">
+        <div class="card card-bordered p-3 mx-3 md:mx-0">
             <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
                 Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.
             </div>

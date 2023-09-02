@@ -1,7 +1,7 @@
 <script setup>
 import PostList from "@/Components/PostList.vue";
-import {usePostStore} from "@/Stores/postStore.js";
-import postService from "@/Services/postService.js";
+import {usePostStore} from "@/stores/postStore.js";
+import postService from "@/services/postService.js";
 import {onBeforeMount} from "vue";
 import {usePage, Head} from "@inertiajs/vue3";
 import DefaultLayout from "@/Layouts/DefaultLayout.vue";

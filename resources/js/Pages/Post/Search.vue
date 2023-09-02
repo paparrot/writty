@@ -4,7 +4,7 @@ import DefaultLayout from "@/Layouts/DefaultLayout.vue";
 import PostList from "@/Components/PostList.vue";
 import {router} from "@inertiajs/vue3";
 import {Head} from "@inertiajs/vue3";
-import {usePostStore} from "@/Stores/postStore.js";
+import {usePostStore} from "@/stores/postStore.js";
 
 const search = ref('');
 
