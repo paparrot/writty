@@ -25,7 +25,7 @@ class CreateNewUser implements CreatesNewUsers
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'nickname' => [
-                'regex:/^[a-z0-9A-Z]+(?:-[A-Za-z0-9]+)*$/',
+                'regex:/^[a-z0-9A-Z]+(?:(-|_)[A-Za-z0-9]+)*$/',
                 'required',
                 'string',
                 Rule::unique('users')->whereNull('deleted_at')

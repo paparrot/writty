@@ -29,7 +29,7 @@ class UpdateUserRequest extends FormRequest
             'name' => ['nullable', 'string'],
             'nickname' => [
                 'nullable',
-                'regex:/^[a-zA-Z0-9]+(?:-[A-Za-z0-9]+)*$/',
+                'regex:/^[a-zA-Z0-9]+(?:(-|_)[A-Za-z0-9]+)*$/',
                 'string',
                 Rule::unique('users')->ignore($userId)->whereNull('deleted_at')
             ],

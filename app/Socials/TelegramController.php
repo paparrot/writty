@@ -17,7 +17,7 @@ class TelegramController extends Controller
     {
         $telegramUser = Socialite::driver('telegram')->user();
 
-        $existedUser = User::where('oauth_id', $telegramUser->id)
+        $existedUser = User::where('oauth_id', $telegramUser->getId())
             ->where('oauth_type', 'telegram')
             ->first();
 

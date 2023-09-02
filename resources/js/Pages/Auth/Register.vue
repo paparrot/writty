@@ -35,8 +35,14 @@ const submit = () => {
                     <p class="font-bold text-xl">Writty</p>
                 </div>
 
-                <div class="socials">
-                    <h2 class="text-center font-bold text-xl mb-3">Join via socials</h2>
+                <div class="socials space-y-3">
+                    <h2 class="text-center font-bold text-xl">Join via socials</h2>
+                    <div class="flex justify-center">
+                        <a
+                            class="py-2 px-[1.125rem] rounded-lg bg-sky-400 text-white font-bold"
+                            :href="route('auth.twitter.redirect')"
+                        >Log in with Twitter</a>
+                    </div>
                     <div class="flex justify-center" id="telegram-container"></div>
                 </div>
 

@@ -4,6 +4,7 @@ use App\Http\Controllers\App\MessageController;
 use App\Http\Controllers\App\PostController;
 use App\Http\Controllers\App\UserController;
 use App\Socials\TelegramController;
+use App\Socials\TwitterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -72,3 +73,7 @@ Route::get('users/{user:nickname}', [UserController::class, 'show'])
     ->name('profile.show');
 Route::get('auth/telegram/callback', [TelegramController::class, 'callback'])
     ->name('auth.telegram.callback');
+Route::get('auth/twitter/redirect', [TwitterController::class, 'redirect'])
+    ->name('auth.twitter.redirect');
+Route::get('auth/twitter/callback', [TwitterController::class, 'callback'])
+    ->name('auth.twitter.callback');
