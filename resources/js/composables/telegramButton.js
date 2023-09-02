@@ -9,7 +9,7 @@ export function useTelegramButton(container) {
         telegramLoginScript.setAttribute("data-size", "large")
         telegramLoginScript.setAttribute("data-userpic", "false")
         telegramLoginScript.setAttribute("data-radius", 10)
-        telegramLoginScript.setAttribute("data-auth-url", "https://writty.test/auth/telegram/callback")
+        telegramLoginScript.setAttribute("data-auth-url", "https://writty.paparrot.me/auth/telegram/callback")
         telegramLoginScript.setAttribute("data-request-access", "write")
 
         const telegramLoginContainer = document.getElementById(container)

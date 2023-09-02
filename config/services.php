@@ -35,7 +35,7 @@ return [
         'bot' => env('TELEGRAM_BOT_NAME'),  // The bot's username
         'client_id' => null,
         'client_secret' => env('TELEGRAM_TOKEN'),
-        'redirect' => "https://writty.test/auth/telegram/callback",
+        'redirect' => "https://writty.paparrot.me/auth/telegram/callback",
     ],
 
 ];
