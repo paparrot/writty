@@ -73,7 +73,7 @@ const deleteUser = () => {
                     Unfollow
                 </button>
             </div>
-            <div class="flex justify-center gap-2 mb-3">
+            <div v-else class="flex justify-center gap-2 mb-3">
                 <Link class="btn btn-outline" :href="route('profile.edit')">Edit</Link>
                 <button class="btn btn-outline btn-error" onclick="deleteModal.showModal()">
                     Delete
