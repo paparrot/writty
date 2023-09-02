@@ -7,6 +7,7 @@ const page = usePage();
 const currentUser = page.props.auth?.user;
 const textarea = ref('textarea');
 const end = ref('end');
+const disableMessage = ref(false);
 
 const {user, messages} = defineProps({
     user: {
@@ -25,7 +26,7 @@ const messagesList = reactive({
 
 Echo.private(`chat.${user.id}.${currentUser.id}`)
     .listen('MessageSent', ({message}) => {
-        if (! messagesList.data.map(item => item.id).includes(message.id)) {
+        if (!messagesList.data.map(item => item.id).includes(message.id)) {
             messagesList.data.push(message)
             nextTick(() => {
                 scrollToEnd()
@@ -35,7 +36,7 @@ Echo.private(`chat.${user.id}.${currentUser.id}`)
 
 Echo.private(`chat.${currentUser.id}.${user.id}`)
     .listen('MessageSent', ({message}) => {
-        if (! messagesList.data.map(item => item.id).includes(message.id)) {
+        if (!messagesList.data.map(item => item.id).includes(message.id)) {
             messagesList.data.push(message)
             nextTick(() => {
                 scrollToEnd()
@@ -54,8 +55,10 @@ const scrollToEnd = () => {
 }
 
 const submit = () => {
+    disableMessage.value = true;
     form.post(route('chat.create'), {
         onSuccess: () => {
+            disableMessage.value = false;
             form.reset()
             scrollToEnd()
         }
@@ -76,7 +79,8 @@ const resize = () => {
         <title>Chat with {{ user.nickname }}</title>
     </Head>
     <DefaultLayout>
-        <div id="chat-container" class="flex h-[calc(100%-5.3rem)] pb-16 md:pb-0 px-3 flex-col justify-between  overflow-scroll">
+        <div id="chat-container"
+             class="flex h-[calc(100%-5.3rem)] pb-16 md:pb-0 px-3 flex-col justify-between  overflow-scroll">
             <div class="flex-1 flex flex-col justify-end border-t-neutral border-t py-3">
                 <ul class="flex flex-col justify-end">
                     <li
@@ -111,8 +115,10 @@ const resize = () => {
                     </li>
                 </ul>
             </div>
-            <form @submit.prevent="submit" class="p-2 sticky bottom-0 bg-neutral-focus rounded-lg bg-opacity-10 dark:bg-opacity-70 pt-3 flex w-full gap-3 items-center">
-                <textarea @keydown.enter.meta="submit" @keydown.enter.ctrl="submit" v-model="form.message" @focusout="resize" @keyup="resize" ref="textarea" type="text" rows="1"
+            <form @submit.prevent="submit"
+                  class="p-2 sticky bottom-0 bg-neutral-focus rounded-lg bg-opacity-10 dark:bg-opacity-70 pt-3 flex w-full gap-3 items-center">
+                <textarea @keydown.enter="submit" v-model="form.message" @focusout="resize" @keyup="resize"
+                          ref="textarea" type="text" rows="1"
                           class="textarea resize-none textarea-bordered w-full"></textarea>
                 <button type="submit" class="p-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-send" width="24"
@@ -124,7 +130,7 @@ const resize = () => {
                     </svg>
                 </button>
             </form>
-            <div ref="end" />
+            <div ref="end"/>
         </div>
     </DefaultLayout>
 </template>

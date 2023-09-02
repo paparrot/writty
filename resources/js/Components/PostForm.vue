@@ -1,8 +1,9 @@
 <script setup>
 import {useForm} from "@inertiajs/vue3";
 import {usePostStore} from "@/stores/postStore.js";
-import {computed, onBeforeMount} from "vue";
+import {computed, onBeforeMount, ref} from "vue";
 
+const disableForm = ref(false);
 const emit = defineEmits(['post-created'])
 
 const {replied} = defineProps({
@@ -29,10 +30,12 @@ const form = useForm({
 const postStore = usePostStore();
 
 const onSubmitForm = async () => {
+    disableForm.value = true;
     if (replied) {
         form.post(route('posts.reply', {post: replied}), {
             preserveState: false,
             onSuccess: () => {
+                disableForm.value = false;
                 form.reset()
                 emit('post-created')
             }
@@ -43,6 +46,7 @@ const onSubmitForm = async () => {
 
     form.post(route('posts.store'), {
         onSuccess: () => {
+            disableForm.value = false;
             form.reset();
             emit('post-created')
         }
