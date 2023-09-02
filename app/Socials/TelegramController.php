@@ -4,6 +4,7 @@ namespace App\Socials;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -12,13 +13,7 @@ use Laravel\Socialite\Facades\Socialite;
 
 class TelegramController extends Controller
 {
-
-    public function redirect()
-    {
-        Socialite::driver('telegram')->redirect();
-    }
-
-    public function callback()
+    public function callback(): RedirectResponse
     {
         $telegramUser = Socialite::driver('telegram')->user();
 
@@ -33,12 +28,12 @@ class TelegramController extends Controller
         }
 
         $user = User::create([
-            'oauth_id' => $telegramUser->id,
+            'oauth_id' => $telegramUser->getId(),
             'oauth_type' => 'telegram',
-            'nickname' => $this->getOrGenerateNickname($telegramUser->nickname),
-            'name' => $telegramUser->name,
-            'profile_photo_path' => $telegramUser->avatar,
-            'password' => Hash::make($telegramUser->id),
+            'nickname' => $this->getOrGenerateNickname($telegramUser->getNickname()),
+            'name' => $telegramUser->getName(),
+            'profile_photo_path' => $telegramUser->getAvatar(),
+            'password' => Hash::make($telegramUser->getId()),
             'email_verified_at' => now()
         ]);
 

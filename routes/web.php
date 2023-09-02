@@ -70,8 +70,5 @@ Route::get('users/{user:nickname}/followers', [UserController::class, 'followers
     ->name('profile.followers');
 Route::get('users/{user:nickname}', [UserController::class, 'show'])
     ->name('profile.show');
-
-Route::get('auth/telegram/redirect', [TelegramController::class, 'redirect'])
-    ->name('auth.telegram.redirect');
 Route::get('auth/telegram/callback', [TelegramController::class, 'callback'])
     ->name('auth.telegram.callback');
