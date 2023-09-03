@@ -31,7 +31,9 @@ export default {
         })
     },
     deletePost(id) {
-        router.delete(route('posts.delete', {post: id}))
+        router.delete(route('posts.delete', {post: id}), {
+            preserveState: false,
+        })
     },
     like(id) {
         const postStore = usePostStore();
@@ -67,16 +69,15 @@ export default {
         const postStore = usePostStore();
         Echo.channel(`${channel}_feed`)
             .listen('PostCreated', ({post}) => {
-                postStore.setPosts([post, ...postStore.posts.data]);
+                const postExists = postStore.posts.data.map(item => item.id).includes(post.id);
+                if (!postExists) {
+                    postStore.setPosts([post, ...postStore.posts.data]);
+                }
             })
     },
     repost(id) {
-        const postStore = usePostStore();
         router.post(route('posts.repost', {post: id}), {}, {
-            onSuccess: () => {
-                const newPosts = postStore.posts.data.filter(post => post.id !== id);
-                postStore.setPosts(newPosts);
-            }
+            preserveState: false,
         })
     },
     deleteRepost(post) {

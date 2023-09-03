@@ -55,11 +55,16 @@ const scrollToEnd = () => {
 }
 
 const submit = () => {
-    disableMessage.value = true;
+    if (disableMessage.value) return;
+
     form.post(route('chat.create'), {
+        preserveState: false,
+        onStart: () => {
+            disableMessage.value = true;
+        },
         onSuccess: () => {
-            disableMessage.value = false;
             form.reset()
+            disableMessage.value = false;
             scrollToEnd()
         }
     });
@@ -70,6 +75,8 @@ onMounted(() => {
 })
 
 const resize = () => {
+    if (textarea.value) return;
+
     textarea.value.style.height = textarea.value.scrollHeight - 4 + 'px';
 }
 </script>
@@ -117,10 +124,10 @@ const resize = () => {
             </div>
             <form @submit.prevent="submit"
                   class="p-2 sticky bottom-0 bg-neutral-focus rounded-lg bg-opacity-10 dark:bg-opacity-70 pt-3 flex w-full gap-3 items-center">
-                <textarea @keydown.enter="submit" v-model="form.message" @focusout="resize" @keyup="resize"
+                <textarea @keydown.prevent.enter="submit" v-model="form.message" @focusout="resize" @keyup="resize"
                           ref="textarea" type="text" rows="1"
                           class="textarea resize-none textarea-bordered w-full"></textarea>
-                <button type="submit" class="p-2">
+                <button :disabled="disableMessage" type="submit" class="p-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-send" width="24"
                          height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                          stroke-linecap="round" stroke-linejoin="round">

@@ -30,10 +30,14 @@ const form = useForm({
 const postStore = usePostStore();
 
 const onSubmitForm = async () => {
-    disableForm.value = true;
+    if (disableForm.value) return;
+
     if (replied) {
         form.post(route('posts.reply', {post: replied}), {
             preserveState: false,
+            onStart: () => {
+                disableForm.value = true;
+            },
             onSuccess: () => {
                 disableForm.value = false;
                 form.reset()
@@ -45,6 +49,10 @@ const onSubmitForm = async () => {
     }
 
     form.post(route('posts.store'), {
+        preserveState: false,
+        onStart: () => {
+            disableForm.value = true;
+        },
         onSuccess: () => {
             disableForm.value = false;
             form.reset();

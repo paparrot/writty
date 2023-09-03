@@ -80,7 +80,8 @@ class PostController extends Controller
         $post->delete();
 
         PostDeleted::broadcast($id);
-        return Redirect::back();
+
+        return back();
     }
 
     public function favourites(): Response
