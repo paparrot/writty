@@ -16,4 +16,4 @@ use Illuminate\Support\Facades\Broadcast;
 */
 
 Broadcast::channel('feed', FeedChannel::class);
-Broadcast::channel('chat.{firstUser}.{secondUser}', ChatChannel::class);
+Broadcast::channel('chat.{conversation}', ChatChannel::class);

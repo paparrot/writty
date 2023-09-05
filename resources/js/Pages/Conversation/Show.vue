@@ -9,14 +9,18 @@ const textarea = ref('textarea');
 const end = ref('end');
 const disableMessage = ref(false);
 
-const {user, messages} = defineProps({
-    user: {
-        type: Object,
-        default: () => ({})
+const {conversation, messages} = defineProps({
+    conversation: {
+        type: String,
+        required: true,
     },
     messages: {
         type: Array,
         default: () => ([])
+    },
+    recipient: {
+        type: String,
+        required: true,
     }
 })
 
@@ -24,17 +28,7 @@ const messagesList = reactive({
     data: messages.data
 })
 
-Echo.private(`chat.${user.id}.${currentUser.id}`)
-    .listen('MessageSent', ({message}) => {
-        if (!messagesList.data.map(item => item.id).includes(message.id)) {
-            messagesList.data.push(message)
-            nextTick(() => {
-                scrollToEnd()
-            })
-        }
-    })
-
-Echo.private(`chat.${currentUser.id}.${user.id}`)
+Echo.private(`chat.${conversation}`)
     .listen('MessageSent', ({message}) => {
         if (!messagesList.data.map(item => item.id).includes(message.id)) {
             messagesList.data.push(message)
@@ -46,7 +40,7 @@ Echo.private(`chat.${currentUser.id}.${user.id}`)
 
 const form = useForm({
     message: "",
-    recipient_id: user.id
+    conversation: conversation.id
 })
 
 const scrollToEnd = () => {
@@ -57,7 +51,7 @@ const scrollToEnd = () => {
 const submit = () => {
     if (disableMessage.value) return;
 
-    form.post(route('chat.create'), {
+    form.post(route('chat.store', {conversation: conversation}), {
         preserveState: false,
         onStart: () => {
             disableMessage.value = true;
@@ -75,7 +69,7 @@ onMounted(() => {
 })
 
 const resize = () => {
-    if (textarea.value) return;
+    if (!textarea.value) return;
 
     textarea.value.style.height = textarea.value.scrollHeight - 4 + 'px';
 }
@@ -83,39 +77,54 @@ const resize = () => {
 
 <template>
     <Head>
-        <title>Chat with {{ user.nickname }}</title>
+        <title>Chat with @{{ recipient.nickname }}</title>
     </Head>
     <DefaultLayout>
         <div id="chat-container"
              class="flex h-[calc(100%-5.3rem)] pb-16 md:pb-0 px-3 flex-col justify-between  overflow-scroll">
-            <div class="flex-1 flex flex-col justify-end border-t-neutral border-t py-3">
+            <div class="card card-bordered p-4 sticky top-0 z-10 backdrop-blur-xl">
+                <div class="flex gap-3 items-center">
+                    <div class="avatar" v-if="recipient.avatar">
+                        <div class="w-10 rounded-full">
+                            <img :src="recipient.avatar"/>
+                        </div>
+                    </div>
+                    <div class="avatar placeholder" v-else>
+                        <div class="w-10 rounded-full bg-base-100 dark:bg-neutral border dark:border-none">
+                            <span class="text-lg uppercase font-bold">{{ recipient.nickname[0] }}</span>
+                        </div>
+                    </div>
+                    <p class="font-bold">@{{ recipient.nickname }}</p>
+                </div>
+            </div>
+            <div class="flex-1 flex flex-col justify-end py-3">
                 <ul class="flex flex-col justify-end">
                     <li
                         class="chat"
                         :class="{
-                            'chat-end': currentUser.id === message.sender.id,
-                            'chat-start': currentUser.id === message.recipient.id
+                            'chat-end': currentUser.id === message.author.id,
+                            'chat-start': currentUser.id !== message.author.id
                         }"
                         :key="message.id"
                         v-for="(message, idx) of messagesList.data"
                     >
-                        <div class="chat-image avatar" v-if="message.sender.avatar">
+                        <div class="chat-image avatar" v-if="message.author.avatar">
                             <div class="w-10 rounded-full">
-                                <img :src="message.sender.avatar"/>
+                                <img :src="message.author.avatar"/>
                             </div>
                         </div>
                         <div class="chat-image avatar placeholder" v-else>
-                            <div class="w-10 rounded-full bg-neutral-focus">
-                                <span class="text-lg uppercase font-bold">{{ message.sender.nickname[0] }}</span>
+                            <div class="w-10 rounded-full bg-base-100 border dark:border-none dark:bg-neutral-focus">
+                                <span class="text-lg uppercase font-bold">{{ message.author.nickname[0] }}</span>
                             </div>
                         </div>
                         <div class="chat-header">
-                            {{ message.sender.name }}
+                            @{{ message.author.nickname }}
                             <time class="text-xs opacity-50">{{ message.time }}</time>
                         </div>
-                        <div class="chat-bubble" :class="{
-                            'chat-bubble-primary' : currentUser.id === message.sender.id,
-                            'chat-bubble-accent': currentUser.id === message.recipient.id
+                        <div class="chat-bubble break-words" :class="{
+                            'chat-bubble-primary' : currentUser.id === message.author.id,
+                            'chat-bubble-accent': currentUser.id !== message.author.id
                         }">
                             {{ message.message }}
                         </div>
@@ -124,9 +133,13 @@ const resize = () => {
             </div>
             <form @submit.prevent="submit"
                   class="p-2 sticky bottom-0 bg-neutral-focus rounded-lg bg-opacity-10 dark:bg-opacity-70 pt-3 flex w-full gap-3 items-center">
-                <textarea @keydown.prevent.enter="submit" v-model="form.message" @focusout="resize" @keyup="resize"
-                          ref="textarea" type="text" rows="1"
-                          class="textarea resize-none textarea-bordered w-full"></textarea>
+                <textarea
+                    @keydown.prevent.enter="submit"
+                    v-model="form.message"
+                    @focusout="resize"
+                    @keyup="resize"
+                    ref="textarea" type="text" rows="1"
+                    class="textarea resize-none textarea-bordered w-full"></textarea>
                 <button :disabled="disableMessage" type="submit" class="p-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-send" width="24"
                          height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"

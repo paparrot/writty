@@ -64,7 +64,7 @@ const deleteUser = () => {
         </div>
         <div v-if="auth.user">
             <div v-if="auth.user.id !== user.id" class="flex justify-center gap-3 items-center my-2">
-                <Link class="btn btn-primary btn-outline" :href="route('chat.show', {user: user.nickname})">Chat</Link>
+                <Link class="btn btn-primary btn-outline" :href="route('chat.search', {user: user.nickname})">Chat</Link>
                 <button v-if="!isFollowing" @click="userService.follow(user.nickname)"
                         class="btn btn-primary btn-outline">
                     Follow

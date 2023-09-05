@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\App\MessageController;
+use App\Http\Controllers\App\ConversationController;
 use App\Http\Controllers\App\PostController;
+use App\Http\Controllers\App\Socials\TelegramController;
+use App\Http\Controllers\App\Socials\TwitterController;
 use App\Http\Controllers\App\UserController;
-use App\Socials\TelegramController;
-use App\Socials\TwitterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,7 +28,9 @@ Route::middleware('auth')->group(function () {
     Route::get('posts/following', [PostController::class, 'following'])->name('posts.following');
     Route::get('posts/create', [PostController::class, 'create'])
         ->name('posts.create');
-    Route::get('chat/{user:nickname}', [MessageController::class, 'chat'])
+    Route::get('chat/search/{user:nickname}', [ConversationController::class, 'search'])
+        ->name('chat.search');
+    Route::get('chat/{conversation}', [ConversationController::class, 'conversation'])
         ->name('chat.show');
     Route::get('posts/{post}/reply', [PostController::class, 'createReply'])
         ->name('posts.reply.create');
@@ -53,8 +55,8 @@ Route::middleware(['auth', 'validate-email', 'verified'])->group(function () {
         ->name('posts.delete');
     Route::delete('posts/{post}/like', [PostController::class, 'unlike'])
         ->name('posts.unlike');
-    Route::post('chat', [MessageController::class, 'store'])
-        ->name('chat.create');
+    Route::post('chat/{conversation}', [ConversationController::class, 'store'])
+        ->name('chat.store');
     Route::post('users/{user:nickname}/follow', [UserController::class, 'follow'])
         ->name('profile.follow');
     Route::post('users/profile', [UserController::class, 'update'])

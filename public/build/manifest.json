@@ -1,144 +1,144 @@
 {
   "DefaultLayout.css": {
-    "file": "assets/DefaultLayout-665a7a79.css",
+    "file": "assets/DefaultLayout-bef72a4f.css",
     "src": "DefaultLayout.css"
   },
-  "_DefaultLayout-5e4bde03.js": {
+  "_DefaultLayout-c1e4a94a.js": {
     "css": [
-      "assets/DefaultLayout-665a7a79.css"
+      "assets/DefaultLayout-bef72a4f.css"
     ],
-    "file": "assets/DefaultLayout-5e4bde03.js",
+    "file": "assets/DefaultLayout-c1e4a94a.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
-  "_PostList-27867cc7.js": {
-    "file": "assets/PostList-27867cc7.js",
+  "_PostList-3776db2c.js": {
+    "file": "assets/PostList-3776db2c.js",
     "imports": [
-      "_DefaultLayout-5e4bde03.js",
+      "_DefaultLayout-c1e4a94a.js",
       "resources/js/app.js"
     ]
   },
-  "_ProfileList-7d2d54fc.js": {
-    "file": "assets/ProfileList-7d2d54fc.js",
+  "_ProfileList-ce4a08b6.js": {
+    "file": "assets/ProfileList-ce4a08b6.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
-  "_telegramButton-d047074d.js": {
-    "file": "assets/telegramButton-d047074d.js",
+  "_telegramButton-1cee02d6.js": {
+    "file": "assets/telegramButton-1cee02d6.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
   "resources/js/Pages/Auth/ConfirmPassword.vue": {
-    "file": "assets/ConfirmPassword-dfd79db2.js",
+    "file": "assets/ConfirmPassword-ac8ce31a.js",
     "imports": [
       "resources/js/app.js",
-      "_DefaultLayout-5e4bde03.js"
+      "_DefaultLayout-c1e4a94a.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/ConfirmPassword.vue"
   },
   "resources/js/Pages/Auth/ForgotPassword.vue": {
-    "file": "assets/ForgotPassword-88b99401.js",
+    "file": "assets/ForgotPassword-ca3d83a9.js",
     "imports": [
       "resources/js/app.js",
-      "_DefaultLayout-5e4bde03.js"
+      "_DefaultLayout-c1e4a94a.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/ForgotPassword.vue"
   },
   "resources/js/Pages/Auth/Login.vue": {
-    "file": "assets/Login-a7962f8a.js",
+    "file": "assets/Login-9d4aad9b.js",
     "imports": [
       "resources/js/app.js",
-      "_DefaultLayout-5e4bde03.js",
-      "_telegramButton-d047074d.js"
+      "_DefaultLayout-c1e4a94a.js",
+      "_telegramButton-1cee02d6.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/Login.vue"
   },
   "resources/js/Pages/Auth/Register.vue": {
-    "file": "assets/Register-7eda25cc.js",
+    "file": "assets/Register-a9f2fc71.js",
     "imports": [
       "resources/js/app.js",
-      "_DefaultLayout-5e4bde03.js",
-      "_telegramButton-d047074d.js"
+      "_DefaultLayout-c1e4a94a.js",
+      "_telegramButton-1cee02d6.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/Register.vue"
   },
   "resources/js/Pages/Auth/ResetPassword.vue": {
-    "file": "assets/ResetPassword-72edaa0a.js",
+    "file": "assets/ResetPassword-810ab084.js",
     "imports": [
       "resources/js/app.js",
-      "_DefaultLayout-5e4bde03.js"
+      "_DefaultLayout-c1e4a94a.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/ResetPassword.vue"
   },
   "resources/js/Pages/Auth/TwoFactorChallenge.vue": {
-    "file": "assets/TwoFactorChallenge-63398511.js",
+    "file": "assets/TwoFactorChallenge-fd3d95c0.js",
     "imports": [
       "resources/js/app.js",
-      "_DefaultLayout-5e4bde03.js"
+      "_DefaultLayout-c1e4a94a.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/TwoFactorChallenge.vue"
   },
   "resources/js/Pages/Auth/VerifyEmail.vue": {
-    "file": "assets/VerifyEmail-6b17fa99.js",
+    "file": "assets/VerifyEmail-3941ba22.js",
     "imports": [
       "resources/js/app.js",
-      "_DefaultLayout-5e4bde03.js"
+      "_DefaultLayout-c1e4a94a.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/VerifyEmail.vue"
   },
   "resources/js/Pages/Chat.vue": {
-    "file": "assets/Chat-067ea367.js",
+    "file": "assets/Chat-1b1c2d6b.js",
     "imports": [
       "resources/js/app.js",
-      "_DefaultLayout-5e4bde03.js"
+      "_DefaultLayout-c1e4a94a.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Chat.vue"
   },
   "resources/js/Pages/Feed.vue": {
-    "file": "assets/Feed-2b72d71e.js",
+    "file": "assets/Feed-990cc32c.js",
     "imports": [
-      "_DefaultLayout-5e4bde03.js",
+      "_DefaultLayout-c1e4a94a.js",
       "resources/js/app.js",
-      "_PostList-27867cc7.js"
+      "_PostList-3776db2c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Feed.vue"
   },
   "resources/js/Pages/Post/Create.vue": {
-    "file": "assets/Create-965ef48c.js",
+    "file": "assets/Create-d6aa6bbd.js",
     "imports": [
-      "_DefaultLayout-5e4bde03.js",
+      "_DefaultLayout-c1e4a94a.js",
       "resources/js/app.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Post/Create.vue"
   },
   "resources/js/Pages/Post/Favourites.vue": {
-    "file": "assets/Favourites-0d526fe5.js",
+    "file": "assets/Favourites-6d310b99.js",
     "imports": [
-      "_PostList-27867cc7.js",
-      "_DefaultLayout-5e4bde03.js",
+      "_PostList-3776db2c.js",
+      "_DefaultLayout-c1e4a94a.js",
       "resources/js/app.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Post/Favourites.vue"
   },
   "resources/js/Pages/Post/Following.vue": {
-    "file": "assets/Following-4fc60eb8.js",
+    "file": "assets/Following-5e28cf8e.js",
     "imports": [
-      "_PostList-27867cc7.js",
-      "_DefaultLayout-5e4bde03.js",
+      "_PostList-3776db2c.js",
+      "_DefaultLayout-c1e4a94a.js",
       "resources/js/app.js"
     ],
     "isDynamicEntry": true,
@@ -152,77 +152,77 @@
     "css": [
       "assets/Search-5bde116f.css"
     ],
-    "file": "assets/Search-1e2e03ac.js",
+    "file": "assets/Search-f344936b.js",
     "imports": [
       "resources/js/app.js",
-      "_DefaultLayout-5e4bde03.js",
-      "_PostList-27867cc7.js"
+      "_DefaultLayout-c1e4a94a.js",
+      "_PostList-3776db2c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Post/Search.vue"
   },
   "resources/js/Pages/Post/Show.vue": {
-    "file": "assets/Show-065364cd.js",
+    "file": "assets/Show-5a9e7ef6.js",
     "imports": [
-      "_PostList-27867cc7.js",
-      "_DefaultLayout-5e4bde03.js",
+      "_PostList-3776db2c.js",
+      "_DefaultLayout-c1e4a94a.js",
       "resources/js/app.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Post/Show.vue"
   },
   "resources/js/Pages/Profile/AddEmail.vue": {
-    "file": "assets/AddEmail-8207e6fc.js",
+    "file": "assets/AddEmail-4a54753b.js",
     "imports": [
       "resources/js/app.js",
-      "_DefaultLayout-5e4bde03.js"
+      "_DefaultLayout-c1e4a94a.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Profile/AddEmail.vue"
   },
   "resources/js/Pages/Profile/Edit.vue": {
-    "file": "assets/Edit-15661faa.js",
+    "file": "assets/Edit-e3fe9557.js",
     "imports": [
       "resources/js/app.js",
-      "_DefaultLayout-5e4bde03.js"
+      "_DefaultLayout-c1e4a94a.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Profile/Edit.vue"
   },
   "resources/js/Pages/Profile/Followers.vue": {
-    "file": "assets/Followers-daea0c0d.js",
+    "file": "assets/Followers-bd907e6c.js",
     "imports": [
-      "_DefaultLayout-5e4bde03.js",
+      "_DefaultLayout-c1e4a94a.js",
       "resources/js/app.js",
-      "_ProfileList-7d2d54fc.js"
+      "_ProfileList-ce4a08b6.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Profile/Followers.vue"
   },
   "resources/js/Pages/Profile/Following.vue": {
-    "file": "assets/Following-022804d8.js",
+    "file": "assets/Following-dc017ce8.js",
     "imports": [
       "resources/js/app.js",
-      "_DefaultLayout-5e4bde03.js",
-      "_ProfileList-7d2d54fc.js"
+      "_DefaultLayout-c1e4a94a.js",
+      "_ProfileList-ce4a08b6.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Profile/Following.vue"
   },
   "resources/js/Pages/Profile/Show.vue": {
-    "file": "assets/Show-05ac822f.js",
+    "file": "assets/Show-d8eab417.js",
     "imports": [
       "resources/js/app.js",
-      "_DefaultLayout-5e4bde03.js",
-      "_PostList-27867cc7.js"
+      "_DefaultLayout-c1e4a94a.js",
+      "_PostList-3776db2c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Profile/Show.vue"
   },
   "resources/js/Pages/Reply/Create.vue": {
-    "file": "assets/Create-c43a4bc2.js",
+    "file": "assets/Create-b19cdb6f.js",
     "imports": [
-      "_DefaultLayout-5e4bde03.js",
+      "_DefaultLayout-c1e4a94a.js",
       "resources/js/app.js"
     ],
     "isDynamicEntry": true,
@@ -258,7 +258,7 @@
       "resources/js/Pages/Profile/Show.vue",
       "resources/js/Pages/Reply/Create.vue"
     ],
-    "file": "assets/app-c7b0be4f.js",
+    "file": "assets/app-e5a1d8a6.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }

@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Socials;
+namespace App\Http\Controllers\App\Socials;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;

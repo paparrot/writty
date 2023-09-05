@@ -13,16 +13,17 @@ class Message extends Model
     use HasFactory, HasUuids, SoftDeletes;
 
     protected $fillable = [
-        'message'
+        'message',
+        'author_id'
     ];
 
-    public function sender(): BelongsTo
+    public function conversation(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_from');
+        return $this->belongsTo(Conversation::class, 'conversation_id','id');
     }
 
-    public function recipient(): BelongsTo
+    public function author(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_to');
+        return $this->belongsTo(User::class);
     }
 }

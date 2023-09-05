@@ -166,4 +166,19 @@ class User extends Authenticatable implements MustVerifyEmail
             ->whereHas('user', fn($q) => $q->whereId($this->id))
             ->exists();
     }
+
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class, 'author_id', 'id');
+    }
+
+    public function conversations(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Conversation::class,
+            'conversation_user',
+            'user_id',
+            'conversation_id'
+        );
+    }
 }

@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Socials;
+namespace App\Http\Controllers\App\Socials;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Auth;
 use Illuminate\Http\RedirectResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
+use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirectResponse;
 
 class TwitterController extends Controller
 {
     public function redirect(): SymfonyRedirectResponse
     {
-        return Socialite::driver('twitter-oauth-2')->redirect();
+        return Socialite::driver('twitter')->redirect();
     }
 
     public function callback(): RedirectResponse
     {
-        $twitterUser = Socialite::driver('twitter-oauth-2')->user();
+        $twitterUser = Socialite::driver('twitter')->user();
 
         $existedUser = User::where('oauth_id', $twitterUser->getId())
             ->where('oauth_type', 'twitter')

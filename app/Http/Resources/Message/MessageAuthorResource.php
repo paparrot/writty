@@ -2,16 +2,13 @@
 
 namespace App\Http\Resources\Message;
 
-use App\Http\Resources\Post\UserResource;
-use App\Models\Message;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Crypt;
 
-class MessageResource extends JsonResource
+class MessageAuthorResource extends JsonResource
 {
     public static $wrap = null;
-
 
     /**
      * Transform the resource into an array.
@@ -20,12 +17,11 @@ class MessageResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        /** @var Message $this */
+        /** @var $this User */
         return [
             'id' => $this->id,
-            'message' => $this->message,
-            'author' => MessageAuthorResource::make($this->author),
-            'time' => $this->created_at->diffForHumans()
+            'nickname' => $this->nickname,
+            'avatar' => $this->profile_photo_path,
         ];
     }
 }
