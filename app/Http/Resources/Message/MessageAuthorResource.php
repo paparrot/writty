@@ -17,7 +17,7 @@ class MessageAuthorResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        /** @var $this User */
+        /** @var User $this */
         return [
             'id' => $this->id,
             'nickname' => $this->nickname,
