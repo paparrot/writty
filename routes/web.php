@@ -28,6 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::get('posts/following', [PostController::class, 'following'])->name('posts.following');
     Route::get('posts/create', [PostController::class, 'create'])
         ->name('posts.create');
+    Route::get('chat', [ConversationController::class, 'list'])
+        ->name('chat.list');
     Route::get('chat/search/{user:nickname}', [ConversationController::class, 'search'])
         ->name('chat.search');
     Route::get('chat/{conversation}', [ConversationController::class, 'conversation'])

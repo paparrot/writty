@@ -5,21 +5,30 @@ namespace App\Http\Controllers\App;
 use App\Events\MessageSent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MessageRequest;
-use App\Http\Resources\Message\MessageAuthorResource;
-use App\Http\Resources\Message\MessageResource;
-use App\Http\Resources\Post\UserResource;
+use App\Http\Resources\Conversation\ConversationResource;
+use App\Http\Resources\Conversation\MessageAuthorResource;
+use App\Http\Resources\Conversation\MessageResource;
 use App\Models\Conversation;
-use App\Models\Message;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class ConversationController extends Controller
 {
+    public function list(): Response
+    {
+        $conversations = Conversation::with(['messages' => fn ($query) => $query->latest()->limit(1)])
+            ->whereHas('messages')
+            ->get();
+
+        return Inertia::render('Conversation/List', [
+            'conversations' => ConversationResource::collection($conversations)
+        ]);
+    }
 
     public function search(User $user): RedirectResponse
     {

@@ -80,6 +80,13 @@ onBeforeMount(() => {
                             >Favourites</Link>
                         </li>
                         <li>
+                            <Link
+                                :class="{'text-primary': route().current('chat.list')}"
+                                :href="route('chat.list')"
+                                class="btn btn-outline w-full"
+                            >Conversations</Link>
+                        </li>
+                        <li>
                             <button
                                 v-if="userId"
                                 @click="postStore.openPostModal"

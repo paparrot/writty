@@ -19,9 +19,11 @@
         "pusher/pusher-php-server": "^7.2",
         "sentry/sentry-laravel": "^3.7",
         "socialiteproviders/telegram": "^4.1",
+        "staudenmeir/eloquent-eager-limit": "^1.0",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.9",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
