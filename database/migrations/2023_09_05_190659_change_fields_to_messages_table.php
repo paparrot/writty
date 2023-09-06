@@ -11,7 +11,9 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('messages', function (Blueprint $table) {
+            $table->dropForeign(['user_from']);
             $table->dropColumn('user_from');
+            $table->dropForeign(['user_to']);
             $table->dropColumn('user_to');
 
             $table->foreignUuid('author_id')
@@ -32,7 +34,9 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('messages', function (Blueprint $table) {
+            $table->dropForeign(['author_id']);
             $table->dropColumn('author_id');
+            $table->dropForeign(['conversation_id']);
             $table->dropColumn('conversation_id');
 
             $table->foreignUuid('user_from')
