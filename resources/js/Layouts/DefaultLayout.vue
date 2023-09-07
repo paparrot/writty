@@ -34,7 +34,8 @@ onBeforeMount(() => {
                     <li>
                         <Link
                             :class="{'text-primary': route().current('home')}"
-                            :href="route('home')" class="btn btn-outline w-full">Home</Link>
+                            :href="route('home')" class="btn btn-outline w-full">Home
+                        </Link>
                     </li>
                     <template v-if="!userId">
                         <li>
@@ -70,21 +71,24 @@ onBeforeMount(() => {
                                 :class="{'text-primary': route().current('profile.show')}"
                                 :href="route('profile.show', {user: user.nickname})"
                                 class="btn btn-outline w-full"
-                            >Profile</Link>
+                            >Profile
+                            </Link>
                         </li>
                         <li>
                             <Link
                                 :class="{'text-primary': route().current('posts.favourites')}"
                                 :href="route('posts.favourites')"
                                 class="btn btn-outline w-full"
-                            >Favourites</Link>
+                            >Favourites
+                            </Link>
                         </li>
                         <li>
                             <Link
                                 :class="{'text-primary': route().current('chat.list')}"
                                 :href="route('chat.list')"
                                 class="btn btn-outline w-full"
-                            >Conversations</Link>
+                            >Conversations
+                            </Link>
                         </li>
                         <li>
                             <button
@@ -134,14 +138,19 @@ onBeforeMount(() => {
             <ul class="space-y-3">
                 <li v-for="nickname of page.props.latestAuthors">
                     <Link class="block font-bold w-full rounded px-2 py-1 text-center bg-base-200"
-                       :href="route('profile.show', {user: nickname})">@{{ nickname }}</Link>
+                          :href="route('profile.show', {user: nickname})">@{{ nickname }}
+                    </Link>
                 </li>
             </ul>
         </aside>
         <footer class="w-full fixed bottom-0 md:hidden">
-            <ul class="menu flex justify-between menu-horizontal bg-base-200 rounded-t-box">
+            <ul class="menu flex flex-wrap justify-between menu-horizontal bg-base-200 rounded-t-box">
                 <li>
-                    <Link :href="route('home')" :class="{'text-primary': route().current('home')}">
+                    <Link
+                        class="p-2"
+                        :href="route('home')"
+                        :class="{'text-primary': route().current('home')}"
+                    >
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home-2" width="24"
                              height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                              stroke-linecap="round" stroke-linejoin="round">
@@ -154,6 +163,7 @@ onBeforeMount(() => {
                 </li>
                 <li>
                     <Link
+                        class="p-2"
                         :class="{'text-primary': route().current('posts.search')}"
                         :href="route('posts.search')">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24"
@@ -166,7 +176,7 @@ onBeforeMount(() => {
                     </Link>
                 </li>
                 <li v-if="userId">
-                    <Link :class="{'text-primary': route().current('posts.create')}" :href="route('posts.create')">
+                    <Link class="p-2" :class="{'text-primary': route().current('posts.create')}" :href="route('posts.create')">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-rounded-plus"
                              width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                              fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -178,7 +188,8 @@ onBeforeMount(() => {
                     </Link>
                 </li>
                 <li v-if="userId">
-                    <Link :class="{'text-primary': route().current('posts.favourites')}" :href="route('posts.favourites')">
+                    <Link class="p-2" :class="{'text-primary': route().current('posts.favourites')}"
+                          :href="route('posts.favourites')">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart-filled"
                              width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                              fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -189,9 +200,28 @@ onBeforeMount(() => {
                         </svg>
                     </Link>
                 </li>
+                <li v-if="userId">
+                    <Link
+                        class="p-2"
+                        :class="{'text-primary': route().current('chat.list')}"
+                        :href="userId ? route('chat.list', {user: user.nickname}) : route('login') ">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message" width="24"
+                             height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M8 9h8"/>
+                            <path d="M8 13h6"/>
+                            <path
+                                d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z"/>
+                        </svg>
+                    </Link>
+                </li>
                 <li>
-                    <Link :class="{'text-primary': route().current('profile.show') || route().current('login')}"
-                       :href="userId ? route('profile.show', {user: user.nickname}) : route('login') ">
+                    <Link
+                        class="p-2"
+                        :class="{'text-primary': route().current('profile.show') || route().current('login')}"
+                        :href="userId ? route('profile.show', {user: user.nickname}) : route('login')"
+                    >
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle"
                              width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                              fill="none" stroke-linecap="round" stroke-linejoin="round">

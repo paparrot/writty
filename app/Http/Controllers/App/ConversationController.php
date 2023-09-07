@@ -21,8 +21,9 @@ class ConversationController extends Controller
 {
     public function list(): Response
     {
-        $conversations = Conversation::with(['messages' => fn ($query) => $query->latest()->limit(1)])
+        $conversations = Conversation::with(['messages' => fn($query) => $query->latest()->limit(1)])
             ->whereHas('messages')
+            ->whereHas('users', fn(Builder $query): Builder => $query->where('id', auth()->id()))
             ->get();
 
         return Inertia::render('Conversation/List', [

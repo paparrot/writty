@@ -41,6 +41,7 @@ defineProps({
                         <div>
                             <p class="font-bold">@{{ conversation.recipient.nickname }}</p>
                             <p class="text-neutral-content">
+                                <span class="font-bold" v-if="conversation.message.author.id === user.id">You:</span>
                                 {{ conversation.message.message.slice(0,50) }}<span v-if="conversation.message.message.length > 50">...</span>
                             </p>
                         </div>
