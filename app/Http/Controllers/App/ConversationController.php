@@ -49,8 +49,13 @@ class ConversationController extends Controller
         return to_route('chat.show', ['conversation' => $conversation]);
     }
 
-    public function conversation(Conversation $conversation): Response
+    public function conversation(Conversation $conversation): RedirectResponse|Response
     {
+        $isUserExternal = $conversation->users->first(fn (User $user) => $user->id === auth()->id());
+        if (! $isUserExternal) {
+            return to_route('chat.list');
+        }
+
         $recipient = $conversation->users->first(fn(User $user): bool => $user->id !== Auth::id());
 
         return Inertia::render('Conversation/Show', [
