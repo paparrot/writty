@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers\App\Socials;
 
+use App\DTO\Auth\UserRegisterData;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\AuthService;
 use Auth;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
 use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirectResponse;
 
 class TwitterController extends Controller
 {
+    public function __construct(
+        private readonly AuthService $authService
+    )
+    {
+    }
+
     public function redirect(): SymfonyRedirectResponse
     {
         return Socialite::driver('twitter')->redirect();
@@ -20,6 +27,7 @@ class TwitterController extends Controller
     public function callback(): RedirectResponse
     {
         $twitterUser = Socialite::driver('twitter')->user();
+        $userData = UserRegisterData::fromSocialiteUser($twitterUser, 'twitter');
 
         $existedUser = User::where('oauth_id', $twitterUser->getId())
             ->where('oauth_type', 'twitter')
@@ -31,16 +39,7 @@ class TwitterController extends Controller
             return to_route('home');
         }
 
-        $user = User::create([
-            'oauth_id' => $twitterUser->getId(),
-            'oauth_type' => 'twitter',
-            'nickname' => $twitterUser->getNickname(),
-            'name' => $twitterUser->getName(),
-            'email' => $twitterUser->getEmail(),
-            'profile_photo_path' => $twitterUser->getAvatar(),
-            'password' => Hash::make($twitterUser->getId()),
-            'email_verified_at' => now()
-        ]);
+        $user = $this->authService->createUser($userData);
 
         Auth::login($user);
 

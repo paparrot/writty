@@ -2,21 +2,28 @@
 
 namespace App\Http\Controllers\App\Socials;
 
+use App\DTO\Auth\UserRegisterData;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\AuthService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 
 class TelegramController extends Controller
 {
+    public function __construct(
+        private readonly AuthService $authService
+    )
+    {
+    }
+
     public function callback(): RedirectResponse
     {
-        $telegramUser = Socialite::driver('telegram')->user();
+        $socialiteUser = Socialite::driver('telegram')->user();
+        $userData = UserRegisterData::fromSocialiteUser($socialiteUser, "telegram");
 
-        $existedUser = User::where('oauth_id', $telegramUser->getId())
+        $existedUser = User::where('oauth_id', $socialiteUser)
             ->where('oauth_type', 'telegram')
             ->first();
 
@@ -26,29 +33,10 @@ class TelegramController extends Controller
             return to_route('home');
         }
 
-        $user = User::create([
-            'oauth_id' => $telegramUser->getId(),
-            'oauth_type' => 'telegram',
-            'nickname' => $this->getOrGenerateNickname($telegramUser->getNickname()),
-            'name' => $telegramUser->getName(),
-            'profile_photo_path' => $telegramUser->getAvatar(),
-            'password' => Hash::make($telegramUser->getId()),
-            'email_verified_at' => now()
-        ]);
+        $user = $this->authService->createUser($userData);
 
         Auth::login($user);
 
         return to_route('home');
-    }
-
-    private function getOrGenerateNickname(string $nickname): string
-    {
-        $nicknameExists = User::where('nickname', $nickname)->exists();
-
-        if (!$nicknameExists) {
-            return $nickname;
-        }
-
-        return $this->getOrGenerateNickname(Str::random());
     }
 }
