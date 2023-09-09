@@ -4,10 +4,18 @@ import {onBeforeMount, onUpdated, ref} from 'vue';
 import PostForm from "@/Components/PostForm.vue";
 import {usePostStore} from "@/stores/postStore.js";
 import Post from "@/Components/Post.vue";
+import useCookies from '@/composables/cookie.js';
 
 const page = usePage();
 const user = ref(page.props.auth?.user);
-const userId = ref(page.props?.auth?.user?.id)
+const userId = ref(page.props?.auth?.user?.id);
+const cookies = useCookies();
+
+const showCookiesNotification = ref(!cookies.getCookie('cookiesAccepted'))
+const acceptCookie = () => {
+    cookies.setCookie('cookiesAccepted', true);
+    showCookiesNotification.value = false;
+}
 
 onUpdated(() => {
     userId.value = page.props?.auth?.user?.id;
@@ -143,6 +151,12 @@ onBeforeMount(() => {
                 </li>
             </ul>
         </aside>
+        <div v-if="showCookiesNotification"
+             class="bg-neutral-focus notification py-4 px-10 z-10 fixed left-0 right-0 bottom-0 flex gap-3 items-center justify-center flex-wrap">
+            <p>We use cookies to ensure you get the best experience on our website. By continuing to use our site, you
+                consent to our use of cookies.</p>
+            <button @click="acceptCookie" class="btn btn-primary btn-sm">Accept and close</button>
+        </div>
         <footer class="w-full fixed bottom-0 md:hidden">
             <ul class="menu flex flex-wrap justify-between menu-horizontal bg-base-200 rounded-t-box">
                 <li>
@@ -176,7 +190,8 @@ onBeforeMount(() => {
                     </Link>
                 </li>
                 <li v-if="userId">
-                    <Link class="p-2" :class="{'text-primary': route().current('posts.create')}" :href="route('posts.create')">
+                    <Link class="p-2" :class="{'text-primary': route().current('posts.create')}"
+                          :href="route('posts.create')">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-rounded-plus"
                              width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                              fill="none" stroke-linecap="round" stroke-linejoin="round">
