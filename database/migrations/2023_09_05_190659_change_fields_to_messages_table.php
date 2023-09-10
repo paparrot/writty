@@ -11,16 +11,17 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('messages', function (Blueprint $table) {
-            $table->dropForeign(['user_from']);
-            $table->dropColumn('user_from');
-            $table->dropForeign(['user_to']);
-            $table->dropColumn('user_to');
-
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign(['user_from']);
+                $table->dropForeign(['user_to']);
+            }
+            $table->dropColumn(['user_from', 'user_to']);
+        });
+        Schema::table('messages', function (Blueprint $table) {
             $table->foreignUuid('author_id')
                 ->references('id')
                 ->on('users')
                 ->cascadeOnDelete();
-
             $table->foreignUuid('conversation_id')
                 ->references('id')
                 ->on('conversations')
@@ -34,16 +35,17 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('messages', function (Blueprint $table) {
-            $table->dropForeign(['author_id']);
-            $table->dropColumn('author_id');
-            $table->dropForeign(['conversation_id']);
-            $table->dropColumn('conversation_id');
-
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign(['author_id']);
+                $table->dropForeign(['conversation_id']);
+            }
+            $table->dropColumn(['author_id', 'conversation_id']);
+        });
+        Schema::table('messages', function (Blueprint $table) {
             $table->foreignUuid('user_from')
                 ->references('id')
                 ->on('users')
                 ->cascadeOnDelete();
-
             $table->foreignUuid('user_to')
                 ->references('id')
                 ->on('users')

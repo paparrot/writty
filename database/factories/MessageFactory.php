@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Conversation;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -20,8 +21,8 @@ class MessageFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_from' => User::factory()->create()->id,
-            'user_to' => User::factory()->create()->id,
+            'conversation_id' => Conversation::factory()->create(),
+            'author_id' => User::factory()->create(),
             'message' => Crypt::encrypt($this->faker->text()),
         ];
     }

@@ -34,8 +34,7 @@ return new class extends Migration {
             $table->string('email')
                 ->nullable(false)
                 ->change();
-            $table->dropColumn('oauth_id');
-            $table->dropColumn('oauth_type');
+            $table->dropColumn(['oauth_id', 'oauth_type']);
         });
     }
 };
