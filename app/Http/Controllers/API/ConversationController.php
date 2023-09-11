@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\App;
+namespace App\Http\Controllers\API;
 
 use App\DTO\Conversation\MessageData;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MessageRequest;
+use App\Http\Requests\Api\Conversation\MessageRequest;
 use App\Http\Resources\Conversation\ConversationResource;
 use App\Http\Resources\Conversation\MessageAuthorResource;
 use App\Http\Resources\Conversation\MessageResource;
@@ -12,10 +12,8 @@ use App\Models\Conversation;
 use App\Models\User;
 use App\Services\ConversationService;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Inertia\Inertia;
-use Inertia\Response;
 
 class ConversationController extends Controller
 {
@@ -25,46 +23,51 @@ class ConversationController extends Controller
     {
     }
 
-    public function list(): Response
+    public function list(): JsonResponse
     {
         $conversations = Conversation::with(['messages' => fn($query) => $query->latest()->limit(1)])
             ->whereHas('messages')
             ->whereHas('users', fn(Builder $query): Builder => $query->where('id', auth()->id()))
             ->get();
 
-        return Inertia::render('Conversation/List', [
+        return response()->json([
             'conversations' => ConversationResource::collection($conversations)
         ]);
     }
 
-    public function search(User $user): RedirectResponse
+    public function search(User $user): JsonResponse
     {
         $conversation = $this->conversationService->searchConversation($user);
 
-        return to_route('chat.show', ['conversation' => $conversation]);
-    }
-
-    public function conversation(Conversation $conversation): RedirectResponse|Response
-    {
-        $isConversationUser = $conversation->users->first(fn(User $user) => $user->id === auth()->id());
-        if (!$isConversationUser) {
-            return to_route('chat.list');
-        }
-
-        $recipient = $conversation->users->first(fn(User $user): bool => $user->id !== Auth::id());
-
-        return Inertia::render('Conversation/Show', [
+        return response()->json([
             'conversation' => $conversation->id,
-            'recipient' => MessageAuthorResource::make($recipient),
-            'messages' => MessageResource::collection($conversation->messages)
         ]);
     }
 
-    public function store(MessageRequest $request, Conversation $conversation): RedirectResponse
+    public function show(Conversation $conversation): JsonResponse
     {
-        $messageData = MessageData::fromAppRequest($request);
-        $this->conversationService->createMessage(conversation: $conversation, message: $messageData);
+        $isConversationUser = $conversation->users->first(fn(User $user) => $user->id === auth()->id());
+        if (!$isConversationUser) {
+            return response()->json([
+                'error' => "Not found."
+            ], 404);
+        }
+        $recipient = $conversation->users->first(fn(User $user): bool => $user->id !== Auth::id());
 
-        return back();
+        return response()->json([
+            'id' => $conversation->id,
+            'recipient' => MessageAuthorResource::make($recipient),
+            'messages' => MessageResource::collection($conversation->messages),
+        ]);
+    }
+
+    public function store(MessageRequest $request, Conversation $conversation): JsonResponse
+    {
+        $messageData = MessageData::fromApiRequest($request);
+        $message = $this->conversationService->createMessage(conversation: $conversation, message: $messageData);
+
+        return response()->json([
+            'message' => MessageResource::make($message)
+        ]);
     }
 }
