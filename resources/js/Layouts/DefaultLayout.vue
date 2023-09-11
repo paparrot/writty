@@ -152,10 +152,9 @@ onBeforeMount(() => {
             </ul>
         </aside>
         <div v-if="showCookiesNotification"
-             class="bg-neutral-focus notification py-4 px-10 z-10 fixed left-0 right-0 bottom-0 flex gap-3 items-center justify-center flex-wrap">
-            <p>We use cookies to ensure you get the best experience on our website. By continuing to use our site, you
-                consent to our use of cookies.</p>
-            <button @click="acceptCookie" class="btn btn-primary btn-sm">Accept and close</button>
+             class="bg-base-200 border-t border-t-neutral notification py-4 px-10 z-10 fixed left-0 right-0 bottom-0 flex gap-3 items-center justify-center">
+            <p class="break-words">We use cookies to ensure you get the best experience on our website.</p>
+            <button @click="acceptCookie" class="btn btn-primary btn-sm">Ok</button>
         </div>
         <footer class="w-full fixed bottom-0 md:hidden">
             <ul class="menu flex flex-wrap justify-between menu-horizontal bg-base-200 rounded-t-box">
