@@ -26,14 +26,15 @@ Route::middleware('auth')->group(function () {
     Route::get('posts/following', [PostController::class, 'following'])->name('posts.following');
     Route::get('posts/create', [PostController::class, 'create'])
         ->name('posts.create');
+    Route::get('posts/{post}/reply', [PostController::class, 'createReply'])
+        ->name('posts.reply.create');
+
     Route::get('chat', [ConversationController::class, 'list'])
         ->name('chat.list');
     Route::get('chat/search/{user:nickname}', [ConversationController::class, 'search'])
         ->name('chat.search');
     Route::get('chat/{conversation}', [ConversationController::class, 'conversation'])
         ->name('chat.show');
-    Route::get('posts/{post}/reply', [PostController::class, 'createReply'])
-        ->name('posts.reply.create');
 });
 
 Route::get('/', [PostController::class, 'feed'])
@@ -44,7 +45,7 @@ Route::get('posts/{post}', [PostController::class, 'show'])
 Route::post('register', [AuthController::class, 'register'])
     ->name('register');
 
-Route::middleware(['auth', 'validate-email', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('posts', [PostController::class, 'store'])
         ->name('posts.store');
     Route::post('posts/{post}/reply', [PostController::class, 'reply'])
