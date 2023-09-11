@@ -2,8 +2,8 @@
 
 namespace App\DTO\Auth;
 
-use App\Http\Requests\Api\Auth\RegisterRequest;
-use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\Api\Auth\RegisterRequest as ApiRegisterRequest;
+use App\Http\Requests\App\Auth\RegisterRequest as AppRegisterRequest;
 use Laravel\Socialite\Contracts\User;
 
 class UserRegisterData
@@ -34,19 +34,17 @@ class UserRegisterData
         );
     }
 
-    public static function fromAppRequest(array $data): self
+    public static function fromAppRequest(AppRegisterRequest $request): self
     {
         return new self(
-            nickname: $data['nickname'],
-            password: $data['password'],
-            name: $data['name'],
-            email: $data['email'],
-            oauthId: $data['oauth_id'],
-            oauthType: $data['oauth_type'],
+            nickname: $request->validated('nickname'),
+            password: $request->validated('password'),
+            name: $request->validated('name'),
+            email: $request->validated('email'),
         );
     }
 
-    public static function fromApiRequest(RegisterRequest $request): self
+    public static function fromApiRequest(ApiRegisterRequest $request): self
     {
         return new self(
             nickname: $request->validated('nickname'),

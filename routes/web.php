@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Controllers\App\AuthController;
 use App\Http\Controllers\App\ConversationController;
 use App\Http\Controllers\App\PostController;
-use App\Http\Controllers\App\Socials\TelegramController;
-use App\Http\Controllers\App\Socials\TwitterController;
+use App\Http\Controllers\App\SocialsController;
 use App\Http\Controllers\App\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,8 +22,6 @@ Route::middleware('auth')->group(function () {
         ->name('verification.notice');
     Route::get('users/profile/edit', [UserController::class, 'edit'])
         ->name('profile.edit');
-    Route::get('users/profile/add-email', [UserController::class, 'addEmail'])
-        ->name('profile.add-email');
     Route::get('posts/favourites', [PostController::class, 'favourites'])->name('posts.favourites');
     Route::get('posts/following', [PostController::class, 'following'])->name('posts.following');
     Route::get('posts/create', [PostController::class, 'create'])
@@ -43,6 +41,8 @@ Route::get('/', [PostController::class, 'feed'])
 Route::get('posts/search', [PostController::class, 'search'])->name('posts.search');
 Route::get('posts/{post}', [PostController::class, 'show'])
     ->name('posts.show');
+Route::post('register', [AuthController::class, 'register'])
+    ->name('register');
 
 Route::middleware(['auth', 'validate-email', 'verified'])->group(function () {
     Route::post('posts', [PostController::class, 'store'])
@@ -75,9 +75,7 @@ Route::get('users/{user:nickname}/followers', [UserController::class, 'followers
     ->name('profile.followers');
 Route::get('users/{user:nickname}', [UserController::class, 'show'])
     ->name('profile.show');
-Route::get('auth/telegram/callback', [TelegramController::class, 'callback'])
-    ->name('auth.telegram.callback');
-Route::get('auth/twitter/redirect', [TwitterController::class, 'redirect'])
-    ->name('auth.twitter.redirect');
-Route::get('auth/twitter/callback', [TwitterController::class, 'callback'])
-    ->name('auth.twitter.callback');
+Route::get('auth/{driver}/callback', [SocialsController::class, 'callback'])
+    ->name('auth.social.callback');
+Route::get('auth/{driver}/redirect', [SocialsController::class, 'redirect'])
+    ->name('auth.social.redirect');

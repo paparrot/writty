@@ -40,7 +40,7 @@ const submit = () => {
                     <div class="flex justify-center">
                         <a
                             class="py-2 px-[1.125rem] rounded-lg bg-sky-400 text-white font-bold"
-                            :href="route('auth.twitter.redirect')"
+                            :href="route('auth.social.redirect', {driver: 'twitter'})"
                         >Log in with Twitter</a>
                     </div>
                     <div class="flex justify-center" id="telegram-container"></div>

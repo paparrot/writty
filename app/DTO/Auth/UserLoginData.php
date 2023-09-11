@@ -17,12 +17,6 @@ class UserLoginData
     {
     }
 
-    /** TODO: Replace CreateNewUser action with auth service method */
-    public static function fromAppRequest(): self
-    {
-        return new self();
-    }
-
     public static function fromApiRequest(ApiLoginRequest $request): self
     {
         return new self(
