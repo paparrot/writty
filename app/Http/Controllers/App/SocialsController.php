@@ -21,7 +21,7 @@ class SocialsController
 
     public function redirect(string $driver)
     {
-        return Socialite::driver('twitter')->redirect();
+        return Socialite::driver($driver)->redirect();
     }
 
     public function callback(string $driver): RedirectResponse
